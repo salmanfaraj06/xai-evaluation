@@ -1,0 +1,67 @@
+data:
+  path: loan_default.csv
+  target: Default
+  drop_cols:
+    - LoanID
+  categorical:
+    - Education
+    - EmploymentType
+    - MaritalStatus
+    - LoanPurpose
+  binary:
+    - HasMortgage
+    - HasDependents
+    - HasCoSigner
+  numeric:
+    - Age
+    - Income
+    - LoanAmount
+    - CreditScore
+    - MonthsEmployed
+    - NumCreditLines
+    - InterestRate
+    - LoanTerm
+    - DTIRatio
+  test_size: 0.2
+  random_state: 42
+
+preprocessing:
+  scale_numeric: true
+  impute_strategy: median
+
+model:
+  type: xgboost
+  params:
+    n_estimators: 200
+    max_depth: 5
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 1
+    reg_lambda: 1.0
+    objective: binary:logistic
+    eval_metric: logloss
+
+evaluation:
+  fidelity:
+    subset_size: 60
+    steps: 30
+  anchor:
+    threshold: 0.9
+    subset_size: 40
+  dice:
+    total_cfs: 3
+    subset_size: 15
+  shap:
+    background_size: 500
+  lime:
+    num_samples: 500
+    num_features: 10
+  human_llm:
+    runs_per_method: 1
+
+paths:
+  model_dir: outputs/models
+  metrics_dir: outputs/vxai_metrics
+  human_eval_dir: outputs/human_eval_templates
+  pretrained_model: xgboost_loan_default_research.pkl
