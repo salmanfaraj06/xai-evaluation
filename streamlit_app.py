@@ -192,27 +192,6 @@ def main():
         elif llm_df is None:
             st.info("Run the LLM persona evaluation to see aggregated scores.")
 
-        # Correlation between human means and technical metrics
-        if llm_summary is not None and metrics_df is not None:
-            human_cols = [c for c in llm_summary.columns if c != "explanation_type"]
-            tech_cols = [
-                c for c in metrics_df.columns
-                if c not in ["method"] and metrics_df[c].notna().any()
-            ]
-            # align on method name
-            human_aligned = llm_summary.rename(columns={"explanation_type": "method"})
-            merged = pd.merge(metrics_df, human_aligned, on="method", how="inner")
-            if not merged.empty and human_cols and tech_cols:
-                st.subheader("Correlation: technical vs human metrics")
-                st.markdown("Merged view (methods with both technical and human scores):")
-                st.dataframe(merged[["method"] + tech_cols + human_cols], width="stretch")
-
-                corr = merged[tech_cols + human_cols].corr()
-                corr_view = corr.loc[tech_cols, human_cols]
-                styled_corr = corr_view.style.background_gradient(cmap="Blues", axis=None)
-                st.markdown("Correlation matrix (technical rows vs human columns):")
-                st.dataframe(styled_corr, width="stretch")
-
     st.markdown("### Maintenance")
     if st.button("Clear all outputs", type="secondary"):
         try:
