@@ -186,18 +186,28 @@ def _build_prompt(persona: Dict, method: str, metrics: Dict | None, explanation_
     if metrics:
         metric_pairs = [f"{k}: {v:.3f}" for k, v in metrics.items() if v == v]
         if metric_pairs:
-            metric_text = "Technical cues: " + ", ".join(metric_pairs) + "."
+            metric_text = "Technical cues: " + ", ".join(metric_pairs) + ". "
+
+    heuristics = "; ".join(persona.get("heuristics", []))
+    signature = "; ".join([f"{k}: {v}" for k, v in persona.get("behavioral_signature", {}).items()])
+
     return (
         f"You are {persona['name']} ({persona['role']}). "
+        f"Experience: {persona.get('experience_years', 'n/a')} years. "
+        f"Loss aversion: {persona.get('loss_aversion', 'n/a')}. "
         f"Risk tolerance: {persona['risk_tolerance']}. "
         f"Decision speed: {persona.get('decision_speed', 'n/a')}. "
         f"Trust in AI: {persona['trust_in_ai']}. "
         f"Priorities: {', '.join(persona['priorities'])}. "
+        f"Mental model: {persona.get('mental_model', '')}. "
+        f"Heuristics: {heuristics}. "
+        f"Explanation preferences: {persona.get('explanation_preferences', '')}. "
+        f"Behavioral signature: {signature}. "
         f"Explanation type: {method}. "
         f"Example explanation: {explanation_text} "
-        f"{metric_text} "
-        "Provide 1-5 ratings for interpretability, completeness, actionability, trust, "
-        "satisfaction, decision_support, and add one short comment."
+        f"{metric_text}"
+        "Rate 1-5 for: interpretability, completeness, actionability, trust, satisfaction, decision_support. "
+        "Return a concise comment reflecting this persona's perspective."
     )
 
 
