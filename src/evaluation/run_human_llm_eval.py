@@ -13,6 +13,13 @@ import pandas as pd
 
 from src.data_loading import load_yaml_config
 from src.evaluation.run_human_proxy_eval import PERSONAS
+from src.explainers.shap_explainer import ShapExplainer
+from src.explainers.lime_explainer import LimeExplainer
+from src.explainers.anchor_explainer import AnchorExplainer
+from src.explainers.dice_counterfactuals import DiceExplainer
+from src.preprocessing import align_columns, one_hot_encode, transform_features
+from src.models import load_artifact
+from src.data_loading import load_credit_data, split_data
 
 try:  # pragma: no cover - optional dependency
     from openai import OpenAI
@@ -33,6 +40,129 @@ RATING_DIMENSIONS: List[Tuple[str, str]] = [
 ]
 
 
+def _prepare_data_for_explanations(config: dict, artifact: dict):
+    X, y = load_credit_data(config)
+    data_cfg = config.get("data", {})
+    test_size = data_cfg.get("test_size", 0.2)
+    random_state = data_cfg.get("random_state", 42)
+    X_train_raw, X_test_raw, y_train, y_test = split_data(
+        X, y, test_size=test_size, random_state=random_state
+    )
+
+    preprocessor = artifact.get("preprocessor")
+    feature_names = artifact.get("feature_names")
+    categorical_cols = config.get("data", {}).get("categorical", [])
+
+    if preprocessor is not None:
+        X_train_proc = np.asarray(transform_features(preprocessor, X_train_raw)).astype(np.float64)
+        X_test_proc = np.asarray(transform_features(preprocessor, X_test_raw)).astype(np.float64)
+        if feature_names is None:
+            feature_names = preprocessor.get_feature_names_out().tolist()
+    else:
+        if feature_names is None:
+            raise ValueError("Artifact missing feature_names and preprocessor for LLM explanations.")
+
+        def encode(df: pd.DataFrame) -> pd.DataFrame:
+            encoded = one_hot_encode(df, categorical_cols, drop_first=True)
+            return align_columns(encoded, feature_names)
+
+        X_train_enc = encode(X_train_raw)
+        X_test_enc = encode(X_test_raw)
+        X_train_proc = X_train_enc.to_numpy().astype(np.float64)
+        X_test_proc = X_test_enc.to_numpy().astype(np.float64)
+
+    return {
+        "X_train_raw": X_train_raw,
+        "X_test_raw": X_test_raw,
+        "X_train_proc": X_train_proc,
+        "X_test_proc": X_test_proc,
+        "y_train": y_train,
+        "y_test": y_test,
+        "feature_names": feature_names,
+        "preprocessor": preprocessor,
+    }
+
+
+def _build_example_explanations(config: dict, artifact: dict) -> Dict[str, str]:
+    """Create representative explanation texts for each method (one test instance)."""
+    data = _prepare_data_for_explanations(config, artifact)
+    feature_names = data["feature_names"]
+    top_k = int(config.get("evaluation", {}).get("human_llm", {}).get("top_k_explanation", 5))
+    outcome_name = config.get("data", {}).get("target", "Default")
+    instance_idx = 0
+    instance_proc = data["X_test_proc"][instance_idx]
+
+    explanations: Dict[str, str] = {}
+
+    # SHAP
+    try:
+        bg_size = min(100, len(data["X_train_proc"]))
+        shap_exp = ShapExplainer(
+            artifact["model"],
+            background=data["X_train_proc"][:bg_size],
+            feature_names=feature_names,
+        )
+        shap_vals = shap_exp.explain_instance(instance_proc)
+        top_idx = np.argsort(-np.abs(shap_vals))[:top_k]
+        parts = [f"{feature_names[i]}: {shap_vals[i]:.3f}" for i in top_idx]
+        explanations["SHAP"] = "Top SHAP attributions: " + "; ".join(parts)
+    except Exception as exc:
+        explanations["SHAP"] = f"SHAP explanation unavailable ({exc})"
+
+    # LIME
+    try:
+        lime = LimeExplainer(
+            training_data=data["X_train_proc"],
+            feature_names=feature_names,
+            class_names=["No Default", "Default"],
+            predict_fn=artifact["model"].predict_proba,
+            random_state=config.get("data", {}).get("random_state", 42),
+        )
+        exp = lime.explain_instance(instance_proc, num_features=top_k, num_samples=2000)
+        parts = [f"{fn}: {w:.3f}" for fn, w in exp.as_list()]
+        explanations["LIME"] = "LIME weights: " + "; ".join(parts)
+    except Exception as exc:
+        explanations["LIME"] = f"LIME explanation unavailable ({exc})"
+
+    # Anchor
+    try:
+        anchor = AnchorExplainer(
+            data["X_train_proc"],
+            feature_names=feature_names,
+            predict_fn=lambda arr: (artifact["model"].predict_proba(arr)[:, 1] >= artifact.get("default_threshold", 0.5)).astype(int),
+            class_names=["No Default", "Default"],
+        )
+        anchor_exp = anchor.explain_instance(instance_proc, threshold=0.9)
+        rule = " AND ".join(anchor_exp.names())
+        explanations["ANCHOR"] = f"Rule: IF {rule}; precision={anchor_exp.precision():.3f}, coverage={anchor_exp.coverage():.3f}"
+    except Exception as exc:
+        explanations["ANCHOR"] = f"Anchor explanation unavailable ({exc})"
+
+    # Counterfactual (DiCE)
+    try:
+        dice = DiceExplainer(
+            model=artifact["model"],
+            X_train_processed=data["X_train_proc"],
+            y_train=data["y_train"],
+            feature_names=feature_names,
+            outcome_name=outcome_name,
+            method="random",
+        )
+        cf = dice.generate_counterfactuals(instance_proc, total_cfs=1)
+        cf_df = cf.cf_examples_list[0].final_cfs_df[feature_names]
+        orig = instance_proc
+        changes = []
+        for col in feature_names:
+            delta = cf_df.iloc[0][col] - orig[feature_names.index(col)]
+            if abs(delta) > 1e-6:
+                changes.append(f"{col}: change by {delta:.3f}")
+        explanations["COUNTERFACTUAL"] = "Counterfactual suggestion: " + (", ".join(changes) if changes else "no changes")
+    except Exception as exc:
+        explanations["COUNTERFACTUAL"] = f"Counterfactual explanation unavailable ({exc})"
+
+    return explanations
+
+
 def _load_metrics(metrics_path: Path) -> pd.DataFrame | None:
     if metrics_path.exists():
         return pd.read_csv(metrics_path)
@@ -51,7 +181,7 @@ def _fallback_score(method: str) -> Dict[str, float]:
     return {dim: float(np.clip(base + delta, 1, 5)) for (dim, _), delta in zip(RATING_DIMENSIONS, noise)}
 
 
-def _build_prompt(persona: Dict, method: str, metrics: Dict | None) -> str:
+def _build_prompt(persona: Dict, method: str, metrics: Dict | None, explanation_text: str) -> str:
     metric_text = ""
     if metrics:
         metric_pairs = [f"{k}: {v:.3f}" for k, v in metrics.items() if v == v]
@@ -64,6 +194,7 @@ def _build_prompt(persona: Dict, method: str, metrics: Dict | None) -> str:
         f"Trust in AI: {persona['trust_in_ai']}. "
         f"Priorities: {', '.join(persona['priorities'])}. "
         f"Explanation type: {method}. "
+        f"Example explanation: {explanation_text} "
         f"{metric_text} "
         "Provide 1-5 ratings for interpretability, completeness, actionability, trust, "
         "satisfaction, decision_support, and add one short comment."
@@ -198,13 +329,22 @@ def run_llm_human_eval(config_path: str) -> Dict[str, Path | pd.DataFrame]:
     if client is None:
         LOG.warning("OPENAI_API_KEY missing or openai not installed. Using fallback scores.")
 
+    # Build example explanations per method
+    example_explanations = {}
+    try:
+        artifact = load_artifact(paths_cfg.get("pretrained_model", "xgboost_loan_default_research.pkl"))
+        example_explanations = _build_example_explanations(cfg, artifact)
+    except Exception as exc:
+        LOG.warning("Failed to build example explanations: %s", exc)
+
     methods = ["SHAP", "LIME", "ANCHOR", "COUNTERFACTUAL"]
     records = []
     for persona in PERSONAS:
         for method in methods:
             for run_idx in range(runs_per_method):
                 LOG.info("LLM eval persona=%s method=%s run=%d", persona["name"], method, run_idx + 1)
-                prompt = _build_prompt(persona, method, metrics_lookup.get(method))
+                expl_text = example_explanations.get(method, "Explanation unavailable.")
+                prompt = _build_prompt(persona, method, metrics_lookup.get(method), expl_text)
                 ratings = _ratings_from_llm(client, prompt, method)
                 row = {
                     "persona_name": persona["name"],
