@@ -45,21 +45,22 @@ model:
 evaluation:
   fidelity:
     subset_size: 150   # number of test instances for insertion/deletion
-    steps: 30          # curve resolution
+    steps: 50          # curve resolution
   anchor:
     threshold: 0.9      # desired precision threshold
     subset_size: 60     # number of instances for anchors
   dice:
-    total_cfs: 10       # counterfactuals per instance
-    subset_size: 15     # instances for counterfactuals
+    total_cfs: 3        # counterfactuals per instance
+    subset_size: 10     # instances for counterfactuals
   shap:
     background_size: 1200  # background rows for SHAP explainer
   lime:
-    num_samples: 3000      # LIME perturbation samples
+    num_samples: 5000      # LIME perturbation samples
     num_features: 10       # LIME top features
+    stability_subset_size: 30 # instances for stability check
   human_llm:
     runs_per_method: 2      # LLM ratings per persona-method
-    n_instances: 2          # test instances sampled per persona-method
+    n_instances: 5         # test instances sampled per persona-method
     top_k_explanation: 5    # top-k features shown in explanation text
 
 paths:

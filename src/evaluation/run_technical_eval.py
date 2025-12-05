@@ -222,7 +222,8 @@ def run_technical_eval(config_path: str, model_path: str | None = None) -> Dict[
         )
 
         stability_scores = []
-        for idx in subset_idx[:10]:  # lightweight stability probe
+        stability_subset_size = min(lime_cfg.get("stability_subset_size", 30), len(subset_idx))
+        for idx in subset_idx[:stability_subset_size]:  # lightweight stability probe
             row = X_test_proc[idx]
             stability_scores.append(
                 explanation_stability(
