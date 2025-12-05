@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Dict
 
 import pandas as pd
+from pandas.errors import EmptyDataError
 import streamlit as st
 
 from src.data_loading import load_yaml_config
@@ -26,7 +27,10 @@ def load_config(path: Path) -> Dict:
 @st.cache_data(show_spinner=False)
 def load_metrics(metrics_path: Path) -> pd.DataFrame | None:
     if metrics_path.exists():
-        return pd.read_csv(metrics_path)
+        try:
+            return pd.read_csv(metrics_path)
+        except EmptyDataError:
+            return None
     return None
 
 
@@ -40,14 +44,20 @@ def load_human_template(path: Path) -> str | None:
 @st.cache_data(show_spinner=False)
 def load_human_llm_results(path: Path) -> pd.DataFrame | None:
     if path.exists():
-        return pd.read_csv(path)
+        try:
+            return pd.read_csv(path)
+        except EmptyDataError:
+            return None
     return None
 
 
 @st.cache_data(show_spinner=False)
 def load_human_llm_summary(path: Path) -> pd.DataFrame | None:
     if path.exists():
-        return pd.read_csv(path)
+        try:
+            return pd.read_csv(path)
+        except EmptyDataError:
+            return None
     return None
 
 
