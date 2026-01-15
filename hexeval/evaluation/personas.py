@@ -150,47 +150,29 @@ PERSONAS = [
     {
         "name": "Alex Johnson",
         "role": "Loan Applicant (End User)",
-        "experience_years": 0,  # Not a professional, just a customer
-        "loss_aversion": 3.0,  # High - loan rejection is personally devastating
-        "risk_tolerance": "N/A - Customer Perspective",
-        "decision_speed": "Immediate",
-        "trust_in_ai": "Low",  # Skeptical of automated systems making life decisions
+        "experience_years": 0,
+        "risk_profile": "Highly anxious about rejection, feels vulnerable and judged by the system",
+        "decision_style": "Not a decision-maker - seeking to understand and respond to the decision",
+        "ai_comfort": "Low - unfamiliar with AI, needs plain-language explanations",
         "priorities": [
-            "Simplicity - Can I understand this without financial jargon?",
-            "Actionability - What can I do to improve my chances?",
-            "Fairness - Is this decision fair and unbiased?",
-            "Transparency - Why was I rejected/approved?",
+            "Understanding why decision was made",
+            "Fairness and transparency",
+            "Clear next steps to improve",
         ],
         "mental_model": (
-            "I applied for a loan to improve my life (buy a home, start a business, consolidate debt). "
-            "I don't understand financial formulas or statistical models. I just want to know: "
-            "1) Why was this decision made? 2) Is it fair? 3) What can I do about it? "
-            "Technical jargon confuses and frustrates me. I need explanations in plain English that "
-            "respect my intelligence but don't assume financial expertise."
+            "This loan decision affects my entire life. I need to understand what went wrong "
+            "and what I can realistically do to improve my chances. The system should explain "
+            "in terms I can understand, not financial jargon."
         ),
         "heuristics": [
-            "If I can't understand the explanation, I assume the system is hiding something.",
-            "If it tells me specific actions I can take, I trust it more.",
-            "Credit score matters, but I don't know exactly how or why.",
-            "Complex numbers and statistics make me anxious and confused.",
-            "I want to feel respected, not talked down to.",
+            "Look for things I can actually control and change.",
+            "Check if the decision seems fair compared to others.",
+            "Understand if there's a path forward for me.",
         ],
         "explanation_preferences": (
-            "I need simple, jargon-free explanations in everyday language. "
-            "Tell me the 2-3 main reasons for the decision. "
-            "Most importantly, tell me what I can DO about it - can I improve my credit score? "
-            "Should I save more? Do I need a co-signer? "
-            "I don't care about SHAP values or statistical weights - I care about understanding "
-            "the decision and having a path forward."
+            "Needs plain-language explanations without jargon. Wants to understand the 'why' in simple terms "
+            "and get actionable steps to improve their application. Cares deeply about fairness."
         ),
-        "behavioral_signature": {
-            "values_plain_language": True,
-            "needs_actionable_steps": True,
-            "low_financial_literacy": True,
-            "high_anxiety_about_rejection": True,
-            "prefers_simple_rules": True,
-            "distrusts_black_box_decisions": True,
-        },
     },
 ]
 
