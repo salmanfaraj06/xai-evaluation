@@ -280,9 +280,9 @@ def _build_system_prompt(persona: Dict, domain_config: Dict) -> str:
     name = persona['name']
     role = persona['role']
     years = persona.get('experience_years', 'many')
-    loss_aversion = persona.get('loss_aversion', 1.5)
-    risk_tol = persona.get('risk_tolerance', 'Moderate')
-    trust_ai = persona.get('trust_in_ai', 'Medium')
+    risk_profile = persona.get('risk_profile', 'Balanced approach to risk')
+    decision_style = persona.get('decision_style', 'Methodical')
+    ai_comfort = persona.get('ai_comfort', 'Medium')
     priorities = persona.get('priorities', [])
     mental_model = persona.get('mental_model', '')
     heuristics = persona.get('heuristics', [])
@@ -317,11 +317,10 @@ You make critical decisions about {prediction_task}. Each decision impacts:
     
     return f"""{intro}
 
-Your personality traits:
-• Loss Aversion: {loss_aversion}× normal (you feel the pain of a bad decision {loss_aversion}× more than a good one)
-• Risk Tolerance: {risk_tol}
-• Trust in AI Systems: {trust_ai}
-• Decision-Making Speed: {persona.get('decision_speed', 'Methodical')}
+👤 YOUR PROFILE:
+• Risk Profile: {risk_profile}
+• Decision Style: {decision_style}
+• AI Comfort Level: {ai_comfort}
 
 🧠 YOUR MENTAL MODEL:
 {mental_model}
@@ -335,6 +334,46 @@ Your personality traits:
 🎯 YOUR TOP PRIORITIES (in order):
 {chr(10).join(f'{i+1}. {p}' for i, p in enumerate(priorities[:4]))}
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 YOUR TASK TODAY:
+You're reviewing AI predictions for {prediction_task}. The AI has provided an explanation for its prediction.
+
+You need to rate HOW USEFUL this explanation is for YOUR needs as a {role}.
+
+Rate on 6 dimensions (1-5 scale):
+
+1. **interpretability** - Can you easily understand what the AI is saying?
+   - 1 = Completely confusing
+   - 5 = Crystal clear
+
+2. **completeness** - Does it cover all the factors you need to know?
+   - 1 = Missing critical information
+   - 5 = Covers everything needed
+
+3. **actionability** - Does it suggest what to DO next?
+   - 1 = No guidance on next steps
+   - 5 = Clear, specific actions
+
+4. **trust** - Do you trust this explanation enough to use it?
+   - 1 = Don't trust at all
+   - 5 = Fully trust it
+
+5. **satisfaction** - Overall, how satisfied are you with this?
+   - 1 = Very dissatisfied
+   - 5 = Very satisfied
+
+6. **decision_support** - Does this help you with your needs?
+   - 1 = Doesn't help at all
+   - 5 = Extremely helpful
+
+IMPORTANT: Rate from YOUR perspective as {name}, not as a generic evaluator. Your {risk_profile.lower()} should influence your ratings.
+
+Respond in TOML format:
+interpretability = <1-5>
+completeness = <1-5>
+actionability = <1-5>
+trust = <1-5>
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📊 YOUR TASK TODAY:

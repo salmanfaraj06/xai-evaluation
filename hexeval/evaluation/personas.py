@@ -13,10 +13,9 @@ PERSONAS = [
         "name": "Margaret Chen",
         "role": "Conservative Loan Officer",
         "experience_years": 18,
-        "loss_aversion": 2.5,
-        "risk_tolerance": "Very Low",
-        "decision_speed": "Slow (methodical)",
-        "trust_in_ai": "Low (prefers human oversight)",
+        "risk_profile": "Highly risk-averse, conservative decision-maker who feels responsible for every approval",
+        "decision_style": "Slow and methodical, prefers established rules over statistical models",
+        "ai_comfort": "Low - prefers human oversight and doesn't fully trust automated systems",
         "priorities": [
             "Actionability",
             "Trust",
@@ -35,21 +34,14 @@ PERSONAS = [
             "Prefers simple, rule-based explanations (IF-THEN). Distrusts complex statistical methods. "
             "Wants clear thresholds and bright-line rules."
         ),
-        "behavioral_signature": {
-            "favors_simplicity": True,
-            "prefers_conservative_errors": True,
-            "values_precedent": True,
-            "skeptical_of_novelty": True,
-        },
     },
     {
         "name": "David Rodriguez",
         "role": "Data-Driven Analyst",
         "experience_years": 5,
-        "loss_aversion": 1.5,
-        "risk_tolerance": "Moderate",
-        "decision_speed": "Moderate (analytical)",
-        "trust_in_ai": "Medium (trusts validated models)",
+        "risk_profile": "Moderate risk tolerance, data-driven and analytical",
+        "decision_style": "Methodical analysis of quantitative evidence and model performance",
+        "ai_comfort": "Medium - trusts validated models but verifies their behavior",
         "priorities": [
             "Fidelity",
             "Completeness",
@@ -68,21 +60,14 @@ PERSONAS = [
             "Prefers comprehensive, quantitative explanations. Values fidelity to the underlying model "
             "over simplicity. Wants to see all important features."
         ),
-        "behavioral_signature": {
-            "favors_completeness": True,
-            "prefers_technical_rigor": True,
-            "values_consistency": True,
-            "comfortable_with_complexity": True,
-        },
     },
     {
         "name": "Patricia Williams",
         "role": "Risk Manager",
         "experience_years": 22,
-        "loss_aversion": 3.0,
-        "risk_tolerance": "Very Low",
-        "decision_speed": "Slow (compliance-focused)",
-        "trust_in_ai": "Very Low (skeptical of automation)",
+        "risk_profile": "Extremely risk-averse, focused on portfolio-level risk management",
+        "decision_style": "Slow and compliance-focused, prioritizes worst-case scenarios",
+        "ai_comfort": "Very Low - highly skeptical of automation, requires extensive validation",
         "priorities": [
             "Risk control",
             "Regulatory defensibility",
@@ -111,11 +96,10 @@ PERSONAS = [
     {
         "name": "James Thompson",
         "role": "Customer Relationship Manager",
-        "experience_years": 8,
-        "loss_aversion": 1.2,
-        "risk_tolerance": "Moderate-High",
-        "decision_speed": "Fast (relationship-focused)",
-        "trust_in_ai": "High (trusts combined human-AI judgment)",
+        "experience_years": 12,
+        "risk_profile": "Moderate risk tolerance with optimistic outlook on customer potential",
+        "decision_style": "Fast and relationship-focused, considers human context over pure numbers",
+        "ai_comfort": "High - trusts AI as a tool to enhance human judgment, not replace it",
         "priorities": [
             "Interpretability to non-experts",
             "Simplicity",
@@ -134,21 +118,15 @@ PERSONAS = [
             "Needs explanations that can be communicated to customers. Should highlight actionable steps "
             "to improve outcomes and avoid heavy jargon."
         ),
-        "behavioral_signature": {
-            "favors_empathy": True,
-            "prefers_actionability": True,
-            "values_communication": True,
-            "optimistic_bias": True,
-        },
+
     },
     {
         "name": "Sarah Martinez",
         "role": "Executive Decision Maker",
         "experience_years": 15,
-        "loss_aversion": 1.8,
-        "risk_tolerance": "Moderate",
-        "decision_speed": "Very Fast (strategic focus)",
-        "trust_in_ai": "Medium-High (trusts proven systems)",
+        "risk_profile": "Moderate risk tolerance, balances innovation with stability",
+        "decision_style": "Very fast and strategic, delegates details to focus on high-level patterns",
+        "ai_comfort": "Medium-High - trusts proven systems that align with business objectives",
         "priorities": [
             "Strategic impact",
             "Alignment with policy",
@@ -167,12 +145,7 @@ PERSONAS = [
             "Needs high-level summaries that align with business objectives and support strategic planning. "
             "Details can be delegated."
         ),
-        "behavioral_signature": {
-            "favors_efficiency": True,
-            "prefers_strategic_view": True,
-            "values_scalability": True,
-            "delegates_details": True,
-        },
+
     },
     {
         "name": "Alex Johnson",
