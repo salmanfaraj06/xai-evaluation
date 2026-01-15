@@ -31,7 +31,7 @@ PERSONAS = [
             "Multiple recent credit inquiries suggest desperation.",
         ],
         "explanation_preferences": (
-            "Prefers simple, rule-based explanations (IF-THEN). Distrusts complex statistical methods. "
+            "Prefers simple, rule-based explanations. Distrusts complex statistical methods. "
             "Wants clear thresholds and bright-line rules."
         ),
     },
