@@ -1,15 +1,31 @@
-pandas
-numpy
-scikit-learn
-xgboost
-shap
-lime
-dice-ml
-anchor-exp
-pyyaml
-matplotlib
-seaborn
-tqdm
-scipy
-streamlit
-openai
+# HEXEval Requirements
+
+# Core Dependencies
+pandas>=1.5.0
+numpy>=1.23.0
+scikit-learn>=1.2.0
+xgboost>=1.7.0
+pyyaml>=6.0
+
+# XAI Libraries
+shap>=0.42.0
+lime>=0.2.0
+dice-ml>=0.10.0
+anchor-exp>=0.0.2
+
+# Evaluation Metrics
+scipy>=1.10.0
+
+# LLM Integration (optional)
+openai>=1.0.0
+
+# UI (optional)
+streamlit>=1.28.0
+plotly>=5.17.0
+
+# Development
+joblib>=1.3.0
+tqdm>=4.65.0
+
+# Logging
+python-dotenv>=1.0.0

@@ -438,16 +438,15 @@ Example JSON format (do NOT add any extra fields):
 
 def _call_openai(client, system_prompt: str, user_prompt: str) -> tuple[Dict[str, float | str], str]:
     resp = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-5.2",
         messages=[
             {
-                "role": "system",
+                "role": "developer",
                 "content": system_prompt,
             },
             {"role": "user", "content": user_prompt},
         ],
-        temperature=0.2,
-        max_tokens=300,
+        max_completion_tokens=5000,
     )
     content = resp.choices[0].message.content or "{}"
 
