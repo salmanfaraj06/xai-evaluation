@@ -170,7 +170,7 @@ PERSONAS = [
             "Understand if there's a path forward for me.",
         ],
         "explanation_preferences": (
-            "Needs plain-language explanations without jargon. Wants to understand the 'why' in simple terms "
+            "Needs simple explanations without jargon. Wants to understand the 'why' in simple terms "
             "and get actionable steps to improve their application. Cares deeply about fairness."
         ),
     },
