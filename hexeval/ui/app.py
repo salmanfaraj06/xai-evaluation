@@ -49,6 +49,44 @@ with st.sidebar:
 tab1, tab2, tab3 = st.tabs(["📤 Upload & Run", "📊 Results", "💡 Recommendations"])
 
 with tab1:
+    # CHECK FOR EXISTING RESULTS
+    default_output = Path("outputs/hexeval_results")
+    has_existing_results = (
+        default_output.exists() and
+        (default_output / "technical_metrics.csv").exists() and
+        (default_output / "persona_ratings.csv").exists() and
+        (default_output / "recommendations.json").exists()
+    )
+    
+    if has_existing_results:
+        st.success("✅ Found existing results in `outputs/hexeval_results/`")
+        
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            st.info("💡 You can load previous results to avoid re-running the expensive LLM evaluation.")
+        with col2:
+            if st.button("📂 Load Existing Results", type="primary", use_container_width=True):
+                import json
+                
+                # Load existing results
+                tech_df = pd.read_csv(default_output / "technical_metrics.csv")
+                persona_df = pd.read_csv(default_output / "persona_ratings.csv")
+                
+                with open(default_output / "recommendations.json") as f:
+                    recs = json.load(f)
+                
+                st.session_state["results"] = {
+                    "technical_metrics": tech_df,
+                    "persona_ratings": persona_df,
+                    "recommendations": recs,
+                    "output_path": str(default_output)
+                }
+                
+                st.success(f"✅ Loaded {len(persona_df)} persona ratings, {len(tech_df)} technical metrics, and recommendations!")
+                st.balloons()
+        
+        st.divider()
+    
     st.header("Step 1: Upload Your Model & Data")
     
     col1, col2 = st.columns(2)
