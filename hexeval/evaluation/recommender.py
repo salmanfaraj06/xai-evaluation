@@ -131,23 +131,62 @@ def generate_recommendations(
             
             tech_row = tech_row.iloc[0]
             
-            # Technical score (normalize to 0-1)
-            fidelity_score = 0
-            if pd.notna(tech_row.get("deletion_auc")):
-                fidelity_score = 1 - tech_row["deletion_auc"]  # Lower deletion is better
+            # METHOD-SPECIFIC TECHNICAL SCORES (normalized to 0-1)
+            # This fixes the bias bug - each method is scored on its own strengths
             
-            parsimony_score = 0
-            if pd.notna(tech_row.get("sparsity")):
-                # Lower sparsity is better (fewer features)
-                parsimony_score = 1 / (1 + tech_row["sparsity"] / 10)
+            if method == "SHAP" or method == "LIME":
+                # Use fidelity & parsimony for attribution methods
+                fidelity_score = 0
+                if pd.notna(tech_row.get("fidelity_deletion")):
+                    # Lower deletion AUC = better fidelity
+                    fidelity_score = 1 - tech_row["fidelity_deletion"]
+                
+                parsimony_score = 0
+                if pd.notna(tech_row.get("num_important_features")):
+                    # Fewer features = better parsimony
+                    # Normalize: 5 features=1.0, 20 features=0.25
+                    sparsity = tech_row["num_important_features"]
+                    parsimony_score = min(1.0, 10 / max(sparsity, 1))
+                
+                # Average the two scores for SHAP/LIME
+                technical_score = (fidelity_score + parsimony_score) / 2
+            
+            elif method == "Anchor":
+                # Use precision (accuracy) & coverage for rule-based
+                precision_score = 0
+                if pd.notna(tech_row.get("rule_accuracy")):
+                    # Higher precision = better (already 0-1)
+                    precision_score = tech_row["rule_accuracy"]
+                
+                coverage_score = 0
+                if pd.notna(tech_row.get("rule_applicability")):
+                    # Higher coverage = better (already 0-1)
+                    coverage_score = tech_row["rule_applicability"]
+                
+                # Precision matters more than coverage (80/20 split)
+                technical_score = 0.8 * precision_score + 0.2 * coverage_score
+            
+            elif method == "DiCE" or method == "COUNTERFACTUAL":
+                # Use success rate for counterfactuals
+                success_score = 0
+                if pd.notna(tech_row.get("counterfactual_success")):
+                    # Higher success = better (already 0-1)
+                    success_score = tech_row["counterfactual_success"]
+                
+                # Only one metric for DiCE currently
+                technical_score = success_score
+            
+            else:
+                # Unknown method - default to 0
+                technical_score = 0
             
             # Persona score (already 1-5, normalize to 0-1)
             persona_score = (row["trust"] + row["satisfaction"]) / 10
             
             # Combined weighted score
             combined_score = (
-                weights["technical_fidelity"] * fidelity_score +
-                weights["technical_parsimony"] * parsimony_score +
+                weights["technical_fidelity"] * technical_score +
+                weights["technical_parsimony"] * technical_score +  # Both use technical_score now
                 weights["persona_trust"] * (row["trust"] / 5) +
                 weights["persona_satisfaction"] * (row["satisfaction"] / 5)
             )
@@ -157,8 +196,7 @@ def generate_recommendations(
                 "trust": row["trust"],
                 "satisfaction": row["satisfaction"],
                 "actionability": row["actionability"],
-                "fidelity": fidelity_score,
-                "parsimony": parsimony_score,
+                "technical_score": technical_score,  # Store for transparency
             }
         
         # Find best method
@@ -177,11 +215,12 @@ def generate_recommendations(
         if best_scores["satisfaction"] >= 4.0:
             reasoning_parts.append(f"strong satisfaction ({best_scores['satisfaction']:.1f}/5)")
         
-        if best_scores["fidelity"] >= 0.7:
-            reasoning_parts.append("excellent fidelity")
+        if best_scores["technical_score"] >= 0.7:
+            reasoning_parts.append(f"strong technical performance ({best_scores['technical_score']:.2f})")
         
-        if best_scores["parsimony"] >= 0.7:
-            reasoning_parts.append("high parsimony")
+        if not reasoning_parts:
+            # If no standout scores, mention best available
+            reasoning_parts.append(f"best combined score across metrics")
         
         reasoning = f"{best_method} recommended due to: " + ", ".join(reasoning_parts)
         

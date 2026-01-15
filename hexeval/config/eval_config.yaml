@@ -46,7 +46,7 @@ evaluation:
     
     lime:
       enabled: true
-      num_samples: 2000  # Perturbations per explanation
+      num_samples: 3000  # Perturbations per explanation
       num_features: 10  # Top features to explain
       stability_test: true
       stability_subset: 30  # Instances to test stability
@@ -85,7 +85,7 @@ personas:
     - "Risk Manager"
     - "Customer Relationship Manager"
     - "Executive Decision Maker"
-    - "Loan Applicant (End User)"  # NEW: Customer perspective
+    - "Loan Applicant (End User)" 
 
 # Output Configuration
 output:
