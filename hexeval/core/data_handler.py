@@ -64,8 +64,13 @@ def load_data(
     df = pd.read_csv(path)
     LOG.info(f"  Loaded {len(df)} rows, {len(df.columns)} columns")
     
-    # Separate features and target
-    if target_column and target_column in df.columns:
+    # Separate features and target (with better validation)
+    if target_column:
+        if target_column not in df.columns:
+            raise ValueError(
+                f"Target column '{target_column}' not found in dataset. "
+                f"Available columns: {df.columns.tolist()}"
+            )
         y = df[target_column]
         X = df.drop(columns=[target_column])
         LOG.info(f"  Target column: '{target_column}'")
@@ -73,8 +78,7 @@ def load_data(
     else:
         y = None
         X = df
-        if target_column:
-            LOG.warning(f"Target column '{target_column}' not found in dataset")
+        LOG.warning("No target column specified - loading features only")
     
     # Auto-detect feature types
     categorical_features = X.select_dtypes(include=["object", "category"]).columns.tolist()
