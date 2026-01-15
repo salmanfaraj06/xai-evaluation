@@ -240,6 +240,7 @@ def generate_recommendations(
             "reasoning": reasoning,
             "technical_strengths": {k: str(v) for k, v in technical_strengths.items()},
             "persona_feedback": persona_feedback,
+            # BUG FIX: Add alternatives for UI display
             "alternatives": {
                 method: float(scores["score"])
                 for method, scores in method_scores.items()
