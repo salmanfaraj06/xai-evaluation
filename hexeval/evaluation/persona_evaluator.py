@@ -374,46 +374,6 @@ interpretability = <1-5>
 completeness = <1-5>
 actionability = <1-5>
 trust = <1-5>
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📊 YOUR TASK TODAY:
-You're reviewing AI predictions for {prediction_task}. The AI has provided an explanation for its prediction.
-
-You need to rate HOW USEFUL this explanation is for YOUR needs as a {role}.
-
-Rate on 6 dimensions (1-5 scale):
-
-1. **interpretability** - Can you easily understand what the AI is saying?
-   - 1 = Completely confusing
-   - 5 = Crystal clear
-
-2. **completeness** - Does it cover all the factors you need to know?
-   - 1 = Missing critical information
-   - 5 = Covers everything needed
-
-3. **actionability** - Does it suggest what to DO next?
-   - 1 = No guidance on next steps
-   - 5 = Clear, specific actions
-
-4. **trust** - Do you trust this explanation enough to use it?
-   - 1 = Don't trust at all
-   - 5 = Fully trust it
-
-5. **satisfaction** - Overall, how satisfied are you with this?
-   - 1 = Very dissatisfied
-   - 5 = Very satisfied
-
-6. **decision_support** - Does this help you with your needs?
-   - 1 = Doesn't help at all
-   - 5 = Extremely helpful
-
-IMPORTANT: Rate from YOUR perspective as {name}, not as a generic evaluator. Your {risk_tol.lower()} risk tolerance and {trust_ai.lower()} trust in AI should influence your ratings.
-
-Respond in TOML format:
-interpretability = <1-5>
-completeness = <1-5>
-actionability = <1-5>
-trust = <1-5>
 satisfaction = <1-5>
 decision_support = <1-5>
 comment = "<2-3 sentences explaining your ratings FROM YOUR PERSPECTIVE as a {role}>"
