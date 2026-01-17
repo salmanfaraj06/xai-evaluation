@@ -229,9 +229,12 @@ def generate_recommendations(
         technical_strengths = tech_row.to_dict()
         
         # Get persona feedback
+        trust_adj = "highly" if best_scores['trust'] >= 4 else "moderately" if best_scores['trust'] >= 2.5 else "poorly"
+        sat_adj = "highly" if best_scores['satisfaction'] >= 4 else "moderately" if best_scores['satisfaction'] >= 2.5 else "poorly"
+        
         persona_feedback = (
-            f"This stakeholder type ({stakeholder}) rated {best_method} highly on "
-            f"trust ({best_scores['trust']:.1f}/5) and satisfaction ({best_scores['satisfaction']:.1f}/5)."
+            f"This stakeholder type ({stakeholder}) rated {best_method} {trust_adj} on "
+            f"trust ({best_scores['trust']:.1f}/5) and {sat_adj} on satisfaction ({best_scores['satisfaction']:.1f}/5)."
         )
         
         recommendations[stakeholder] = {

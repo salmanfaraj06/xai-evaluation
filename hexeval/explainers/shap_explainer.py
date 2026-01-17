@@ -23,7 +23,14 @@ class ShapExplainer:
         self.shap = shap
         self.class_index = class_index
         self.feature_names = feature_names
-        self.explainer = shap.Explainer(model, background)
+        try:
+            self.explainer = shap.Explainer(model, background)
+        except Exception:
+            # Fallback for Pipelines or unsupported objects: use predict_proba
+            if hasattr(model, "predict_proba"):
+                self.explainer = shap.Explainer(model.predict_proba, background)
+            else:
+                raise
 
     def _reduce(self, shap_values) -> np.ndarray:
         """Extract class-specific values as (n_samples, n_features)."""

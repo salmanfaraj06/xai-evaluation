@@ -31,7 +31,8 @@ except ImportError:
 LOG = logging.getLogger(__name__)
 
 # Import personas from existing file
-from hexeval.evaluation.personas import PERSONAS
+# Import dynamic loader
+from hexeval.evaluation.personas import load_personas_from_file
 
 RATING_DIMENSIONS: List[Tuple[str, str]] = [
     ("interpretability", "How easy is this explanation to understand? (1-5)"),
@@ -43,14 +44,14 @@ RATING_DIMENSIONS: List[Tuple[str, str]] = [
 ]
 
 
-def run_persona_evaluation(model_artifact: Dict, data: Dict, config: Dict) -> pd.DataFrame | None:
+def run_persona_evaluation(model_wrapper: Any, data: Dict, config: Dict) -> pd.DataFrame | None:
     """
     Run LLM-based persona evaluation.
     
     Parameters
     ----------
-    model_artifact : dict
-        Model artifact from load_model()
+    model_wrapper : ModelWrapper
+        Wrapped model object
     data : dict
         Data dictionary from load_data()
     config : dict
@@ -93,9 +94,17 @@ def run_persona_evaluation(model_artifact: Dict, data: Dict, config: Dict) -> pd
     LOG.info(f"Running persona evaluation with {llm_model}")
     LOG.info(f"Domain: {domain_config.get('name', 'Generic')}")
     
+    # Load personas from config file
+    personas_file = persona_config.get("file", "hexeval/config/personas_healthcare.yaml") 
+    try:
+        personas = load_personas_from_file(personas_file)
+    except Exception as e:
+        LOG.error(f"Failed to load personas from {personas_file}: {e}")
+        return None
+
     # Generate explanations
     explanations, instance_indices = _generate_explanations(
-        model_artifact, data, config
+        model_wrapper, data, config
     )
     
     # Run LLM evaluation with domain context
@@ -105,6 +114,7 @@ def run_persona_evaluation(model_artifact: Dict, data: Dict, config: Dict) -> pd
         explanations,
         instance_indices,
         data,
+        personas,  # Pass loaded personas
         persona_config,
         domain_config,  # Pass domain config
     )
@@ -112,12 +122,12 @@ def run_persona_evaluation(model_artifact: Dict, data: Dict, config: Dict) -> pd
     return pd.DataFrame(results)
 
 
-def _generate_explanations(model_artifact: Dict, data: Dict, config: Dict) -> Tuple[Dict, List[int]]:
+def _generate_explanations(model_wrapper: Any, data: Dict, config: Dict) -> Tuple[Dict, List[int]]:
     """Generate explanations for sample instances using all 4 methods."""
     
-    model = model_artifact["model"]
-    preprocessor = model_artifact.get("preprocessor")
-    feature_names = model_artifact.get("feature_names", data["feature_names"])
+    model = model_wrapper.model
+    preprocessor = model_wrapper.preprocessor
+    feature_names = model_wrapper.feature_names or data["feature_names"]
     
     # Preprocess data
     X_train = preprocess_for_model(data["X_train"], preprocessor, feature_names)
@@ -139,13 +149,18 @@ def _generate_explanations(model_artifact: Dict, data: Dict, config: Dict) -> Tu
     # Initialize explainers
     shap_exp = ShapExplainer(model, X_train[:min(500, len(X_train))], feature_names)
     
+    # Get class names from domain config
+    domain = config.get("domain", {})
+    positive = domain.get("positive_outcome", "Class 0")
+    negative = domain.get("negative_outcome", "Class 1")
+    
     lime_exp = LimeExplainer(
         X_train, feature_names,
-        class_names=["No Default", "Default"],
+        class_names=[positive, negative],
         predict_fn=model.predict_proba
     )
     
-    threshold = model_artifact.get("threshold", 0.5)
+    threshold = model_wrapper.threshold
     anchor_exp = AnchorExplainer(
         X_train,
         feature_names=feature_names,
@@ -209,6 +224,7 @@ def _evaluate_with_llm(
     explanations: Dict,
     instance_indices: List[int],
     data: Dict,
+    personas: List[Dict],
     persona_config: Dict,
     domain_config: Dict,  # NEW: domain configuration
 ) -> List[Dict]:
@@ -219,11 +235,11 @@ def _evaluate_with_llm(
     
     LOG.info("Running LLM persona evaluation...")
     
-    total_calls = len(PERSONAS) * 4 * len(instance_indices) * runs_per_method
+    total_calls = len(personas) * 4 * len(instance_indices) * runs_per_method
     LOG.info(f"Total LLM calls: {total_calls}")
     
     with tqdm(total=total_calls, desc="LLM evaluation") as pbar:
-        for persona in PERSONAS:
+        for persona in personas:
             system_prompt = _build_system_prompt(persona, domain_config)  # Pass domain
             
             for idx in instance_indices:

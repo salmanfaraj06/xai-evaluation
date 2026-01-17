@@ -60,11 +60,9 @@ def load_data(
     
     LOG.info(f"Loading data from {path}")
     
-    # Load CSV
     df = pd.read_csv(path)
     LOG.info(f"  Loaded {len(df)} rows, {len(df.columns)} columns")
     
-    # Separate features and target (with better validation)
     if target_column:
         if target_column not in df.columns:
             raise ValueError(
@@ -179,4 +177,12 @@ def preprocess_for_model(
             if missing_cols:
                 raise ValueError(f"Missing expected features: {missing_cols}")
             X = X[feature_names]
-        return X.values.astype(np.float64)
+        
+        # Try converting to float for efficiency
+        try:
+            return X.values.astype(np.float64)
+        except ValueError:
+            # Fallback for mixed types (strings/categories)
+            # This allows pipelines with internal encoders to function
+            LOG.debug("Input contains non-numeric data, keeping as object dtype for pipeline processing")
+            return X.values.astype(object)

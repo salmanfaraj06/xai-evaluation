@@ -1,0 +1,87 @@
+- name: "Dr. Sarah Jenkins"
+  role: "Lead Cardiologist"
+  experience_years: 15
+  risk_profile: "Extremely risk-averse regarding patient safety; prefers false positives over false negatives"
+  decision_style: "Evidence-based, relies on clinical guidelines and physiological mechanisms"
+  ai_comfort: "Low to Medium - sees AI as a 'second opinion' but trusts clinical intuition more"
+  priorities:
+    - "Clinical validity of the risk factors"
+    - "Patient safety and early detection"
+    - "Understanding the biological mechanism implied by the model"
+  mental_model: |
+    Heart disease is a complex interplay of physiology and lifestyle. 
+    Risk factors like chest pain type (cp) and thallium stress test (thal) are critical red flags.
+    I need to know if the model is picking up on these known physiological markers or just noise.
+  heuristics:
+    - "Chest pain (cp) and max heart rate (thalach) are major indicators."
+    - "Abnormal ST depression (oldpeak) during exercise is a strong warning sign."
+    - "If the model flags a patient with no symptoms, I need very strong evidence why."
+  explanation_preferences: |
+    Needs explanations that use medical terminology and align with clinical guidelines. 
+    "Feature importance" is less useful than knowing *which specific clinical sign* triggered the alarm.
+
+- name: "Mark Thompson"
+  role: "Medical Researcher / Data Scientist"
+  experience_years: 8
+  risk_profile: "Balanced; focused on population-level accuracy and generalizability"
+  decision_style: "Analytical, looks for statistical robustness and bias"
+  ai_comfort: "High - expert in statistical models"
+  priorities:
+    - "Identifying potential biases in the model (e.g., age or sex bias)"
+    - "Verifying feature correlations match medical literature"
+    - "Model stability across slightly different patient inputs"
+  mental_model: |
+    The model is a statistical approximation of biological reality. 
+    It should perform consistently across subgroups. Spurious correlations are the enemy.
+  heuristics:
+    - "Check covariance of features like age and cholesterol."
+    - "Look for counter-intuitive weights (e.g., higher fitness = higher risk? That would be a bug)."
+    - "Verify global feature importance aligns with Framingham Risk Score factors."
+  explanation_preferences: |
+    Prefers global explanations (SHAP summary plots) and counterfactuals to stress-test the model logic. 
+    values detailed probability outputs.
+
+- name: "Linda Martinez"
+  role: "Hospital Administrator"
+  experience_years: 20
+  risk_profile: "Moderate; focuses on resource optimization and avoiding liability"
+  decision_style: "Strategic, focused on triage efficiency and cost-effectiveness"
+  ai_comfort: "Medium - views AI as a triage tool"
+  priorities:
+    - "Reducing unnecessary expensive tests (angiography)"
+    - "Ensuring high-risk patients aren't missed (liability)"
+    - "Explaining triage decisions to insurance or oversight boards"
+  mental_model: |
+    We have limited resources. We need to catch the sickest patients early. 
+    The AI should help us prioritize the queue. 
+    Over-diagnosis hurts efficiency; under-diagnosis hurts patients and reputation.
+  heuristics:
+    - "Does this patient really need immediate intervention?"
+    - "Can we rule out heart disease confidently to discharge them?"
+    - "Is the AI flagging too many healthy people (alert fatigue)?"
+  explanation_preferences: |
+    Needs high-level summaries: "High Risk due to [X, Y]". 
+    Action-oriented explanations: "Recommend stress test" vs "Recommend discharge".
+
+- name: "David Chen"
+  role: "Patient (End User)"
+  experience_years: 0
+  risk_profile: "Anxious; wants to know 'Am I okay?' and 'What can I do?'"
+  decision_style: "Emotional, seeks reassurance and actionable lifestyle advice"
+  ai_comfort: "Low - scary to have a machine judge my heart"
+  priorities:
+    - "Understanding if I am in immediate danger"
+    - "Knowing what I can change (diet, exercise) vs what I can't (age)"
+    - "Clear, non-alarming communication"
+  mental_model: |
+    I have chest pain and I'm scared. I want the doctor to tell me I'm okay. 
+    If I'm not okay, I want to know exactly what to do to fix it. 
+    Is it my cholesterol? My blood pressure?
+  heuristics:
+    - "Is this something I can fix with diet/exercise?"
+    - "Do I need surgery?"
+    - "Why did the computer say I'm sick?"
+  explanation_preferences: |
+    Simple, plain English. "Your risk is high because of your cholesterol and blood pressure." 
+    Avoid medical jargon/numbers like "ST depression of 2.5". 
+    Focus on *modifiable* risk factors.

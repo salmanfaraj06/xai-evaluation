@@ -11,6 +11,12 @@ from typing import Dict, Any
 
 import pandas as pd
 import yaml
+import warnings
+from sklearn.exceptions import InconsistentVersionWarning
+
+# Suppress warnings
+warnings.filterwarnings("ignore", category=InconsistentVersionWarning)
+warnings.filterwarnings("ignore", category=UserWarning, message=".*X does not have valid feature names.*")
 
 from hexeval.core import load_model, load_data, validate_model_data_compatibility
 from hexeval.evaluation.technical_evaluator import run_technical_evaluation
@@ -35,6 +41,7 @@ def evaluate(
     target_column: str | None = None,
     config_path: str | None = None,
     output_dir: str | None = None,
+    config_overrides: Dict[str, Any] | None = None,
 ) -> Dict[str, Any]:
     """
     Run complete HEXEval evaluation pipeline.
@@ -77,13 +84,20 @@ def evaluate(
     LOG.info("HEXEval - Holistic Explanation Evaluation")
     LOG.info("=" * 60)
     
-    # Load configuration
     config = load_config(config_path)
+    if config_overrides:
+        # Simple recursive update or flat update? 
+        # For now, handle specific top-level keys used by UI
+        if "personas" in config_overrides:
+            config.setdefault("personas", {}).update(config_overrides["personas"])
+        if "evaluation" in config_overrides:
+             config.setdefault("evaluation", {}).update(config_overrides["evaluation"])
+             
     LOG.info("✓ Loaded configuration")
     
-    # Load model
-    model_artifact = load_model(model_path)
-    LOG.info(f"✓ Loaded model: {model_artifact['model_type']}")
+    model_wrapper = load_model(model_path)
+    model_info = model_wrapper.get_model_info()
+    LOG.info(f"✓ Loaded model: {model_info['model_type']}")
     
     # Load data
     data = load_data(
@@ -94,8 +108,7 @@ def evaluate(
     )
     LOG.info(f"✓ Loaded data: {len(data['X_train'])} train, {len(data['X_test'])} test")
     
-    # Validate compatibility
-    validation = validate_model_data_compatibility(model_artifact, data)
+    validation = validate_model_data_compatibility(model_wrapper, data)
     if validation["status"] == "invalid":
         raise ValueError(f"Model-data validation failed: {validation['errors']}")
     LOG.info("✓ Validated model-data compatibility")
@@ -106,7 +119,7 @@ def evaluate(
     LOG.info("=" * 60)
     
     technical_results = run_technical_evaluation(
-        model_artifact=model_artifact,
+        model_wrapper=model_wrapper,
         data=data,
         config=config["evaluation"],
     )
@@ -121,7 +134,7 @@ def evaluate(
         
         try:
             persona_results = run_persona_evaluation(
-                model_artifact=model_artifact,
+                model_wrapper=model_wrapper,
                 data=data,
                 config=config,
             )
@@ -133,16 +146,19 @@ def evaluate(
     # Generate recommendations
     recommendations = None
     if config.get("recommendations", {}).get("enabled", True):
+        import json
         if persona_results is not None:
-            recommendations = generate_recommendations(
+             recommendations = generate_recommendations(
                 technical_metrics=technical_results,
                 persona_ratings=persona_results,
                 config=config.get("recommendations", {}),
             )
-            LOG.info("✓ Generated recommendations")
+             LOG.info("✓ Generated recommendations")
     
     # Save results
-    output_path = Path(output_dir) if output_dir else Path(config["output"]["dir"])
+    # User requested flattened output structure, no domain splitting
+    final_output_dir = output_dir if output_dir else config.get("output", {}).get("dir", "outputs/hexeval_results")
+    output_path = Path(final_output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
     
     technical_results.to_csv(output_path / "technical_metrics.csv", index=False)
@@ -153,7 +169,6 @@ def evaluate(
         LOG.info(f"  Saved: persona_ratings.csv")
     
     if recommendations is not None:
-        import json
         with open(output_path / "recommendations.json", "w") as f:
             json.dump(recommendations, f, indent=2)
         LOG.info(f"  Saved: recommendations.json")
@@ -164,7 +179,7 @@ def evaluate(
         "technical_metrics": technical_results,
         "persona_ratings": persona_results,
         "recommendations": recommendations,
-        "model_info": model_artifact,
+        "model_info": model_info,
         "data_info": data,
         "output_path": str(output_path),
     }

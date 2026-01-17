@@ -10,7 +10,6 @@ from pathlib import Path
 import tempfile
 import os
 
-# Set page config
 st.set_page_config(
     page_title="HEXEval",
     page_icon="🔍",
@@ -20,7 +19,6 @@ st.set_page_config(
 st.title("🔍 HEXEval - Holistic Explanation Evaluation")
 st.caption("Evaluate XAI methods for your tabular model")
 
-# Sidebar
 with st.sidebar:
     st.header("ℹ️ About")
     st.markdown("""
@@ -49,7 +47,7 @@ with st.sidebar:
 tab1, tab2, tab3 = st.tabs(["📤 Upload & Run", "📊 Results", "💡 Recommendations"])
 
 with tab1:
-    # CHECK FOR EXISTING RESULTS
+    # Check if a previous run exists to offer "Fast Load" option
     default_output = Path("outputs/hexeval_results")
     has_existing_results = (
         default_output.exists() and
@@ -112,6 +110,9 @@ with tab1:
         
         if data_file:
             st.success(f"✓ Uploaded: {data_file.name}")
+
+
+
     
     target_column = st.text_input(
         "Target column name",
@@ -134,6 +135,8 @@ with tab1:
                         tmp_data.write(data_file.getvalue())
                         data_path = tmp_data.name
                     
+                    config_path = None
+                    
                     # Import here to avoid slow startup
                     from hexeval import evaluate
                     
@@ -142,6 +145,11 @@ with tab1:
                         model_path=model_path,
                         data_path=data_path,
                         target_column=target_column,
+                        config_path=config_path,
+                        config_overrides={
+                            "personas": {"enabled": enable_personas},
+                            "evaluation": {"sample_size": sample_size}
+                        }
                     )
                     
                     # Store in session state
@@ -152,6 +160,7 @@ with tab1:
                     # Cleanup temp files
                     os.unlink(model_path)
                     os.unlink(data_path)
+
                     
                     st.success("✅ Evaluation complete! Check the Results tab.")
                     st.balloons()
