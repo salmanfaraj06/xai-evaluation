@@ -44,7 +44,7 @@ with st.sidebar:
             os.environ["OPENAI_API_KEY"] = api_key
 
 # Main content
-tab1, tab2, tab3 = st.tabs(["📤 Upload & Run", "📊 Results", "💡 Recommendations"])
+tab1, tab2, tab3, tab4 = st.tabs(["📤 Upload & Run", "📊 Results", "💡 Recommendations", "📚 Documentation"])
 
 with tab1:
     # Check if a previous run exists to offer "Fast Load" option
@@ -344,6 +344,38 @@ with tab3:
     
     else:
         st.info("Run evaluation first to see recommendations")
+
+with tab4:
+    st.header("Documentation")
+    
+    doc_mode = st.radio(
+        "Select Topic:",
+        ["🚀 Prerequisites & Setup", "💡 How It Works (Concepts)", "⚙️ Configuration Guide"],
+        horizontal=True
+    )
+    
+    st.divider()
+    
+    if doc_mode == "🚀 Prerequisites & Setup":
+        try:
+            with open("docs/HEXEval_Prerequisites.md", "r") as f:
+                st.markdown(f.read())
+        except FileNotFoundError:
+            st.error("Documentation file not found: `docs/HEXEval_Prerequisites.md`")
+            
+    elif doc_mode == "💡 How It Works (Concepts)":
+        try:
+            with open("docs/HEXEval_HowItWorks.md", "r") as f:
+                st.markdown(f.read())
+        except FileNotFoundError:
+            st.error("Documentation file not found: `docs/HEXEval_HowItWorks.md`")
+            
+    elif doc_mode == "⚙️ Configuration Guide":
+        try:
+            with open("docs/HEXEval_Configuration.md", "r") as f:
+                st.markdown(f.read())
+        except FileNotFoundError:
+            st.error("Documentation file not found: `docs/HEXEval_Configuration.md`")
 
 # Footer
 st.divider()
