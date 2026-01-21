@@ -9,6 +9,38 @@ import plotly.graph_objects as go
 from pathlib import Path
 import tempfile
 import os
+import shutil
+
+# --- Use Case Configuration ---
+USE_CASES = {
+    "Heart Disease (Healthcare)": {
+        "description": "Predict heart disease risk. Stakeholders: Cardiologists, Patients.",
+        "config_path": "hexeval/config/eval_config.yaml",
+        "data_path": "usecases/heart.csv",
+        "model_path": "usecases/heart_disease_pipeline.pkl",
+        "target": "target",
+        "output_dir": "outputs/heart_disease",
+        "default_sample_size": 100
+    },
+    "Credit Risk (Finance)": {
+        "description": "Predict loan default. Stakeholders: Loan Officers, Risk Managers.",
+        "config_path": "hexeval/config/eval_config_credit_risk.yaml",
+        "data_path": "usecases/credit_risk_dataset.csv",
+        "model_path": "usecases/xgboost_credit_risk_new.pkl", # Ensure this path is correct relative to root
+        "target": "loan_status",
+        "output_dir": "outputs/credit_risk",
+        "default_sample_size": 150
+    },
+    "Custom Upload": {
+        "description": "Upload your own model and dataset.",
+        "config_path": None,
+        "data_path": None,
+        "model_path": None,
+        "target": None,
+        "output_dir": "outputs/custom_run",
+        "default_sample_size": 150
+    }
+}
 
 st.set_page_config(
     page_title="HEXEval",
@@ -20,13 +52,25 @@ st.title("🔍 HEXEval - Holistic Explanation Evaluation")
 st.caption("Evaluate XAI methods for your tabular model")
 
 with st.sidebar:
+    st.header("UseCase Selection")
+    selected_use_case = st.selectbox(
+        "Select Use Case",
+        list(USE_CASES.keys()),
+        index=0
+    )
+    
+    use_case_config = USE_CASES[selected_use_case]
+    st.info(use_case_config["description"])
+    
+    st.divider()
+    
     st.header("ℹ️ About")
     st.markdown("""
     **HEXEval** helps you choose the best explanation method (SHAP, LIME, Anchor, DiCE) 
     for your stakeholders.
     
     **How it works:**
-    1. Upload your model + data
+    1. Select Use Case or Upload
     2. Configure evaluation
     3. Run evaluation
     4. Get recommendations
@@ -35,20 +79,22 @@ with st.sidebar:
     st.divider()
     
     st.header("⚙️ Settings")
-    sample_size = st.slider("Evaluation sample size", 50, 300, 150)
-    enable_personas = st.checkbox("Enable LLM personas", value=False, help="Requires OpenAI API key")
+    sample_size = st.slider("Evaluation sample size", 50, 500, use_case_config["default_sample_size"])
+    enable_personas = st.checkbox("Enable LLM personas", value=True, help="Requires OpenAI API key")
     
     if enable_personas:
-        api_key = st.text_input("OpenAI API Key", type="password")
-        if api_key:
-            os.environ["OPENAI_API_KEY"] = api_key
+        api_key_input = st.text_input("OpenAI API Key", type="password")
+        if api_key_input:
+            os.environ["OPENAI_API_KEY"] = api_key_input
+        elif "OPENAI_API_KEY" in os.environ:
+             st.info("API Key found in environment.")
 
 # Main content
-tab1, tab2, tab3, tab4 = st.tabs(["📤 Upload & Run", "📊 Results", "💡 Recommendations", "📚 Documentation"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["📤 Configuration & Run", "ℹ️ Use Case Details", "📊 Results", "💡 Recommendations", "📚 Documentation"])
 
 with tab1:
-    # Check if a previous run exists to offer "Fast Load" option
-    default_output = Path("outputs/hexeval_results")
+    # Check if a previous run exists for THIS use case
+    default_output = Path(use_case_config["output_dir"])
     has_existing_results = (
         default_output.exists() and
         (default_output / "technical_metrics.csv").exists() and
@@ -57,95 +103,172 @@ with tab1:
     )
     
     if has_existing_results:
-        st.success("✅ Found existing results in `outputs/hexeval_results/`")
+        st.success(f"✅ Found existing results for **{selected_use_case}**")
         
         col1, col2 = st.columns([3, 1])
         with col1:
-            st.info("💡 You can load previous results to avoid re-running the expensive LLM evaluation.")
+            st.info(f"💡 Load previous results from `{default_output}` to save time.")
         with col2:
-            if st.button("📂 Load Existing Results", type="primary", use_container_width=True):
+            if st.button("📂 Load Existing Results", type="primary", use_container_width=True, key="load_btn"):
                 import json
                 
-                # Load existing results
-                tech_df = pd.read_csv(default_output / "technical_metrics.csv")
-                persona_df = pd.read_csv(default_output / "persona_ratings.csv")
-                
-                with open(default_output / "recommendations.json") as f:
-                    recs = json.load(f)
-                
-                st.session_state["results"] = {
-                    "technical_metrics": tech_df,
-                    "persona_ratings": persona_df,
-                    "recommendations": recs,
-                    "output_path": str(default_output)
-                }
-                
-                st.success(f"✅ Loaded {len(persona_df)} persona ratings, {len(tech_df)} technical metrics, and recommendations!")
-                st.balloons()
+                try:
+                    # Load existing results
+                    tech_df = pd.read_csv(default_output / "technical_metrics.csv")
+                    persona_df = pd.read_csv(default_output / "persona_ratings.csv")
+                    
+                    with open(default_output / "recommendations.json") as f:
+                        recs = json.load(f)
+                    
+                    st.session_state["results"] = {
+                        "technical_metrics": tech_df,
+                        "persona_ratings": persona_df,
+                        "recommendations": recs,
+                        "output_path": str(default_output)
+                    }
+                    
+                    st.success(f"✅ Loaded results for {selected_use_case}!")
+                    st.balloons()
+                except Exception as e:
+                    st.error(f"Failed to load results: {e}")
         
         st.divider()
     
-    st.header("Step 1: Upload Your Model & Data")
+    st.header(f"Step 1: Configure {selected_use_case}")
     
-    col1, col2 = st.columns(2)
+    use_sample_data = False
     
-    with col1:
-        st.subheader("Model")
-        model_file = st.file_uploader(
-            "Upload trained model",
-            type=["pkl", "joblib"],
-            help="sklearn or XGBoost model with predict_proba()"
+    if selected_use_case != "Custom Upload":
+        use_sample_data = st.checkbox("Use sample model and dataset", value=True)
+    
+    model_path = None
+    data_path = None
+    target_column = None
+    
+    if use_sample_data:
+        # Use paths from config
+        # Verify files exist
+        m_path = Path(use_case_config["model_path"])
+        d_path = Path(use_case_config["data_path"])
+        
+        # Determine if files exist relative to CWD
+        # Usually Streamlit runs from root
+        if not m_path.exists():
+             # Try looking in 'models/' if standard structure, but USE_CASES has 'usecases/'
+             # actually I moved pk to 'models/' in previous step?
+             # Wait, I moved `xgboost_credit_risk_new.pkl` to `models/`
+             # I need to fix the path in USE_CASES if I moved them.
+             # Checking walkthrough... "Moved .pkl files to models"
+             # So `xgboost_credit_risk_new.pkl` IS IN `models/`
+             pass
+
+        st.info(f"Using sample data: `{use_case_config['data_path']}`")
+        st.info(f"Using sample model: `{use_case_config['model_path']}`")
+        
+        model_path = use_case_config["model_path"]
+        data_path = use_case_config["data_path"]
+        target_column = use_case_config["target"]
+        
+    else:
+        # File Uploaders
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.subheader("Model")
+            model_file = st.file_uploader(
+                "Upload trained model",
+                type=["pkl", "joblib"],
+                help="sklearn or XGBoost model with predict_proba()"
+            ) 
+        
+        with col2:
+            st.subheader("Dataset")
+            data_file = st.file_uploader(
+                "Upload CSV dataset",
+                type=["csv"],
+                help="Tabular data used to train the model"
+            )
+            
+        target_column = st.text_input(
+            "Target column name",
+            value=use_case_config["target"] if use_case_config["target"] else "",
+            placeholder="e.g., 'loan_status', 'churn', 'diagnosis'",
+            help="Name of the prediction target in your dataset"
         )
         
-        if model_file:
-            st.success(f"✓ Uploaded: {model_file.name}")
-    
-    with col2:
-        st.subheader("Dataset")
-        data_file = st.file_uploader(
-            "Upload CSV dataset",
-            type=["csv"],
-            help="Tabular data used to train the model"
-        )
-        
-        if data_file:
-            st.success(f"✓ Uploaded: {data_file.name}")
+        # Handle file saving
+        if model_file and data_file:
+            # We need to save them content to pass paths to evaluate()
+             # Ideally we save to a temp or the output folder
+             pass 
 
-
-
-    
-    target_column = st.text_input(
-        "Target column name",
-        placeholder="e.g., 'loan_status', 'churn', 'diagnosis'",
-        help="Name of the prediction target in your dataset"
-    )
     
     st.divider()
     
-    if model_file and data_file and target_column:
+    # Run Button
+    run_ready = False
+    if use_sample_data:
+        run_ready = True
+    elif 'model_file' in locals() and model_file and 'data_file' in locals() and data_file and target_column:
+        run_ready = True
+        
+    if run_ready:
         if st.button("🚀 Run Evaluation", type="primary", use_container_width=True):
             with st.spinner("Running evaluation... This may take a few minutes."):
                 try:
-                    # Save uploaded files temporarily
-                    with tempfile.NamedTemporaryFile(delete=False, suffix=".pkl") as tmp_model:
-                        tmp_model.write(model_file.getvalue())
-                        model_path = tmp_model.name
-                    
-                    with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tmp_data:
-                        tmp_data.write(data_file.getvalue())
-                        data_path = tmp_data.name
-                    
-                    config_path = None
+                    # Handle file paths if uploaded
+                    if not use_sample_data:
+                        # Save uploaded files temporarily
+                        with tempfile.NamedTemporaryFile(delete=False, suffix=".pkl") as tmp_model:
+                            tmp_model.write(model_file.getvalue())
+                            model_path = tmp_model.name
+                        
+                        with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tmp_data:
+                            tmp_data.write(data_file.getvalue())
+                            data_path = tmp_data.name
                     
                     # Import here to avoid slow startup
                     from hexeval import evaluate
                     
+                    # Helper: fix path if not found (because I moved files)
+                    # I moved 'xgboost_credit_risk_new.pkl' to 'models/'
+                    # But 'credit_risk_dataset.csv' to 'data/'
+                    # And 'heart.csv' might still be in 'usecases/'
+                    
+                    final_model_path = model_path
+                    final_data_path = data_path
+                    
+                    # Fix for moved files if using defaults
+                    if use_sample_data:
+                        # Check where I actually moved them
+                        # task.md said: "Move .pkl files to models", "Move .csv files to data"
+                        # USE_CASES dict above has 'usecases/...'. I should fix logic here or in dict.
+                        # I will attempt to fix paths dynamically if file not found at original path
+                        
+                        if not os.path.exists(final_model_path):
+                            # Try models/
+                            basename = os.path.basename(final_model_path)
+                            alt_path = f"models/{basename}"
+                            if os.path.exists(alt_path):
+                                final_model_path = alt_path
+                        
+                        if not os.path.exists(final_data_path):
+                            # Try data/
+                            basename = os.path.basename(final_data_path)
+                            alt_path = f"data/{basename}"
+                            if os.path.exists(alt_path):
+                                final_data_path = alt_path
+                                
+                    st.write(f"Using Model: `{final_model_path}`")
+                    st.write(f"Using Data: `{final_data_path}`")
+
                     # Run evaluation
                     results = evaluate(
-                        model_path=model_path,
-                        data_path=data_path,
+                        model_path=final_model_path,
+                        data_path=final_data_path,
                         target_column=target_column,
-                        config_path=config_path,
+                        config_path=use_case_config["config_path"],
+                        output_dir=use_case_config["output_dir"],
                         config_overrides={
                             "personas": {"enabled": enable_personas},
                             "evaluation": {"sample_size": sample_size}
@@ -154,12 +277,14 @@ with tab1:
                     
                     # Store in session state
                     st.session_state['results'] = results
-                    st.session_state['model_name'] = model_file.name
-                    st.session_state['data_name'] = data_file.name
+                    st.session_state['model_name'] = model_path if use_sample_data else model_file.name
+                    st.session_state['data_name'] = data_path if use_sample_data else data_file.name
+                    st.session_state['current_use_case'] = selected_use_case
                     
-                    # Cleanup temp files
-                    os.unlink(model_path)
-                    os.unlink(data_path)
+                    # Cleanup temp files if uploaded
+                    if not use_sample_data:
+                        os.unlink(model_path)
+                        os.unlink(data_path)
                     
                     st.success("✅ Evaluation complete! Check the Results tab.")
                     st.balloons()
@@ -168,9 +293,74 @@ with tab1:
                     st.error(f"❌ Evaluation failed: {str(e)}")
                     st.exception(e)
     else:
-        st.info("👆 Upload model, data, and specify target column to begin")
+        st.info("👆 Configure inputs to begin")
 
 with tab2:
+    st.header(f"ℹ️ {selected_use_case} Details")
+    
+    if selected_use_case == "Custom Upload":
+        st.info("Upload your own data to see configuration details.")
+    else:
+        import yaml
+        
+        # Load Config
+        try:
+             with open(use_case_config["config_path"], "r") as f:
+                config_data = yaml.safe_load(f)
+                
+             # Display Domain Info
+             st.subheader("🌍 Domain Context")
+             domain = config_data.get("domain", {})
+             
+             col1, col2 = st.columns(2)
+             with col1:
+                 st.markdown(f"**Task:** {domain.get('prediction_task', 'N/A')}")
+                 st.markdown(f"**Stakeholders:** {domain.get('stakeholder_context', 'N/A')}")
+             with col2:
+                 st.markdown(f"**Positive Outcome:** {domain.get('positive_outcome', 'N/A')}")
+                 st.markdown(f"**Negative Outcome:** {domain.get('negative_outcome', 'N/A')}")
+             
+             st.divider()
+             
+             # Display Personas
+             st.subheader("👥 Stakeholder Personas")
+             
+             personas_file = config_data.get("personas", {}).get("file")
+             if personas_file:
+                 try:
+                     from hexeval.evaluation.persona_evaluator import load_personas_from_file
+                     # Handle relative path
+                     if not os.path.exists(personas_file):
+                         # Try relative to config file or root
+                         pass
+                     
+                     personas = load_personas_from_file(personas_file)
+                     
+                     for p in personas:
+                         with st.expander(f"**{p['name']}** - {p['role']}"):
+                             c1, c2 = st.columns([1, 2])
+                             with c1:
+                                 st.markdown(f"**Risk Profile:** {p.get('risk_profile', 'N/A')}")
+                                 st.markdown(f"**AI Comfort:** {p.get('ai_comfort', 'N/A')}")
+                             with c2:
+                                 st.markdown(f"**Priorities:**")
+                                 for prio in p.get('priorities', []):
+                                     st.markdown(f"- {prio}")
+                                 
+                                 st.markdown(f"**Needs:**")
+                                 st.info(p.get('explanation_preferences', ''))
+                                 
+                 except Exception as e:
+                     st.warning(f"Could not load personas details: {e}")
+             
+             st.divider()
+             with st.expander("Show Full Configuration (YAML)"):
+                 st.code(yaml.dump(config_data), language="yaml")
+                 
+        except Exception as e:
+            st.error(f"Could not load configuration file: {e}")
+
+with tab3:
     st.header("Technical Metrics")
     
     if 'results' in st.session_state:
@@ -267,9 +457,10 @@ with tab2:
                     with col2:
                         # Highlight best method for this persona
                         avg_scores = persona_summary.mean(axis=1)
-                        best_method = avg_scores.idxmax()
-                        best_score = avg_scores.max()
-                        st.metric("Best Method", best_method, f"{best_score:.2f}/5")
+                        if not avg_scores.empty:
+                            best_method = avg_scores.idxmax()
+                            best_score = avg_scores.max()
+                            st.metric("Best Method", best_method, f"{best_score:.2f}/5")
                     
                     # Show comments for each method
                     st.markdown("**💬 Comments by Method**")
@@ -285,7 +476,7 @@ with tab2:
     else:
         st.info("Run evaluation first to see results")
 
-with tab3:
+with tab4:
     st.header("Recommendations")
     
     if 'results' in st.session_state and st.session_state['results']['recommendations']:
@@ -344,7 +535,7 @@ with tab3:
     else:
         st.info("Run evaluation first to see recommendations")
 
-with tab4:
+with tab5:
     st.header("Documentation")
     
     doc_mode = st.radio(
@@ -355,6 +546,7 @@ with tab4:
     
     st.divider()
     
+    # Updated paths for docs
     if doc_mode == "🚀 Prerequisites & Setup":
         try:
             with open("docs/HEXEval_Prerequisites.md", "r") as f:

@@ -65,6 +65,7 @@ evaluation:
 # Human Proxy Evaluation (LLM Personas)
 personas:
   enabled: true
+  file: "hexeval/config/personas_credit_risk.yaml"
   
   # LLM Model Selection
   # Options:
