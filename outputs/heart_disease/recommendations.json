@@ -1,0 +1,82 @@
+{
+  "Hospital Administrator": {
+    "recommended_method": "LIME",
+    "score": 0.510823310734207,
+    "reasoning": "LIME recommended due to: strong technical performance (0.71)",
+    "technical_strengths": {
+      "method": "LIME",
+      "fidelity_deletion": "0.5700400903965055",
+      "fidelity_insertion": "0.5585899691295763",
+      "num_important_features": "5.0",
+      "rule_accuracy": "nan",
+      "rule_applicability": "nan",
+      "rule_length": "nan",
+      "counterfactual_success": "nan",
+      "stability": "0.5150849713105522"
+    },
+    "persona_feedback": "This stakeholder type (Hospital Administrator) rated LIME poorly on trust (1.7/5) and poorly on satisfaction (1.3/5).",
+    "alternatives": {
+      "SHAP": 0.4636967969751675
+    }
+  },
+  "Lead Cardiologist": {
+    "recommended_method": "LIME",
+    "score": 0.5241566440675403,
+    "reasoning": "LIME recommended due to: strong technical performance (0.71)",
+    "technical_strengths": {
+      "method": "LIME",
+      "fidelity_deletion": "0.5700400903965055",
+      "fidelity_insertion": "0.5585899691295763",
+      "num_important_features": "5.0",
+      "rule_accuracy": "nan",
+      "rule_applicability": "nan",
+      "rule_length": "nan",
+      "counterfactual_success": "nan",
+      "stability": "0.5150849713105522"
+    },
+    "persona_feedback": "This stakeholder type (Lead Cardiologist) rated LIME poorly on trust (1.7/5) and poorly on satisfaction (1.7/5).",
+    "alternatives": {
+      "SHAP": 0.4436967969751675
+    }
+  },
+  "Medical Researcher / Data Scientist": {
+    "recommended_method": "LIME",
+    "score": 0.5974899774008737,
+    "reasoning": "LIME recommended due to: strong technical performance (0.71)",
+    "technical_strengths": {
+      "method": "LIME",
+      "fidelity_deletion": "0.5700400903965055",
+      "fidelity_insertion": "0.5585899691295763",
+      "num_important_features": "5.0",
+      "rule_accuracy": "nan",
+      "rule_applicability": "nan",
+      "rule_length": "nan",
+      "counterfactual_success": "nan",
+      "stability": "0.5150849713105522"
+    },
+    "persona_feedback": "This stakeholder type (Medical Researcher / Data Scientist) rated LIME moderately on trust (2.7/5) and poorly on satisfaction (2.0/5).",
+    "alternatives": {
+      "SHAP": 0.5503634636418341
+    }
+  },
+  "Patient (End User)": {
+    "recommended_method": "LIME",
+    "score": 0.4574899774008736,
+    "reasoning": "LIME recommended due to: strong technical performance (0.71)",
+    "technical_strengths": {
+      "method": "LIME",
+      "fidelity_deletion": "0.5700400903965055",
+      "fidelity_insertion": "0.5585899691295763",
+      "num_important_features": "5.0",
+      "rule_accuracy": "nan",
+      "rule_applicability": "nan",
+      "rule_length": "nan",
+      "counterfactual_success": "nan",
+      "stability": "0.5150849713105522"
+    },
+    "persona_feedback": "This stakeholder type (Patient (End User)) rated LIME poorly on trust (1.0/5) and poorly on satisfaction (1.0/5).",
+    "alternatives": {
+      "SHAP": 0.4436967969751675
+    }
+  }
+}
