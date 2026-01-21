@@ -328,13 +328,19 @@ with tab2:
              personas_file = config_data.get("personas", {}).get("file")
              if personas_file:
                  try:
-                     from hexeval.evaluation.persona_evaluator import load_personas_from_file
+                     # Load personas directly from YAML file (avoid import issues on Streamlit Cloud)
+                     import yaml
+                     
                      # Handle relative path
                      if not os.path.exists(personas_file):
-                         # Try relative to config file or root
+                         # Try relative to project root
                          pass
                      
-                     personas = load_personas_from_file(personas_file)
+                     with open(personas_file, 'r') as f:
+                         personas_data = yaml.safe_load(f)
+                     
+                     # Extract personas list
+                     personas = personas_data.get('personas', [])
                      
                      for p in personas:
                          with st.expander(f"**{p['name']}** - {p['role']}"):
