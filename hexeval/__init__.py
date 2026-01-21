@@ -5,7 +5,7 @@ using technical metrics and LLM-simulated stakeholder feedback.
 """
 
 __version__ = "0.1.0"
-__author__ = "Your Name"
+__author__ = "Salman Faraj"
 
 from hexeval.core.model_loader import load_model
 from hexeval.core.data_handler import load_data
