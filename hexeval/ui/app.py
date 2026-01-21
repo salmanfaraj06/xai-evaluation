@@ -339,8 +339,11 @@ with tab2:
                      with open(personas_file, 'r') as f:
                          personas_data = yaml.safe_load(f)
                      
-                     # Extract personas list
-                     personas = personas_data.get('personas', [])
+                     # Extract personas list (handle both dict and list structures)
+                     if isinstance(personas_data, list):
+                         personas = personas_data
+                     else:
+                         personas = personas_data.get('personas', [])
                      
                      for p in personas:
                          with st.expander(f"**{p['name']}** - {p['role']}"):
