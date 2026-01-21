@@ -1,0 +1,8 @@
+# System-level dependencies for Streamlit Cloud
+# Add any apt-get packages needed here (one per line)
+
+# Example: For image processing
+# libgl1-mesa-glx
+# libglib2.0-0
+
+# Currently no system dependencies required

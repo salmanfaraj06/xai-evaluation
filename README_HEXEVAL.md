@@ -1,6 +1,14 @@
 # HEXEval - Holistic Explanation Evaluation Framework
 
+[![Test Suite](https://github.com/salmanfaraj06/xai-evaluation/actions/workflows/test.yml/badge.svg)](https://github.com/salmanfaraj06/xai-evaluation/actions/workflows/test.yml)
+[![Code Quality](https://github.com/salmanfaraj06/xai-evaluation/actions/workflows/lint.yml/badge.svg)](https://github.com/salmanfaraj06/xai-evaluation/actions/workflows/lint.yml)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 **Evaluate XAI methods for your tabular models using technical metrics + LLM-simulated stakeholder feedback**
+
+> [!NOTE]
+> 🚀 **[Try the Live Demo](https://hexeval.streamlit.app)** - No installation required!
 
 ## What is HEXEval?
 
@@ -164,6 +172,45 @@ personas:
 - ✅ Tabular data (CSV)
 - ✅ Mixed categorical + numeric features
 - ✅ Binary classification
+
+---
+
+## 🚀 Deployment
+
+### Streamlit Cloud (Recommended)
+
+Deploy your own instance for free:
+
+1. **Fork this repository** on GitHub
+2. **Sign up** at [share.streamlit.io](https://share.streamlit.io)
+3. **Create new app**:
+   - Repository: Your forked repo
+   - Branch: `hexeval` or `main`
+   - Main file: `hexeval/ui/app.py`
+4. **Add secrets** (for LLM personas):
+   ```toml
+   OPENAI_API_KEY = "your-api-key-here"
+   ```
+5. **Deploy!** 🎉
+
+📖 **[Full Deployment Guide](DEPLOYMENT.md)** - Step-by-step instructions with troubleshooting
+
+### Local Development
+
+```bash
+# Clone repository
+git clone https://github.com/salmanfaraj06/xai-evaluation.git
+cd xai-evaluation
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Add your OpenAI API key to .env
+echo "OPENAI_API_KEY=your-key-here" > .env
+
+# Run locally
+streamlit run hexeval/ui/app.py
+```
 
 ---
 

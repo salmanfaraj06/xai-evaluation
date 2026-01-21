@@ -1,31 +1,36 @@
 # HEXEval Requirements
 
 # Core Dependencies
-pandas>=1.5.0
-numpy>=1.23.0
-scikit-learn>=1.2.0
-xgboost>=1.7.0
-pyyaml>=6.0
+pandas>=1.5.0,<2.0.0
+numpy>=1.23.0,<2.0.0
+scikit-learn>=1.2.0,<2.0.0
+xgboost>=1.7.0,<2.0.0
+pyyaml>=6.0,<7.0.0
 
 # XAI Libraries
-shap>=0.42.0
-lime>=0.2.0
-dice-ml>=0.10.0
-anchor-exp>=0.0.2
+shap>=0.42.0,<1.0.0
+lime>=0.2.0,<1.0.0
+dice-ml>=0.10.0,<1.0.0
+anchor-exp>=0.0.2,<1.0.0
 
 # Evaluation Metrics
-scipy>=1.10.0
+scipy>=1.10.0,<2.0.0
 
 # LLM Integration (optional)
-openai>=1.0.0
+openai>=1.0.0,<2.0.0
 
-# UI (optional)
-streamlit>=1.28.0
-plotly>=5.17.0
+# UI (required for Streamlit Cloud)
+streamlit>=1.28.0,<2.0.0
+plotly>=5.17.0,<6.0.0
 
-# Development
-joblib>=1.3.0
-tqdm>=4.65.0
+# Utilities
+joblib>=1.3.0,<2.0.0
+tqdm>=4.65.0,<5.0.0
+python-dotenv>=1.0.0,<2.0.0
 
-# Logging
-python-dotenv>=1.0.0
+# Testing (for CI/CD)
+pytest>=7.4.0,<8.0.0
+pytest-cov>=4.1.0,<5.0.0
+black>=23.0.0,<24.0.0
+flake8>=6.0.0,<7.0.0
+
