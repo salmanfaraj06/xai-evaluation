@@ -131,7 +131,6 @@ def generate_recommendations(
             
             tech_row = tech_row.iloc[0]
             
-<<<<<<< Updated upstream
             # METHOD-SPECIFIC TECHNICAL SCORES (normalized to 0-1)
             # This fixes the bias bug - each method is scored on its own strengths
             
@@ -180,30 +179,14 @@ def generate_recommendations(
             else:
                 # Unknown method - default to 0
                 technical_score = 0
-=======
-            # Technical score (normalize to 0-1)
-            fidelity_score = 0
-            if pd.notna(tech_row.get("deletion_auc")):
-                fidelity_score = 1 - tech_row["deletion_auc"]  # Lower deletion is better
-            
-            parsimony_score = 0
-            if pd.notna(tech_row.get("sparsity")):
-                # Lower sparsity is better (fewer features)
-                parsimony_score = 1 / (1 + tech_row["sparsity"] / 10)
->>>>>>> Stashed changes
             
             # Persona score (already 1-5, normalize to 0-1)
             persona_score = (row["trust"] + row["satisfaction"]) / 10
             
             # Combined weighted score
             combined_score = (
-<<<<<<< Updated upstream
                 weights["technical_fidelity"] * technical_score +
                 weights["technical_parsimony"] * technical_score +  # Both use technical_score now
-=======
-                weights["technical_fidelity"] * fidelity_score +
-                weights["technical_parsimony"] * parsimony_score +
->>>>>>> Stashed changes
                 weights["persona_trust"] * (row["trust"] / 5) +
                 weights["persona_satisfaction"] * (row["satisfaction"] / 5)
             )
@@ -213,12 +196,7 @@ def generate_recommendations(
                 "trust": row["trust"],
                 "satisfaction": row["satisfaction"],
                 "actionability": row["actionability"],
-<<<<<<< Updated upstream
                 "technical_score": technical_score,  # Store for transparency
-=======
-                "fidelity": fidelity_score,
-                "parsimony": parsimony_score,
->>>>>>> Stashed changes
             }
         
         # Find best method
@@ -237,20 +215,12 @@ def generate_recommendations(
         if best_scores["satisfaction"] >= 4.0:
             reasoning_parts.append(f"strong satisfaction ({best_scores['satisfaction']:.1f}/5)")
         
-<<<<<<< Updated upstream
         if best_scores["technical_score"] >= 0.7:
             reasoning_parts.append(f"strong technical performance ({best_scores['technical_score']:.2f})")
         
         if not reasoning_parts:
             # If no standout scores, mention best available
             reasoning_parts.append(f"best combined score across metrics")
-=======
-        if best_scores["fidelity"] >= 0.7:
-            reasoning_parts.append("excellent fidelity")
-        
-        if best_scores["parsimony"] >= 0.7:
-            reasoning_parts.append("high parsimony")
->>>>>>> Stashed changes
         
         reasoning = f"{best_method} recommended due to: " + ", ".join(reasoning_parts)
         
@@ -259,18 +229,12 @@ def generate_recommendations(
         technical_strengths = tech_row.to_dict()
         
         # Get persona feedback
-<<<<<<< Updated upstream
         trust_adj = "highly" if best_scores['trust'] >= 4 else "moderately" if best_scores['trust'] >= 2.5 else "poorly"
         sat_adj = "highly" if best_scores['satisfaction'] >= 4 else "moderately" if best_scores['satisfaction'] >= 2.5 else "poorly"
         
         persona_feedback = (
             f"This stakeholder type ({stakeholder}) rated {best_method} {trust_adj} on "
             f"trust ({best_scores['trust']:.1f}/5) and {sat_adj} on satisfaction ({best_scores['satisfaction']:.1f}/5)."
-=======
-        persona_feedback = (
-            f"This stakeholder type ({stakeholder}) rated {best_method} highly on "
-            f"trust ({best_scores['trust']:.1f}/5) and satisfaction ({best_scores['satisfaction']:.1f}/5)."
->>>>>>> Stashed changes
         )
         
         recommendations[stakeholder] = {
@@ -279,10 +243,7 @@ def generate_recommendations(
             "reasoning": reasoning,
             "technical_strengths": {k: str(v) for k, v in technical_strengths.items()},
             "persona_feedback": persona_feedback,
-<<<<<<< Updated upstream
             # BUG FIX: Add alternatives for UI display
-=======
->>>>>>> Stashed changes
             "alternatives": {
                 method: float(scores["score"])
                 for method, scores in method_scores.items()

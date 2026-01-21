@@ -10,10 +10,6 @@ from pathlib import Path
 import tempfile
 import os
 
-<<<<<<< Updated upstream
-=======
-# Set page config
->>>>>>> Stashed changes
 st.set_page_config(
     page_title="HEXEval",
     page_icon="🔍",
@@ -23,10 +19,6 @@ st.set_page_config(
 st.title("🔍 HEXEval - Holistic Explanation Evaluation")
 st.caption("Evaluate XAI methods for your tabular model")
 
-<<<<<<< Updated upstream
-=======
-# Sidebar
->>>>>>> Stashed changes
 with st.sidebar:
     st.header("ℹ️ About")
     st.markdown("""
@@ -52,7 +44,6 @@ with st.sidebar:
             os.environ["OPENAI_API_KEY"] = api_key
 
 # Main content
-<<<<<<< Updated upstream
 tab1, tab2, tab3, tab4 = st.tabs(["📤 Upload & Run", "📊 Results", "💡 Recommendations", "📚 Documentation"])
 
 with tab1:
@@ -94,11 +85,6 @@ with tab1:
         
         st.divider()
     
-=======
-tab1, tab2, tab3 = st.tabs(["📤 Upload & Run", "📊 Results", "💡 Recommendations"])
-
-with tab1:
->>>>>>> Stashed changes
     st.header("Step 1: Upload Your Model & Data")
     
     col1, col2 = st.columns(2)
@@ -124,12 +110,9 @@ with tab1:
         
         if data_file:
             st.success(f"✓ Uploaded: {data_file.name}")
-<<<<<<< Updated upstream
 
 
 
-=======
->>>>>>> Stashed changes
     
     target_column = st.text_input(
         "Target column name",
@@ -152,11 +135,8 @@ with tab1:
                         tmp_data.write(data_file.getvalue())
                         data_path = tmp_data.name
                     
-<<<<<<< Updated upstream
                     config_path = None
                     
-=======
->>>>>>> Stashed changes
                     # Import here to avoid slow startup
                     from hexeval import evaluate
                     
@@ -165,14 +145,11 @@ with tab1:
                         model_path=model_path,
                         data_path=data_path,
                         target_column=target_column,
-<<<<<<< Updated upstream
                         config_path=config_path,
                         config_overrides={
                             "personas": {"enabled": enable_personas},
                             "evaluation": {"sample_size": sample_size}
                         }
-=======
->>>>>>> Stashed changes
                     )
                     
                     # Store in session state
@@ -183,10 +160,6 @@ with tab1:
                     # Cleanup temp files
                     os.unlink(model_path)
                     os.unlink(data_path)
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
                     
                     st.success("✅ Evaluation complete! Check the Results tab.")
                     st.balloons()
@@ -371,7 +344,6 @@ with tab3:
     else:
         st.info("Run evaluation first to see recommendations")
 
-<<<<<<< Updated upstream
 with tab4:
     st.header("Documentation")
     
@@ -404,8 +376,6 @@ with tab4:
         except FileNotFoundError:
             st.error("Documentation file not found: `docs/HEXEval_Configuration.md`")
 
-=======
->>>>>>> Stashed changes
 # Footer
 st.divider()
 st.caption("HEXEval - Holistic Explanation Evaluation Framework | Made for practitioners, not academics")

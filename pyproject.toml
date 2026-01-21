@@ -9,11 +9,7 @@ description = "Holistic Explanation Evaluation Framework for XAI"
 readme = "README_HEXEVAL.md"
 requires-python = ">=3.8"
 authors = [
-<<<<<<< Updated upstream
     {name = "Salman Faraj", email = "salman.faraj@06@gmail.com"}
-=======
-    {name = "Your Name", email = "your.email@example.com"}
->>>>>>> Stashed changes
 ]
 dependencies = [
     "pandas>=1.5.0",

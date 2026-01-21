@@ -76,8 +76,8 @@ artifact = {
     "default_threshold": 0.5,
 }
 
-joblib.dump(artifact, "hexeval_test_model.pkl")
+joblib.dump(artifact, "models/hexeval_test_model.pkl")
 
-print("✓ Model saved to hexeval_test_model.pkl")
+print("✓ Model saved to models/hexeval_test_model.pkl")
 print("\nNow you can test HEXEval with:")
-print("  python hexeval_cli.py validate hexeval_test_model.pkl credit_risk_dataset.csv --target loan_status")
+print("  python scripts/hexeval_cli.py validate models/hexeval_test_model.pkl usecases/credit_risk_dataset.csv --target loan_status")

@@ -11,15 +11,12 @@ from typing import Dict, Any
 
 import pandas as pd
 import yaml
-<<<<<<< Updated upstream
 import warnings
 from sklearn.exceptions import InconsistentVersionWarning
 
 # Suppress warnings
 warnings.filterwarnings("ignore", category=InconsistentVersionWarning)
 warnings.filterwarnings("ignore", category=UserWarning, message=".*X does not have valid feature names.*")
-=======
->>>>>>> Stashed changes
 
 from hexeval.core import load_model, load_data, validate_model_data_compatibility
 from hexeval.evaluation.technical_evaluator import run_technical_evaluation
@@ -44,10 +41,7 @@ def evaluate(
     target_column: str | None = None,
     config_path: str | None = None,
     output_dir: str | None = None,
-<<<<<<< Updated upstream
     config_overrides: Dict[str, Any] | None = None,
-=======
->>>>>>> Stashed changes
 ) -> Dict[str, Any]:
     """
     Run complete HEXEval evaluation pipeline.
@@ -90,7 +84,6 @@ def evaluate(
     LOG.info("HEXEval - Holistic Explanation Evaluation")
     LOG.info("=" * 60)
     
-<<<<<<< Updated upstream
     config = load_config(config_path)
     if config_overrides:
         # Simple recursive update or flat update? 
@@ -105,15 +98,6 @@ def evaluate(
     model_wrapper = load_model(model_path)
     model_info = model_wrapper.get_model_info()
     LOG.info(f"✓ Loaded model: {model_info['model_type']}")
-=======
-    # Load configuration
-    config = load_config(config_path)
-    LOG.info("✓ Loaded configuration")
-    
-    # Load model
-    model_artifact = load_model(model_path)
-    LOG.info(f"✓ Loaded model: {model_artifact['model_type']}")
->>>>>>> Stashed changes
     
     # Load data
     data = load_data(
@@ -124,12 +108,7 @@ def evaluate(
     )
     LOG.info(f"✓ Loaded data: {len(data['X_train'])} train, {len(data['X_test'])} test")
     
-<<<<<<< Updated upstream
     validation = validate_model_data_compatibility(model_wrapper, data)
-=======
-    # Validate compatibility
-    validation = validate_model_data_compatibility(model_artifact, data)
->>>>>>> Stashed changes
     if validation["status"] == "invalid":
         raise ValueError(f"Model-data validation failed: {validation['errors']}")
     LOG.info("✓ Validated model-data compatibility")
@@ -140,11 +119,7 @@ def evaluate(
     LOG.info("=" * 60)
     
     technical_results = run_technical_evaluation(
-<<<<<<< Updated upstream
         model_wrapper=model_wrapper,
-=======
-        model_artifact=model_artifact,
->>>>>>> Stashed changes
         data=data,
         config=config["evaluation"],
     )
@@ -159,11 +134,7 @@ def evaluate(
         
         try:
             persona_results = run_persona_evaluation(
-<<<<<<< Updated upstream
                 model_wrapper=model_wrapper,
-=======
-                model_artifact=model_artifact,
->>>>>>> Stashed changes
                 data=data,
                 config=config,
             )
@@ -175,31 +146,19 @@ def evaluate(
     # Generate recommendations
     recommendations = None
     if config.get("recommendations", {}).get("enabled", True):
-<<<<<<< Updated upstream
         import json
         if persona_results is not None:
              recommendations = generate_recommendations(
-=======
-        if persona_results is not None:
-            recommendations = generate_recommendations(
->>>>>>> Stashed changes
                 technical_metrics=technical_results,
                 persona_ratings=persona_results,
                 config=config.get("recommendations", {}),
             )
-<<<<<<< Updated upstream
              LOG.info("✓ Generated recommendations")
     
     # Save results
     # User requested flattened output structure, no domain splitting
     final_output_dir = output_dir if output_dir else config.get("output", {}).get("dir", "outputs/hexeval_results")
     output_path = Path(final_output_dir)
-=======
-            LOG.info("✓ Generated recommendations")
-    
-    # Save results
-    output_path = Path(output_dir) if output_dir else Path(config["output"]["dir"])
->>>>>>> Stashed changes
     output_path.mkdir(parents=True, exist_ok=True)
     
     technical_results.to_csv(output_path / "technical_metrics.csv", index=False)
@@ -210,10 +169,6 @@ def evaluate(
         LOG.info(f"  Saved: persona_ratings.csv")
     
     if recommendations is not None:
-<<<<<<< Updated upstream
-=======
-        import json
->>>>>>> Stashed changes
         with open(output_path / "recommendations.json", "w") as f:
             json.dump(recommendations, f, indent=2)
         LOG.info(f"  Saved: recommendations.json")
@@ -224,11 +179,7 @@ def evaluate(
         "technical_metrics": technical_results,
         "persona_ratings": persona_results,
         "recommendations": recommendations,
-<<<<<<< Updated upstream
         "model_info": model_info,
-=======
-        "model_info": model_artifact,
->>>>>>> Stashed changes
         "data_info": data,
         "output_path": str(output_path),
     }

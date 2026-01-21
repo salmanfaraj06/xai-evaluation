@@ -31,12 +31,8 @@ except ImportError:
 LOG = logging.getLogger(__name__)
 
 # Import personas from existing file
-<<<<<<< Updated upstream
 # Import dynamic loader
 from hexeval.evaluation.personas import load_personas_from_file
-=======
-from hexeval.evaluation.personas import PERSONAS
->>>>>>> Stashed changes
 
 RATING_DIMENSIONS: List[Tuple[str, str]] = [
     ("interpretability", "How easy is this explanation to understand? (1-5)"),
@@ -48,23 +44,14 @@ RATING_DIMENSIONS: List[Tuple[str, str]] = [
 ]
 
 
-<<<<<<< Updated upstream
 def run_persona_evaluation(model_wrapper: Any, data: Dict, config: Dict) -> pd.DataFrame | None:
-=======
-def run_persona_evaluation(model_artifact: Dict, data: Dict, config: Dict) -> pd.DataFrame | None:
->>>>>>> Stashed changes
     """
     Run LLM-based persona evaluation.
     
     Parameters
     ----------
-<<<<<<< Updated upstream
     model_wrapper : ModelWrapper
         Wrapped model object
-=======
-    model_artifact : dict
-        Model artifact from load_model()
->>>>>>> Stashed changes
     data : dict
         Data dictionary from load_data()
     config : dict
@@ -107,7 +94,6 @@ def run_persona_evaluation(model_artifact: Dict, data: Dict, config: Dict) -> pd
     LOG.info(f"Running persona evaluation with {llm_model}")
     LOG.info(f"Domain: {domain_config.get('name', 'Generic')}")
     
-<<<<<<< Updated upstream
     # Load personas from config file
     personas_file = persona_config.get("file", "hexeval/config/personas_healthcare.yaml") 
     try:
@@ -119,11 +105,6 @@ def run_persona_evaluation(model_artifact: Dict, data: Dict, config: Dict) -> pd
     # Generate explanations
     explanations, instance_indices = _generate_explanations(
         model_wrapper, data, config
-=======
-    # Generate explanations
-    explanations, instance_indices = _generate_explanations(
-        model_artifact, data, config
->>>>>>> Stashed changes
     )
     
     # Run LLM evaluation with domain context
@@ -133,10 +114,7 @@ def run_persona_evaluation(model_artifact: Dict, data: Dict, config: Dict) -> pd
         explanations,
         instance_indices,
         data,
-<<<<<<< Updated upstream
         personas,  # Pass loaded personas
-=======
->>>>>>> Stashed changes
         persona_config,
         domain_config,  # Pass domain config
     )
@@ -144,21 +122,12 @@ def run_persona_evaluation(model_artifact: Dict, data: Dict, config: Dict) -> pd
     return pd.DataFrame(results)
 
 
-<<<<<<< Updated upstream
 def _generate_explanations(model_wrapper: Any, data: Dict, config: Dict) -> Tuple[Dict, List[int]]:
     """Generate explanations for sample instances using all 4 methods."""
     
     model = model_wrapper.model
     preprocessor = model_wrapper.preprocessor
     feature_names = model_wrapper.feature_names or data["feature_names"]
-=======
-def _generate_explanations(model_artifact: Dict, data: Dict, config: Dict) -> Tuple[Dict, List[int]]:
-    """Generate explanations for sample instances using all 4 methods."""
-    
-    model = model_artifact["model"]
-    preprocessor = model_artifact.get("preprocessor")
-    feature_names = model_artifact.get("feature_names", data["feature_names"])
->>>>>>> Stashed changes
     
     # Preprocess data
     X_train = preprocess_for_model(data["X_train"], preprocessor, feature_names)
@@ -180,7 +149,6 @@ def _generate_explanations(model_artifact: Dict, data: Dict, config: Dict) -> Tu
     # Initialize explainers
     shap_exp = ShapExplainer(model, X_train[:min(500, len(X_train))], feature_names)
     
-<<<<<<< Updated upstream
     # Get class names from domain config
     domain = config.get("domain", {})
     positive = domain.get("positive_outcome", "Class 0")
@@ -193,15 +161,6 @@ def _generate_explanations(model_artifact: Dict, data: Dict, config: Dict) -> Tu
     )
     
     threshold = model_wrapper.threshold
-=======
-    lime_exp = LimeExplainer(
-        X_train, feature_names,
-        class_names=["No Default", "Default"],
-        predict_fn=model.predict_proba
-    )
-    
-    threshold = model_artifact.get("threshold", 0.5)
->>>>>>> Stashed changes
     anchor_exp = AnchorExplainer(
         X_train,
         feature_names=feature_names,
@@ -265,10 +224,7 @@ def _evaluate_with_llm(
     explanations: Dict,
     instance_indices: List[int],
     data: Dict,
-<<<<<<< Updated upstream
     personas: List[Dict],
-=======
->>>>>>> Stashed changes
     persona_config: Dict,
     domain_config: Dict,  # NEW: domain configuration
 ) -> List[Dict]:
@@ -279,19 +235,11 @@ def _evaluate_with_llm(
     
     LOG.info("Running LLM persona evaluation...")
     
-<<<<<<< Updated upstream
     total_calls = len(personas) * 4 * len(instance_indices) * runs_per_method
     LOG.info(f"Total LLM calls: {total_calls}")
     
     with tqdm(total=total_calls, desc="LLM evaluation") as pbar:
         for persona in personas:
-=======
-    total_calls = len(PERSONAS) * 4 * len(instance_indices) * runs_per_method
-    LOG.info(f"Total LLM calls: {total_calls}")
-    
-    with tqdm(total=total_calls, desc="LLM evaluation") as pbar:
-        for persona in PERSONAS:
->>>>>>> Stashed changes
             system_prompt = _build_system_prompt(persona, domain_config)  # Pass domain
             
             for idx in instance_indices:
@@ -348,15 +296,9 @@ def _build_system_prompt(persona: Dict, domain_config: Dict) -> str:
     name = persona['name']
     role = persona['role']
     years = persona.get('experience_years', 'many')
-<<<<<<< Updated upstream
     risk_profile = persona.get('risk_profile', 'Balanced approach to risk')
     decision_style = persona.get('decision_style', 'Methodical')
     ai_comfort = persona.get('ai_comfort', 'Medium')
-=======
-    loss_aversion = persona.get('loss_aversion', 1.5)
-    risk_tol = persona.get('risk_tolerance', 'Moderate')
-    trust_ai = persona.get('trust_in_ai', 'Medium')
->>>>>>> Stashed changes
     priorities = persona.get('priorities', [])
     mental_model = persona.get('mental_model', '')
     heuristics = persona.get('heuristics', [])
@@ -391,18 +333,10 @@ You make critical decisions about {prediction_task}. Each decision impacts:
     
     return f"""{intro}
 
-<<<<<<< Updated upstream
 👤 YOUR PROFILE:
 • Risk Profile: {risk_profile}
 • Decision Style: {decision_style}
 • AI Comfort Level: {ai_comfort}
-=======
-Your personality traits:
-• Loss Aversion: {loss_aversion}× normal (you feel the pain of a bad decision {loss_aversion}× more than a good one)
-• Risk Tolerance: {risk_tol}
-• Trust in AI Systems: {trust_ai}
-• Decision-Making Speed: {persona.get('decision_speed', 'Methodical')}
->>>>>>> Stashed changes
 
 🧠 YOUR MENTAL MODEL:
 {mental_model}
@@ -449,11 +383,7 @@ Rate on 6 dimensions (1-5 scale):
    - 1 = Doesn't help at all
    - 5 = Extremely helpful
 
-<<<<<<< Updated upstream
 IMPORTANT: Rate from YOUR perspective as {name}, not as a generic evaluator. Your {risk_profile.lower()} should influence your ratings.
-=======
-IMPORTANT: Rate from YOUR perspective as {name}, not as a generic evaluator. Your {risk_tol.lower()} risk tolerance and {trust_ai.lower()} trust in AI should influence your ratings.
->>>>>>> Stashed changes
 
 Respond in TOML format:
 interpretability = <1-5>

@@ -25,18 +25,13 @@ LOG = logging.getLogger(__name__)
 
 
 def run_technical_evaluation(
-<<<<<<< Updated upstream
     model_wrapper: Any,  # Typed as Any to avoid circular imports
-=======
-    model_artifact: Dict,
->>>>>>> Stashed changes
     data: Dict,
     config: Dict,
 ) -> pd.DataFrame:
     """
     Run technical evaluation on all enabled explanation methods.
     
-<<<<<<< Updated upstream
     Evaluates SHAP, LIME, Anchor, and DiCE.
     """
     # Defensive config access
@@ -63,41 +58,6 @@ def run_technical_evaluation(
     
     preprocessor = model_wrapper.preprocessor
     feature_names = model_wrapper.feature_names or data["feature_names"]
-=======
-    Evaluates SHAP, LIME, Anchor, and DiCE using metrics like:
-    - Fidelity (insertion/deletion AUC)
-    - Parsimony (sparsity, rule length)
-    - Stability (robustness to perturbations)
-    
-    Parameters
-    ----------
-    model_artifact : dict
-        Model artifact from load_model()
-    data : dict
-        Data dictionary from load_data()
-    config : dict
-        Evaluation configuration
-    
-    Returns
-    -------
-    pd.DataFrame
-        Technical metrics for each method with columns:
-        - method: Explanation method name
-        - fidelity_deletion: Lower is better (features matter more)
-        - fidelity_insertion: Higher is better (features help more)
-        - num_important_features: Parsimony measure
-        - rule_accuracy: Anchor precision
-        - rule_applicability: Anchor coverage
-        - rule_length: Number of conditions
-        - counterfactual_success: % valid CFs
-        - stability: Robustness score
-    """
-    LOG.info("Starting technical evaluation...")
-    
-    model = model_artifact["model"]
-    preprocessor = model_artifact.get("preprocessor")
-    feature_names = model_artifact.get("feature_names", data["feature_names"])
->>>>>>> Stashed changes
     
     # Prepare data
     X_train_proc = preprocess_for_model(data["X_train"], preprocessor, feature_names)
@@ -113,11 +73,7 @@ def run_technical_evaluation(
     
     results = []
     
-<<<<<<< Updated upstream
     
-=======
-    # SHAP Evaluation
->>>>>>> Stashed changes
     if config["explainers"]["shap"]["enabled"]:
         LOG.info("Evaluating SHAP...")
         try:
@@ -130,12 +86,8 @@ def run_technical_evaluation(
             LOG.error(f"  ✗ SHAP failed: {e}")
             results.append({"method": "SHAP", "error": str(e)})
     
-<<<<<<< Updated upstream
             results.append({"method": "SHAP", "error": str(e)})
     
-=======
-    # LIME Evaluation  
->>>>>>> Stashed changes
     if config["explainers"]["lime"]["enabled"]:
         LOG.info("Evaluating LIME...")
         try:
@@ -148,21 +100,13 @@ def run_technical_evaluation(
             LOG.error(f"  ✗ LIME failed: {e}")
             results.append({"method": "LIME", "error": str(e)})
     
-<<<<<<< Updated upstream
             results.append({"method": "LIME", "error": str(e)})
     
-=======
-    # Anchor Evaluation
->>>>>>> Stashed changes
     if config["explainers"]["anchor"]["enabled"]:
         LOG.info("Evaluating Anchor...")
         try:
             anchor_metrics = _evaluate_anchor(
-<<<<<<< Updated upstream
                 model, X_train_proc, X_sample, feature_names, config, model_wrapper
-=======
-                model, X_train_proc, X_sample, feature_names, config, model_artifact
->>>>>>> Stashed changes
             )
             results.append({"method": "Anchor", **anchor_metrics})
             LOG.info(f"  ✓ Anchor complete")
@@ -170,12 +114,8 @@ def run_technical_evaluation(
             LOG.error(f"  ✗ Anchor failed: {e}")
             results.append({"method": "Anchor", "error": str(e)})
     
-<<<<<<< Updated upstream
             results.append({"method": "Anchor", "error": str(e)})
     
-=======
-    # DiCE Evaluation
->>>>>>> Stashed changes
     if config["explainers"]["dice"]["enabled"]:
         LOG.info("Evaluating DiCE...")
         try:
@@ -222,7 +162,6 @@ def _evaluate_shap(model, X_train, X_sample, baseline, feature_names, config) ->
 
 def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) -> Dict:
     """Evaluate LIME explainer."""
-<<<<<<< Updated upstream
     # Get class names from domain config (defaults to Class 0/1 if missing)
     domain_cfg = config.get("domain", {})
     class_names = [
@@ -234,12 +173,6 @@ def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) ->
         training_data=X_train,
         feature_names=feature_names,
         class_names=class_names,
-=======
-    explainer = LimeExplainer(
-        training_data=X_train,
-        feature_names=feature_names,
-        class_names=["Class 0", "Class 1"],
->>>>>>> Stashed changes
         predict_fn=model.predict_proba,
     )
     
@@ -293,15 +226,9 @@ def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) ->
     }
 
 
-<<<<<<< Updated upstream
 def _evaluate_anchor(model, X_train, X_sample, feature_names, config, model_wrapper) -> Dict:
     """Evaluate Anchor explainer."""
     threshold = model_wrapper.threshold
-=======
-def _evaluate_anchor(model, X_train, X_sample, feature_names, config, model_artifact) -> Dict:
-    """Evaluate Anchor explainer."""
-    threshold = model_artifact.get("threshold", 0.5)
->>>>>>> Stashed changes
     
     def predict_fn(X):
         proba = model.predict_proba(X)

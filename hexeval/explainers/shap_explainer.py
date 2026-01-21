@@ -23,7 +23,6 @@ class ShapExplainer:
         self.shap = shap
         self.class_index = class_index
         self.feature_names = feature_names
-<<<<<<< Updated upstream
         try:
             self.explainer = shap.Explainer(model, background)
         except Exception:
@@ -32,9 +31,6 @@ class ShapExplainer:
                 self.explainer = shap.Explainer(model.predict_proba, background)
             else:
                 raise
-=======
-        self.explainer = shap.Explainer(model, background)
->>>>>>> Stashed changes
 
     def _reduce(self, shap_values) -> np.ndarray:
         """Extract class-specific values as (n_samples, n_features)."""
