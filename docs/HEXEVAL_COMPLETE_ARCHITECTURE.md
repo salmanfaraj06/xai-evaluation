@@ -19,7 +19,7 @@
 
 ## Executive Summary
 
-**HEXEval** is a production-grade framework for holistic evaluation of explainable AI (XAI) methods on tabular classification models. It combines:
+**HEXEval** is a framework for holistic evaluation of explainable AI (XAI) methods on tabular classification models. It combines:
 
 - **Technical Metrics:** Fidelity, parsimony, stability
 - **Human-Centered Evaluation:** LLM-simulated personas rating explanations
@@ -41,15 +41,15 @@
 │                      HEXEval Framework                          │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  ┌──────────────┐      ┌──────────────┐      ┌──────────────┐ │
-│  │              │      │              │      │              │ │
-│  │     CORE     │─────▶│  EXPLAINERS  │─────▶│  EVALUATION  │ │
-│  │              │      │              │      │              │ │
-│  └──────────────┘      └──────────────┘      └──────────────┘ │
+│  ┌──────────────┐      ┌──────────────┐      ┌──────────────┐   │
+│  │              │      │              │      │              │   │
+│  │     CORE     │─────▶│  EXPLAINERS  │─────▶│  EVALUATION  │   │
+│  │              │      │              │      │              │   │
+│  └──────────────┘      └──────────────┘      └──────────────┘   │
 │                                                                 │
-│  ┌──────────────────────────────────────────────────────────┐  │
-│  │                   OUTPUTS & UI                           │  │
-│  └──────────────────────────────────────────────────────────┘  │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │                   OUTPUTS & UI                           │   │
+│  └──────────────────────────────────────────────────────────┘   │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -82,12 +82,12 @@
 ┌──────────────────────────────────────────────────────────────────┐
 │ 1. INPUT                                                         │
 ├──────────────────────────────────────────────────────────────────┤
-│  ▶ Model (.pkl)         ▶ Data (CSV)        ▶ Config (YAML)     │
+│  ▶ Model (.pkl)         ▶ Data (CSV)        ▶ Config (YAML)      │
 └──────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│ 2. LOAD & VALIDATE (core/)                                      │
+│ 2. LOAD & VALIDATE (core/)                                       │
 ├──────────────────────────────────────────────────────────────────┤
 │                                                                  │
 │  model_loader.py                                                 │
@@ -110,52 +110,52 @@
                               │
                               ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│ 3. TECHNICAL EVALUATION (evaluation/technical_evaluator.py)     │
+│ 3. TECHNICAL EVALUATION (evaluation/technical_evaluator.py)      │
 ├──────────────────────────────────────────────────────────────────┤
 │                                                                  │
 │  FOR EACH METHOD (SHAP, LIME, Anchor, DiCE):                     │
 │                                                                  │
-│  ┌──────────────────────────────────────────────┐               │
-│  │ SHAP                                         │               │
-│  ├──────────────────────────────────────────────┤               │
-│  │ 1. Create KernelExplainer(model, background) │               │
-│  │ 2. Generate SHAP values for 150 instances    │               │
-│  │ 3. Compute Fidelity:                         │               │
-│  │    ├─ Deletion AUC (remove features)         │               │
-│  │    └─ Insertion AUC (add features)           │               │
-│  │ 4. Compute Parsimony:                        │               │
-│  │    └─ Sparsity (avg # important features)    │               │
-│  └──────────────────────────────────────────────┘               │
+│  ┌──────────────────────────────────────────────┐                │
+│  │ SHAP                                         │                │
+│  ├──────────────────────────────────────────────┤                │
+│  │ 1. Create KernelExplainer(model, background) │                │
+│  │ 2. Generate SHAP values for 150 instances    │                │
+│  │ 3. Compute Fidelity:                         │                │
+│  │    ├─ Deletion AUC (remove features)         │                │
+│  │    └─ Insertion AUC (add features)           │                │
+│  │ 4. Compute Parsimony:                        │                │
+│  │    └─ Sparsity (avg # important features)    │                │
+│  └──────────────────────────────────────────────┘                │
 │                                                                  │
-│  ┌──────────────────────────────────────────────┐               │
-│  │ LIME                                         │               │
-│  ├──────────────────────────────────────────────┤               │
-│  │ 1. Create LimeTabularExplainer              │               │
-│  │ 2. Generate explanations (2000 samples)      │               │
-│  │ 3. Compute Fidelity (same as SHAP)           │               │
-│  │ 4. Compute Stability:                        │               │
-│  │    └─ Add noise, measure variance            │               │
-│  └──────────────────────────────────────────────┘               │
+│  ┌──────────────────────────────────────────────┐                │
+│  │ LIME                                         │                │
+│  ├──────────────────────────────────────────────┤                │
+│  │ 1. Create LimeTabularExplainer               │                │
+│  │ 2. Generate explanations (2000 samples)      │                │
+│  │ 3. Compute Fidelity (same as SHAP)           │                │
+│  │ 4. Compute Stability:                        │                │
+│  │    └─ Add noise, measure variance            │                │
+│  └──────────────────────────────────────────────┘                │
 │                                                                  │
-│  ┌──────────────────────────────────────────────┐               │
-│  │ Anchor                                       │               │
-│  ├──────────────────────────────────────────────┤               │
-│  │ 1. Create AnchorTabularExplainer            │               │
-│  │ 2. Generate rules (30 instances)             │               │
-│  │ 3. Compute:                                  │               │
-│  │    ├─ Rule Accuracy (precision)              │               │
-│  │    ├─ Rule Applicability (coverage)          │               │
-│  │    └─ Rule Length (# conditions)             │               │
-│  └──────────────────────────────────────────────┘               │
+│  ┌──────────────────────────────────────────────┐                │
+│  │ Anchor                                       │                │
+│  ├──────────────────────────────────────────────┤                │
+│  │ 1. Create AnchorTabularExplainer             │                │
+│  │ 2. Generate rules (30 instances)             │                │
+│  │ 3. Compute:                                  │                │
+│  │    ├─ Rule Accuracy (precision)              │                │
+│  │    ├─ Rule Applicability (coverage)          │                │
+│  │    └─ Rule Length (# conditions)             │                │
+│  └──────────────────────────────────────────────┘                │
 │                                                                  │
-│  ┌──────────────────────────────────────────────┐               │
-│  │ DiCE                                         │               │
-│  ├──────────────────────────────────────────────┤               │
-│  │ 1. Create DiCE explainer                     │               │
-│  │ 2. Generate counterfactuals (10 instances)   │               │
-│  │ 3. Compute:                                  │               │
-│  │    └─ Success Rate (% valid CFs that flip)   │               │
-│  └──────────────────────────────────────────────┘               │
+│  ┌──────────────────────────────────────────────┐                │
+│  │ DiCE                                         │                │
+│  ├──────────────────────────────────────────────┤                │
+│  │ 1. Create DiCE explainer                     │                │
+│  │ 2. Generate counterfactuals (10 instances)   │                │
+│  │ 3. Compute:                                  │                │
+│  │    └─ Success Rate (% valid CFs that flip)   │                │
+│  └──────────────────────────────────────────────┘                │
 │                                                                  │
 │  OUTPUT: technical_metrics.csv                                   │
 │  ├─ method | fidelity_del | fidelity_ins | sparsity |...         │
@@ -165,22 +165,22 @@
                               │
                               ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│ 4. PERSONA EVALUATION (evaluation/persona_evaluator.py)         │
+│ 4. PERSONA EVALUATION (evaluation/persona_evaluator.py)          │
 ├──────────────────────────────────────────────────────────────────┤
 │                                                                  │
 │  Step 1: Generate Explanations (2 instances × 4 methods)         │
 │  ┌────────────────────────────────────────────────┐              │
-│  │ Instance #581:                                 │              │
-│  │ ├─ SHAP: "credit_score: 0.23, income: -0.15"  │              │
-│  │ ├─ LIME: "credit_score: 0.19, income: 0.05"   │              │
-│  │ ├─ Anchor: "IF loan_pct > 0.15 AND..."        │              │
-│  │ └─ DiCE: "income: change by +8000"            │              │
+│  │ Instance #581:                               │              │
+│  │ ├─ SHAP: "credit_score: 0.23, income: -0.15"   │              │
+│  │ ├─ LIME: "credit_score: 0.19, income: 0.05"    │              │
+│  │ ├─ Anchor: "IF loan_pct > 0.15 AND..."         │              │
+│  │ └─ DiCE: "income: change by +8000"             │              │
 │  └────────────────────────────────────────────────┘              │
 │                                                                  │
 │  Step 2: LLM Evaluation (6 personas × 4 methods × 2 instances)   │
-│  = 48 LLM calls                                                   │
+│  = 48 LLM calls                                                  │
 │                                                                  │
-│  FOR EACH PERSONA:                                                │
+│  FOR EACH PERSONA:                                               │
 │  ┌────────────────────────────────────────────────┐              │
 │  │ 1. Build System Prompt:                        │              │
 │  │    ├─ Persona identity (name, role, years)     │              │
@@ -191,8 +191,8 @@
 │  │    ├─ Explanation preferences                  │              │
 │  │    └─ Domain context (loan application)        │              │
 │  │                                                │              │
-│  │ 2. Build Evaluation Prompt:                   │              │
-│  │    ├─ Scenario: "You're reviewing Case #581"   │              │
+│  │ 2. Build Evaluation Prompt:                    │              │
+│  │    ├─ Scenario: "You're reviewing Case #581" │              │
 │  │    ├─ Show explanation text                    │              │
 │  │    └─ Ask: Rate on 6 dimensions (1-5)          │              │
 │  │                                                │              │
@@ -202,7 +202,7 @@
 │  │    └─ Extract: ratings + comment               │              │
 │  └────────────────────────────────────────────────┘              │
 │                                                                  │
-│  6 Dimensions Rated:                                              │
+│  6 Dimensions Rated:                                             │
 │  ├─ interpretability (can you understand it?)                    │
 │  ├─ completeness (covers all factors?)                           │
 │  ├─ actionability (what to do next?)                             │
@@ -212,7 +212,7 @@
 │                                                                  │
 │  OUTPUT: persona_ratings.csv                                     │
 │  ├─ persona_name | role | method | instance | run |...           │
-│  └─ 48 rows (6 personas × 4 methods × 2 instances × 1 run)        │
+│  └─ 48 rows (6 personas × 4 methods × 2 instances × 1 run)       │
 │                                                                  │
 └──────────────────────────────────────────────────────────────────┘
                               │
@@ -221,21 +221,21 @@
 │ 5. RECOMMENDATIONS (evaluation/recommender.py)                   │
 ├──────────────────────────────────────────────────────────────────┤
 │                                                                  │
-│  FOR EACH STAKEHOLDER TYPE:                                       │
+│  FOR EACH STAKEHOLDER TYPE:                                      │
 │                                                                  │
-│  1. Calculate Combined Score:                                     │
-│     score = 0.3×fidelity + 0.2×parsimony +                        │
-│             0.3×trust + 0.2×satisfaction                          │
+│  1. Calculate Combined Score:                                    │
+│     score = 0.3×fidelity + 0.2×parsimony +                       │
+│             0.3×trust + 0.2×satisfaction                         │
 │                                                                  │
-│  2. Select Best Method:                                           │
-│     best_method = argmax(score)                                   │
+│  2. Select Best Method:                                          │
+│     best_method = argmax(score)                                  │
 │                                                                  │
-│  3. Generate Reasoning:                                           │
-│     "SHAP recommended due to: high trust (3.5/5),                 │
-│      excellent fidelity, comprehensive coverage"                  │
+│  3. Generate Reasoning:                                          │
+│     "SHAP recommended due to: high trust (3.5/5),                │
+│      excellent fidelity, comprehensive coverage"                 │
 │                                                                  │
-│  OUTPUT: recommendations.json                                     │
-│  └─ {stakeholder: {method, score, reasoning, feedback}}           │
+│  OUTPUT: recommendations.json                                    │
+│  └─ {stakeholder: {method, score, reasoning, feedback}}          │
 │                                                                  │
 └──────────────────────────────────────────────────────────────────┘
                               │
@@ -997,12 +997,12 @@ streamlit run hexeval/ui/app.py
 
 **Technical Evaluation:**
 | Method | Time per Instance | 150 Instances |
-|--------|------------------:|-------------:|
-| SHAP   | 0.5s             | ~75s         |
-| LIME   | 1.0s             | ~150s        |
-| Anchor | 2.0s             | ~60s (30 inst)|
-| DiCE   | 3.0s             | ~30s (10 inst)|
-| **TOTAL** |               | **~5 minutes**|
+|--------|------------------:|-------------: |
+| SHAP   | 0.5s              | ~75s          |
+| LIME   | 1.0s              | ~150s         |
+| Anchor | 2.0s              | ~60s (30 inst)|
+| DiCE   | 3.0s              | ~30s (10 inst)|
+| **TOTAL** |                | **~5 minutes**|
 
 **Persona Evaluation (with LLM):**
 - 48 API calls × 1-2s per call = **~2 minutes**

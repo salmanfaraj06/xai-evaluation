@@ -50,7 +50,7 @@ METHOD_TRAITS = {
     "LIME": ["balanced", "interpretable", "moderate_features"],
     "Anchor": ["rule_based", "simple", "high_precision", "defensive"],
     "DiCE": ["actionable", "counterfactual", "communicable"],
-    "COUNTERFACTUAL": ["actionable", "counterfactual", "communicable"],  # Alias
+    "COUNTERFACTUAL": ["actionable", "counterfactual", "communicable"],  
 }
 
 

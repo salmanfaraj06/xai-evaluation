@@ -25,7 +25,7 @@ LOG = logging.getLogger(__name__)
 
 
 def run_technical_evaluation(
-    model_wrapper: Any,  # Typed as Any to avoid circular imports
+    model_wrapper: Any,  
     data: Dict,
     config: Dict,
 ) -> pd.DataFrame:
