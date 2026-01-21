@@ -7,3 +7,5 @@ __pycache__/
 outputs/
 *.ipynb_checkpoints/
 *.egg-info/
+node_modules/
+.next/
