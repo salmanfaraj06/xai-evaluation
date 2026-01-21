@@ -60,6 +60,7 @@ def load_data(
     
     LOG.info(f"Loading data from {path}")
     
+<<<<<<< Updated upstream
     df = pd.read_csv(path)
     LOG.info(f"  Loaded {len(df)} rows, {len(df.columns)} columns")
     
@@ -69,6 +70,14 @@ def load_data(
                 f"Target column '{target_column}' not found in dataset. "
                 f"Available columns: {df.columns.tolist()}"
             )
+=======
+    # Load CSV
+    df = pd.read_csv(path)
+    LOG.info(f"  Loaded {len(df)} rows, {len(df.columns)} columns")
+    
+    # Separate features and target
+    if target_column and target_column in df.columns:
+>>>>>>> Stashed changes
         y = df[target_column]
         X = df.drop(columns=[target_column])
         LOG.info(f"  Target column: '{target_column}'")
@@ -76,7 +85,12 @@ def load_data(
     else:
         y = None
         X = df
+<<<<<<< Updated upstream
         LOG.warning("No target column specified - loading features only")
+=======
+        if target_column:
+            LOG.warning(f"Target column '{target_column}' not found in dataset")
+>>>>>>> Stashed changes
     
     # Auto-detect feature types
     categorical_features = X.select_dtypes(include=["object", "category"]).columns.tolist()
@@ -177,6 +191,7 @@ def preprocess_for_model(
             if missing_cols:
                 raise ValueError(f"Missing expected features: {missing_cols}")
             X = X[feature_names]
+<<<<<<< Updated upstream
         
         # Try converting to float for efficiency
         try:
@@ -186,3 +201,6 @@ def preprocess_for_model(
             # This allows pipelines with internal encoders to function
             LOG.debug("Input contains non-numeric data, keeping as object dtype for pipeline processing")
             return X.values.astype(object)
+=======
+        return X.values.astype(np.float64)
+>>>>>>> Stashed changes

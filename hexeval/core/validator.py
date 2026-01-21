@@ -15,7 +15,11 @@ LOG = logging.getLogger(__name__)
 
 
 def validate_model_data_compatibility(
+<<<<<<< Updated upstream
     model_wrapper: Any,  # Typed as Any to avoid circular imports, but expects ModelWrapper
+=======
+    model_artifact: Dict[str, Any],
+>>>>>>> Stashed changes
     data: Dict,
 ) -> Dict[str, str]:
     """
@@ -23,8 +27,13 @@ def validate_model_data_compatibility(
     
     Parameters
     ----------
+<<<<<<< Updated upstream
     model_wrapper : ModelWrapper
         Wrapped model from load_model()
+=======
+    model_artifact : dict
+        Model artifact from load_model()
+>>>>>>> Stashed changes
     data : dict
         Data dictionary from load_data()
     
@@ -35,10 +44,20 @@ def validate_model_data_compatibility(
         - 'status': 'valid' or 'invalid'
         - 'warnings': List of warning messages
         - 'errors': List of error messages
+<<<<<<< Updated upstream
+=======
+    
+    Examples
+    --------
+    >>> result = validate_model_data_compatibility(model_artifact, data)
+    >>> if result['status'] == 'invalid':
+    ...     print("Errors:", result['errors'])
+>>>>>>> Stashed changes
     """
     warnings = []
     errors = []
     
+<<<<<<< Updated upstream
     # Access properties via wrapper
     try:
         model = model_wrapper.model
@@ -59,6 +78,18 @@ def validate_model_data_compatibility(
 
     X_sample = data["X_train"].iloc[:1]
     
+=======
+    model = model_artifact["model"]
+    preprocessor = model_artifact.get("preprocessor")
+    expected_features = model_artifact.get("feature_names")
+    
+    X_sample = data["X_train"].iloc[:1]
+    
+    # Check 1: Model has predict_proba
+    if not hasattr(model, "predict_proba"):
+        errors.append("Model must have 'predict_proba' method")
+    
+>>>>>>> Stashed changes
     # Check 2: Feature compatibility
     if expected_features:
         actual_features = set(data["feature_names"])
@@ -72,12 +103,16 @@ def validate_model_data_compatibility(
             real_missing = [f for f in missing_features if f not in onehot_missing]
             
             if real_missing:
+<<<<<<< Updated upstream
                 # Critical error only if using raw features
                 # If wrapper has preprocessor, it might handle generation
                 if model_wrapper.preprocessor is None:
                     errors.append(f"Missing required numeric features: {list(real_missing)[:5]}")
                 else:
                     warnings.append(f"Missing features (hopefully handled by preprocessor): {list(real_missing)[:5]}")
+=======
+                errors.append(f"Missing required numeric features: {list(real_missing)[:5]}")
+>>>>>>> Stashed changes
             
             if onehot_missing:
                 warnings.append(f"Some categorical values missing (OK if using preprocessor): {list(onehot_missing)[:3]}")
@@ -88,16 +123,27 @@ def validate_model_data_compatibility(
     
     # Check 3: Can we make a prediction?
     try:
+<<<<<<< Updated upstream
         # Wrapper handles preprocessing internally
         if hasattr(model_wrapper, "predict_proba"):
             pred = model_wrapper.predict_proba(X_sample)
         else:
             # Fallback for raw model
+=======
+        if preprocessor:
+            X_proc = preprocessor.transform(X_sample)
+        else:
+>>>>>>> Stashed changes
             if expected_features:
                 X_proc = X_sample[expected_features].values
             else:
                 X_proc = X_sample.values
+<<<<<<< Updated upstream
             pred = model.predict_proba(X_proc)
+=======
+        
+        pred = model.predict_proba(X_proc)
+>>>>>>> Stashed changes
         
         # Validate prediction shape
         if pred.shape[0] != 1:
