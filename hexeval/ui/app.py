@@ -105,32 +105,29 @@ with tab1:
     if has_existing_results:
         st.success(f"✅ Found existing results for **{selected_use_case}**")
         
-        col1, col2 = st.columns([3, 1])
-        with col1:
-            st.info(f"💡 Load previous results from `{default_output}` to save time.")
-        with col2:
-            if st.button("📂 Load Existing Results", type="primary", use_container_width=True, key="load_btn"):
-                import json
+        # Show the Load Existing Results button nicely
+        if st.button("📂 Load Existing Results", type="primary", use_container_width=True, key="load_btn"):
+            import json
+            
+            try:
+                # Load existing results
+                tech_df = pd.read_csv(default_output / "technical_metrics.csv")
+                persona_df = pd.read_csv(default_output / "persona_ratings.csv")
                 
-                try:
-                    # Load existing results
-                    tech_df = pd.read_csv(default_output / "technical_metrics.csv")
-                    persona_df = pd.read_csv(default_output / "persona_ratings.csv")
-                    
-                    with open(default_output / "recommendations.json") as f:
-                        recs = json.load(f)
-                    
-                    st.session_state["results"] = {
-                        "technical_metrics": tech_df,
-                        "persona_ratings": persona_df,
-                        "recommendations": recs,
-                        "output_path": str(default_output)
-                    }
-                    
-                    st.success(f"✅ Loaded results for {selected_use_case}!")
-                    st.balloons()
-                except Exception as e:
-                    st.error(f"Failed to load results: {e}")
+                with open(default_output / "recommendations.json") as f:
+                    recs = json.load(f)
+                
+                st.session_state["results"] = {
+                    "technical_metrics": tech_df,
+                    "persona_ratings": persona_df,
+                    "recommendations": recs,
+                    "output_path": str(default_output)
+                }
+                
+                st.success(f"✅ Loaded results for {selected_use_case}!")
+                st.balloons()
+            except Exception as e:
+                st.error(f"Failed to load results: {e}")
         
         st.divider()
     
@@ -162,9 +159,6 @@ with tab1:
              # So `xgboost_credit_risk_new.pkl` IS IN `models/`
              pass
 
-        st.info(f"Using sample data: `{use_case_config['data_path']}`")
-        st.info(f"Using sample model: `{use_case_config['model_path']}`")
-        
         model_path = use_case_config["model_path"]
         data_path = use_case_config["data_path"]
         target_column = use_case_config["target"]
@@ -296,7 +290,7 @@ with tab1:
         st.info("👆 Configure inputs to begin")
 
 with tab2:
-    st.header(f"ℹ️ {selected_use_case} Details")
+    st.header(f"{selected_use_case} Details")
     
     if selected_use_case == "Custom Upload":
         st.info("Upload your own data to see configuration details.")
@@ -309,7 +303,7 @@ with tab2:
                 config_data = yaml.safe_load(f)
                 
              # Display Domain Info
-             st.subheader("🌍 Domain Context")
+             st.subheader("Domain Context")
              domain = config_data.get("domain", {})
              
              col1, col2 = st.columns(2)
@@ -323,7 +317,7 @@ with tab2:
              st.divider()
              
              # Display Personas
-             st.subheader("👥 Stakeholder Personas")
+             st.subheader("Stakeholder Personas")
              
              personas_file = config_data.get("personas", {}).get("file")
              if personas_file:
@@ -345,19 +339,18 @@ with tab2:
                      else:
                          personas = personas_data.get('personas', [])
                      
-                     for p in personas:
-                         with st.expander(f"**{p['name']}** - {p['role']}"):
-                             c1, c2 = st.columns([1, 2])
-                             with c1:
-                                 st.markdown(f"**Risk Profile:** {p.get('risk_profile', 'N/A')}")
-                                 st.markdown(f"**AI Comfort:** {p.get('ai_comfort', 'N/A')}")
-                             with c2:
-                                 st.markdown(f"**Priorities:**")
-                                 for prio in p.get('priorities', []):
-                                     st.markdown(f"- {prio}")
-                                 
-                                 st.markdown(f"**Needs:**")
-                                 st.info(p.get('explanation_preferences', ''))
+                     for idx, p in enumerate(personas):
+                         # Expand first persona by default to reduce empty space
+                         with st.expander(f"**{p['name']}** - {p['role']}", expanded=(idx == 0)):
+                             # More compact layout without excessive columns
+                             st.markdown(f"**Risk Profile:** {p.get('risk_profile', 'N/A')} | **AI Comfort:** {p.get('ai_comfort', 'N/A')}")
+                             
+                             st.markdown("**Priorities:**")
+                             for prio in p.get('priorities', []):
+                                 st.markdown(f"• {prio}")
+                             
+                             st.markdown("**Explanation Preferences:**")
+                             st.info(p.get('explanation_preferences', ''))
                                  
                  except Exception as e:
                      st.warning(f"Could not load personas details: {e}")
@@ -579,4 +572,4 @@ with tab5:
 
 # Footer
 st.divider()
-st.caption("HEXEval - Holistic Explanation Evaluation Framework | Made for practitioners, not academics")
+st.caption("HEXEval - Holistic Explanation Evaluation Framework")
