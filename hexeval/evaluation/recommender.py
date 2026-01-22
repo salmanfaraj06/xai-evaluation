@@ -206,23 +206,52 @@ def generate_recommendations(
         best_method = max(method_scores.keys(), key=lambda m: method_scores[m]["score"])
         best_scores = method_scores[best_method]
         
-        # Generate reasoning
+        # Generate context-aware reasoning that acknowledges trade-offs
         reasoning_parts = []
+        strengths = []
+        concerns = []
         
+        # Identify strengths
         if best_scores["trust"] >= 4.0:
-            reasoning_parts.append(f"high stakeholder trust ({best_scores['trust']:.1f}/5)")
+            strengths.append(f"high stakeholder trust ({best_scores['trust']:.1f}/5)")
         
         if best_scores["satisfaction"] >= 4.0:
-            reasoning_parts.append(f"strong satisfaction ({best_scores['satisfaction']:.1f}/5)")
+            strengths.append(f"strong satisfaction ({best_scores['satisfaction']:.1f}/5)")
         
         if best_scores["technical_score"] >= 0.7:
-            reasoning_parts.append(f"strong technical performance ({best_scores['technical_score']:.2f})")
+            strengths.append(f"strong technical performance ({best_scores['technical_score']:.2f})")
         
-        if not reasoning_parts:
-            # If no standout scores, mention best available
-            reasoning_parts.append(f"best combined score across metrics")
+        # Identify concerns
+        if best_scores["trust"] < 2.5:
+            concerns.append(f"low stakeholder trust ({best_scores['trust']:.1f}/5)")
         
-        reasoning = f"{best_method} recommended due to: " + ", ".join(reasoning_parts)
+        if best_scores["satisfaction"] < 2.5:
+            concerns.append(f"low satisfaction ({best_scores['satisfaction']:.1f}/5)")
+        
+        if best_scores["technical_score"] < 0.5:
+            concerns.append(f"weak technical performance ({best_scores['technical_score']:.2f})")
+        
+        # Build reasoning based on context
+        if strengths and concerns:
+            # Trade-off scenario: good in some areas, poor in others
+            reasoning = (
+                f"{best_method} is the best available option with {', '.join(strengths)}, "
+                f"but has {', '.join(concerns)}. Consider improving explanation delivery or adjusting weights."
+            )
+        elif strengths:
+            # Clear winner: strong across the board
+            reasoning = f"{best_method} recommended due to: {', '.join(strengths)}"
+        elif concerns:
+            # All methods are poor: "best of worst" scenario
+            all_scores = [scores["score"] for scores in method_scores.values()]
+            max_possible = max(all_scores)
+            reasoning = (
+                f"{best_method} has the highest score ({best_scores['score']:.2f}) but all methods scored below 0.70. "
+                f"Concerns: {', '.join(concerns)}. Consider improving explanations or re-evaluating XAI methods."
+            )
+        else:
+            # Moderate scores across the board
+            reasoning = f"{best_method} recommended as best available option (score: {best_scores['score']:.2f})"
         
         # Get technical details
         tech_row = technical_metrics[technical_metrics["method"] == best_method].iloc[0]
@@ -240,6 +269,7 @@ def generate_recommendations(
         recommendations[stakeholder] = {
             "recommended_method": best_method,
             "score": float(best_scores["score"]),
+            "score_out_of": 1.0,  # Clarify score scale
             "reasoning": reasoning,
             "technical_strengths": {k: str(v) for k, v in technical_strengths.items()},
             "persona_feedback": persona_feedback,
