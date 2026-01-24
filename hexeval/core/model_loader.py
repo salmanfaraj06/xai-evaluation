@@ -49,17 +49,26 @@ def load_model(path: str | Path) -> ModelWrapper:
     
     LOG.info(f"Loading model from {path}")
     
-    # XGBoost compatibility fix: Add deprecated attribute BEFORE unpickling
+    # XGBoost compatibility fix: Add deprecated attributes BEFORE unpickling
     # Models trained with XGBoost <1.6.0 have use_label_encoder attribute
+    # Models trained with older XGBoost versions may also have gpu_id attribute
     try:
         import xgboost as xgb
         if hasattr(xgb, 'XGBClassifier'):
-            # Add the attribute if it doesn't exist (for newer XGBoost versions)
+            # Add the attributes if they don't exist (for newer XGBoost versions)
             if not hasattr(xgb.XGBClassifier, 'use_label_encoder'):
                 xgb.XGBClassifier.use_label_encoder = False
+            if not hasattr(xgb.XGBClassifier, 'gpu_id'):
+                xgb.XGBClassifier.gpu_id = None
         if hasattr(xgb, 'XGBRegressor'):
             if not hasattr(xgb.XGBRegressor, 'use_label_encoder'):
                 xgb.XGBRegressor.use_label_encoder = False
+            if not hasattr(xgb.XGBRegressor, 'gpu_id'):
+                xgb.XGBRegressor.gpu_id = None
+        # Also patch the base XGBModel class if it exists
+        if hasattr(xgb, 'XGBModel'):
+            if not hasattr(xgb.XGBModel, 'gpu_id'):
+                xgb.XGBModel.gpu_id = None
     except ImportError:
         pass  # XGBoost not installed, no problem
     
