@@ -125,7 +125,6 @@ with tab1:
                 }
                 
                 st.success(f"✅ Loaded results for {selected_use_case}!")
-                st.balloons()
             except Exception as e:
                 st.error(f"Failed to load results: {e}")
         
@@ -281,7 +280,6 @@ with tab1:
                         os.unlink(data_path)
                     
                     st.success("✅ Evaluation complete! Check the Results tab.")
-                    st.balloons()
                     
                 except Exception as e:
                     st.error(f"❌ Evaluation failed: {str(e)}")
