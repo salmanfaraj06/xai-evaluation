@@ -266,7 +266,7 @@ with tab1:
                         model_path=final_model_path,
                         data_path=final_data_path,
                         target_column=target_column,
-                        config_path=config_path_to_use,
+                        config_path=use_case_config["config_path"],
                         output_dir=use_case_config["output_dir"],
                         config_overrides={
                             "personas": {"enabled": True},  # Always enabled - core feature
