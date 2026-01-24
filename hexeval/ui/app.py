@@ -213,83 +213,97 @@ with tab1:
         
     if run_ready:
         if st.button("🚀 Run Evaluation", type="primary", use_container_width=True):
-            with st.spinner("Running evaluation... This may take a few minutes."):
-                try:
-                    # Handle file paths if uploaded
-                    if not use_sample_data:
-                        # Save uploaded files temporarily
-                        with tempfile.NamedTemporaryFile(delete=False, suffix=".pkl") as tmp_model:
-                            tmp_model.write(model_file.getvalue())
-                            model_path = tmp_model.name
-                        
-                        with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tmp_data:
-                            tmp_data.write(data_file.getvalue())
-                            data_path = tmp_data.name
+            # Create progress tracking UI
+            progress_bar = st.progress(0)
+            status_text = st.empty()
+            
+            # Progress callback function
+            def update_progress(percent: float, message: str):
+                progress_bar.progress(int(percent) / 100)
+                status_text.text(f"⏳ {message}")
+            
+            try:
+                # Handle file paths if uploaded
+                if not use_sample_data:
+                    # Save uploaded files temporarily
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".pkl") as tmp_model:
+                        tmp_model.write(model_file.getvalue())
+                        model_path = tmp_model.name
                     
-                    # Import here to avoid slow startup
-                    from hexeval import evaluate
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tmp_data:
+                        tmp_data.write(data_file.getvalue())
+                        data_path = tmp_data.name
+                
+                # Import here to avoid slow startup
+                from hexeval import evaluate
+                
+                # Helper: fix path if not found (because I moved files)
+                # I moved 'xgboost_credit_risk_new.pkl' to 'models/'
+                # But 'credit_risk_dataset.csv' to 'data/'
+                # And 'heart.csv' might still be in 'usecases/'
+                
+                final_model_path = model_path
+                final_data_path = data_path
+                
+                # Fix for moved files if using defaults
+                if use_sample_data:
+                    # Check where I actually moved them
+                    # task.md said: "Move .pkl files to models", "Move .csv files to data"
+                    # USE_CASES dict above has 'usecases/...'. I should fix logic here or in dict.
+                    # I will attempt to fix paths dynamically if file not found at original path
                     
-                    # Helper: fix path if not found (because I moved files)
-                    # I moved 'xgboost_credit_risk_new.pkl' to 'models/'
-                    # But 'credit_risk_dataset.csv' to 'data/'
-                    # And 'heart.csv' might still be in 'usecases/'
+                    if not os.path.exists(final_model_path):
+                        # Try models/
+                        basename = os.path.basename(final_model_path)
+                        alt_path = f"models/{basename}"
+                        if os.path.exists(alt_path):
+                            final_model_path = alt_path
                     
-                    final_model_path = model_path
-                    final_data_path = data_path
-                    
-                    # Fix for moved files if using defaults
-                    if use_sample_data:
-                        # Check where I actually moved them
-                        # task.md said: "Move .pkl files to models", "Move .csv files to data"
-                        # USE_CASES dict above has 'usecases/...'. I should fix logic here or in dict.
-                        # I will attempt to fix paths dynamically if file not found at original path
-                        
-                        if not os.path.exists(final_model_path):
-                            # Try models/
-                            basename = os.path.basename(final_model_path)
-                            alt_path = f"models/{basename}"
-                            if os.path.exists(alt_path):
-                                final_model_path = alt_path
-                        
-                        if not os.path.exists(final_data_path):
-                            # Try data/
-                            basename = os.path.basename(final_data_path)
-                            alt_path = f"data/{basename}"
-                            if os.path.exists(alt_path):
-                                final_data_path = alt_path
-                                
-                    st.write(f"Using Model: `{final_model_path}`")
-                    st.write(f"Using Data: `{final_data_path}`")
+                    if not os.path.exists(final_data_path):
+                        # Try data/
+                        basename = os.path.basename(final_data_path)
+                        alt_path = f"data/{basename}"
+                        if os.path.exists(alt_path):
+                            final_data_path = alt_path
+                            
+                st.write(f"Using Model: `{final_model_path}`")
+                st.write(f"Using Data: `{final_data_path}`")
 
-                    # Run evaluation
-                    results = evaluate(
-                        model_path=final_model_path,
-                        data_path=final_data_path,
-                        target_column=target_column,
-                        config_path=use_case_config["config_path"],
-                        output_dir=use_case_config["output_dir"],
-                        config_overrides={
-                            "personas": {"enabled": True},  # Always enabled - core feature
-                            "evaluation": {"sample_size": use_case_config["default_sample_size"]}
-                        }
-                    )
-                    
-                    # Store in session state
-                    st.session_state['results'] = results
-                    st.session_state['model_name'] = model_path if use_sample_data else model_file.name
-                    st.session_state['data_name'] = data_path if use_sample_data else data_file.name
-                    st.session_state['current_use_case'] = selected_use_case
-                    
-                    # Cleanup temp files if uploaded
-                    if not use_sample_data:
-                        os.unlink(model_path)
-                        os.unlink(data_path)
-                    
-                    st.success("✅ Evaluation complete! Check the Results tab.")
-                    
-                except Exception as e:
-                    st.error(f"❌ Evaluation failed: {str(e)}")
-                    st.exception(e)
+                # Run evaluation with progress callback
+                results = evaluate(
+                    model_path=final_model_path,
+                    data_path=final_data_path,
+                    target_column=target_column,
+                    config_path=use_case_config["config_path"],
+                    output_dir=use_case_config["output_dir"],
+                    config_overrides={
+                        "personas": {"enabled": True},  # Always enabled - core feature
+                        "evaluation": {"sample_size": use_case_config["default_sample_size"]}
+                    },
+                    progress_callback=update_progress
+                )
+                
+                # Store in session state
+                st.session_state['results'] = results
+                st.session_state['model_name'] = model_path if use_sample_data else model_file.name
+                st.session_state['data_name'] = data_path if use_sample_data else data_file.name
+                st.session_state['current_use_case'] = selected_use_case
+                
+                # Cleanup temp files if uploaded
+                if not use_sample_data:
+                    os.unlink(model_path)
+                    os.unlink(data_path)
+                
+                # Clear progress indicators and show success
+                progress_bar.empty()
+                status_text.empty()
+                st.success("✅ Evaluation complete! Check the Results tab.")
+                
+            except Exception as e:
+                progress_bar.empty()
+                status_text.empty()
+                st.error(f"❌ Evaluation failed: {str(e)}")
+                st.exception(e)
     else:
         st.info("👆 Configure inputs to begin")
 

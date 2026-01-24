@@ -42,6 +42,7 @@ def evaluate(
     config_path: str | None = None,
     output_dir: str | None = None,
     config_overrides: Dict[str, Any] | None = None,
+    progress_callback: callable | None = None,
 ) -> Dict[str, Any]:
     """
     Run complete HEXEval evaluation pipeline.
@@ -84,6 +85,13 @@ def evaluate(
     LOG.info("HEXEval - Holistic Explanation Evaluation")
     LOG.info("=" * 60)
     
+    def report_progress(percent: float, message: str):
+        """Helper to report progress if callback provided."""
+        if progress_callback:
+            progress_callback(percent, message)
+    
+    report_progress(0, "Starting evaluation...")
+    
     config = load_config(config_path)
     if config_overrides:
         # Simple recursive update or flat update? 
@@ -94,12 +102,16 @@ def evaluate(
              config.setdefault("evaluation", {}).update(config_overrides["evaluation"])
              
     LOG.info("✓ Loaded configuration")
+    report_progress(5, "Configuration loaded")
     
+    report_progress(10, "Loading model...")
     model_wrapper = load_model(model_path)
     model_info = model_wrapper.get_model_info()
     LOG.info(f"✓ Loaded model: {model_info['model_type']}")
+    report_progress(15, f"Model loaded: {model_info['model_type']}")
     
     # Load data
+    report_progress(20, "Loading data...")
     data = load_data(
         data_path,
         target_column=target_column,
@@ -107,16 +119,20 @@ def evaluate(
         random_state=config["evaluation"]["random_state"],
     )
     LOG.info(f"✓ Loaded data: {len(data['X_train'])} train, {len(data['X_test'])} test")
+    report_progress(25, f"Data loaded: {len(data['X_train'])} samples")
     
+    report_progress(28, "Validating model-data compatibility...")
     validation = validate_model_data_compatibility(model_wrapper, data)
     if validation["status"] == "invalid":
         raise ValueError(f"Model-data validation failed: {validation['errors']}")
     LOG.info("✓ Validated model-data compatibility")
+    report_progress(30, "Validation complete")
     
     # Run technical evaluation
     LOG.info("\n" + "=" * 60)
     LOG.info("Running Technical Evaluation")
     LOG.info("=" * 60)
+    report_progress(35, "Running technical evaluation (SHAP, LIME, Anchor, DiCE)...")
     
     technical_results = run_technical_evaluation(
         model_wrapper=model_wrapper,
@@ -124,6 +140,7 @@ def evaluate(
         config=config["evaluation"],
     )
     LOG.info(f"✓ Technical evaluation complete ({len(technical_results)} methods)")
+    report_progress(60, "Technical evaluation complete")
     
     # Run persona evaluation
     persona_results = None
@@ -131,6 +148,7 @@ def evaluate(
         LOG.info("\n" + "=" * 60)
         LOG.info("Running Persona Evaluation (LLM)")
         LOG.info("=" * 60)
+        report_progress(65, "Running persona evaluation (LLM-based)...")
         
         try:
             persona_results = run_persona_evaluation(
@@ -139,23 +157,28 @@ def evaluate(
                 config=config,
             )
             LOG.info(f"✓ Persona evaluation complete")
+            report_progress(85, "Persona evaluation complete")
         except Exception as e:
             LOG.warning(f"Persona evaluation failed: {e}")
             LOG.warning("Continuing without persona ratings...")
+            report_progress(85, "Persona evaluation skipped")
     
     # Generate recommendations
     recommendations = None
     if config.get("recommendations", {}).get("enabled", True):
         import json
         if persona_results is not None:
-             recommendations = generate_recommendations(
+            report_progress(90, "Generating recommendations...")
+            recommendations = generate_recommendations(
                 technical_metrics=technical_results,
                 persona_ratings=persona_results,
                 config=config.get("recommendations", {}),
             )
-             LOG.info("✓ Generated recommendations")
+            LOG.info("✓ Generated recommendations")
+            report_progress(92, "Recommendations generated")
     
     # Save results
+    report_progress(95, "Saving results...")
     # User requested flattened output structure, no domain splitting
     final_output_dir = output_dir if output_dir else config.get("output", {}).get("dir", "outputs/hexeval_results")
     output_path = Path(final_output_dir)
@@ -174,6 +197,7 @@ def evaluate(
         LOG.info(f"  Saved: recommendations.json")
     
     LOG.info(f"\n✓ Results saved to: {output_path}")
+    report_progress(100, "Evaluation complete!")
     
     return {
         "technical_metrics": technical_results,
