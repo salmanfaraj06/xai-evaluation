@@ -144,11 +144,16 @@ def evaluate(
     
     # Persona Evaluation (LLM-based)
     persona_results = None
-    if config.get("personas", {}).get("enabled", False):
+    personas_enabled = config.get("personas", {}).get("enabled", False)
+    
+    LOG.info(f"Persona evaluation enabled: {personas_enabled}")
+    
+    if personas_enabled:
         LOG.info("\n" + "=" * 60)
         LOG.info("Running Persona Evaluation (LLM)")
         LOG.info("=" * 60)
         report_progress(65, "Running persona evaluation (LLM-based)...")
+        
         try:
             persona_results = run_persona_evaluation(
                 model_wrapper=model_wrapper,
@@ -162,7 +167,7 @@ def evaluate(
             LOG.warning("Continuing without persona ratings...")
             report_progress(85, "Persona evaluation skipped")
     else:
-        LOG.info("Persona evaluation disabled in config")
+        LOG.info("Persona evaluation disabled in config - skipping LLM evaluation")
         report_progress(85, "Persona evaluation skipped (disabled)")
     
     # Generate recommendations

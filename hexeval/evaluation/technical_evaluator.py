@@ -175,11 +175,17 @@ def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) ->
         domain_cfg.get("negative_outcome", "Class 1")
     ]
     
+    LOG.info(f"LIME Debug: X_train type: {type(X_train)}, shape: {X_train.shape if hasattr(X_train, 'shape') else 'N/A'}")
+    LOG.info(f"LIME Debug: X_train dtype: {X_train.dtype if hasattr(X_train, 'dtype') else 'N/A'}")
+    
     # Ensure X_train is numpy array and float64
     if not isinstance(X_train, np.ndarray):
         X_train = np.asarray(X_train, dtype=np.float64)
     else:
         X_train = X_train.astype(np.float64)
+    
+    LOG.info(f"LIME Debug: After conversion - X_train has NaN: {np.any(np.isnan(X_train))}")
+    LOG.info(f"LIME Debug: NaN count: {np.sum(np.isnan(X_train))}")
     
     # Add small jitter to prevent zero-variance features (LIME requirement)
     X_train_jittered = X_train.copy()
@@ -188,6 +194,9 @@ def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) ->
     variances = np.var(X_train_jittered, axis=0)
     min_variance = 1e-8  # Minimum acceptable variance
     
+    LOG.info(f"LIME Debug: Min variance: {np.min(variances)}, Max variance: {np.max(variances)}")
+    LOG.info(f"LIME Debug: Features with low variance: {np.sum(variances < min_variance)}")
+    
     for i in range(X_train_jittered.shape[1]):
         if variances[i] < min_variance:
             # Add small random noise proportional to the mean
@@ -195,9 +204,27 @@ def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) ->
             noise_scale = max(mean_val * 0.01, 0.01)  # 1% of mean or 0.01 minimum
             noise = np.random.RandomState(42 + i).normal(0, noise_scale, X_train_jittered.shape[0])
             X_train_jittered[:, i] += noise
+            LOG.info(f"LIME Debug: Added jitter to feature {i} (variance was {variances[i]:.2e})")
+    
+    # Check for and fill any NaN values
+    if np.any(np.isnan(X_train_jittered)):
+        nan_count = np.sum(np.isnan(X_train_jittered))
+        LOG.warning(f"LIME Debug: Found {nan_count} NaN values in X_train, filling with 0.0")
+        X_train_jittered = np.nan_to_num(X_train_jittered, nan=0.0, copy=False)
+        # Verify NaN removal worked
+        if np.any(np.isnan(X_train_jittered)):
+            LOG.error("LIME Debug: NaN still present after nan_to_num!")
+        else:
+            LOG.info("LIME Debug: Successfully removed all NaN values from X_train")
+    
+    LOG.info(f"LIME Debug: Final X_train_jittered has NaN: {np.any(np.isnan(X_train_jittered))}")
+    LOG.info(f"LIME Debug: Final shape: {X_train_jittered.shape}, dtype: {X_train_jittered.dtype}")
+    
+    # Make a clean copy to ensure no reference issues
+    X_train_clean = X_train_jittered.copy()
 
     explainer = LimeExplainer(
-        training_data=X_train_jittered,
+        training_data=X_train_clean,
         feature_names=feature_names,
         class_names=class_names,
         predict_fn=model.predict_proba,
@@ -206,6 +233,14 @@ def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) ->
     # Generate explanations
     lime_cfg = config["explainers"]["lime"]
     importances = []
+    
+    # Check and fix NaN in X_sample as well
+    if isinstance(X_sample, np.ndarray):
+        if np.any(np.isnan(X_sample)):
+            nan_count = np.sum(np.isnan(X_sample))
+            LOG.warning(f"LIME Debug: Found {nan_count} NaN values in X_sample, filling with 0.0")
+            X_sample = np.nan_to_num(X_sample, nan=0.0)
+    
     for i in range(len(X_sample)):
         weights = explainer.as_importance_vector(
             X_sample[i],
