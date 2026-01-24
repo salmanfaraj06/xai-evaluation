@@ -1,28 +1,6 @@
 {
   "Compliance & Risk Officer": {
     "recommended_method": "LIME",
-    "score": 0.6168808246332693,
-    "score_out_of": 1.0,
-    "reasoning": "LIME is the best available option with strong technical performance (0.93), but has low stakeholder trust (1.5/5), low satisfaction (1.5/5). Consider improving explanation delivery or adjusting weights.",
-    "technical_strengths": {
-      "method": "LIME",
-      "fidelity_deletion": "0.13247670146692275",
-      "fidelity_insertion": "0.20965173692665603",
-      "num_important_features": "10.0",
-      "rule_accuracy": "nan",
-      "rule_applicability": "nan",
-      "rule_length": "nan",
-      "counterfactual_success": "nan",
-      "counterfactual_sparsity": "nan",
-      "stability": "0.20525114891820465"
-    },
-    "persona_feedback": "This stakeholder type (Compliance & Risk Officer) rated LIME poorly on trust (1.5/5) and poorly on satisfaction (1.5/5).",
-    "alternatives": {
-      "SHAP": 0.5272622872559982
-    }
-  },
-  "Customer Success Manager": {
-    "recommended_method": "LIME",
     "score": 0.6468808246332693,
     "score_out_of": 1.0,
     "reasoning": "LIME is the best available option with strong technical performance (0.93), but has low stakeholder trust (2.0/5), low satisfaction (1.5/5). Consider improving explanation delivery or adjusting weights.",
@@ -36,18 +14,18 @@
       "rule_length": "nan",
       "counterfactual_success": "nan",
       "counterfactual_sparsity": "nan",
-      "stability": "0.20525114891820465"
+      "stability": "0.1314991585249074"
     },
-    "persona_feedback": "This stakeholder type (Customer Success Manager) rated LIME poorly on trust (2.0/5) and poorly on satisfaction (1.5/5).",
+    "persona_feedback": "This stakeholder type (Compliance & Risk Officer) rated LIME poorly on trust (2.0/5) and poorly on satisfaction (1.5/5).",
     "alternatives": {
-      "SHAP": 0.5872622872559983
+      "SHAP": 0.5272622872559982
     }
   },
-  "Loan Applicant (End User)": {
+  "Customer Success Manager": {
     "recommended_method": "LIME",
-    "score": 0.5968808246332693,
+    "score": 0.6268808246332693,
     "score_out_of": 1.0,
-    "reasoning": "LIME is the best available option with strong technical performance (0.93), but has low stakeholder trust (1.5/5), low satisfaction (1.0/5). Consider improving explanation delivery or adjusting weights.",
+    "reasoning": "LIME is the best available option with strong technical performance (0.93), but has low stakeholder trust (2.0/5), low satisfaction (1.0/5). Consider improving explanation delivery or adjusting weights.",
     "technical_strengths": {
       "method": "LIME",
       "fidelity_deletion": "0.13247670146692275",
@@ -58,16 +36,38 @@
       "rule_length": "nan",
       "counterfactual_success": "nan",
       "counterfactual_sparsity": "nan",
-      "stability": "0.20525114891820465"
+      "stability": "0.1314991585249074"
     },
-    "persona_feedback": "This stakeholder type (Loan Applicant (End User)) rated LIME poorly on trust (1.5/5) and poorly on satisfaction (1.0/5).",
+    "persona_feedback": "This stakeholder type (Customer Success Manager) rated LIME poorly on trust (2.0/5) and poorly on satisfaction (1.0/5).",
+    "alternatives": {
+      "SHAP": 0.5872622872559983
+    }
+  },
+  "Loan Applicant (End User)": {
+    "recommended_method": "LIME",
+    "score": 0.6268808246332693,
+    "score_out_of": 1.0,
+    "reasoning": "LIME is the best available option with strong technical performance (0.93), but has low stakeholder trust (2.0/5), low satisfaction (1.0/5). Consider improving explanation delivery or adjusting weights.",
+    "technical_strengths": {
+      "method": "LIME",
+      "fidelity_deletion": "0.13247670146692275",
+      "fidelity_insertion": "0.20965173692665603",
+      "num_important_features": "10.0",
+      "rule_accuracy": "nan",
+      "rule_applicability": "nan",
+      "rule_length": "nan",
+      "counterfactual_success": "nan",
+      "counterfactual_sparsity": "nan",
+      "stability": "0.1314991585249074"
+    },
+    "persona_feedback": "This stakeholder type (Loan Applicant (End User)) rated LIME poorly on trust (2.0/5) and poorly on satisfaction (1.0/5).",
     "alternatives": {
       "SHAP": 0.5072622872559982
     }
   },
   "Model Validation Analyst": {
     "recommended_method": "LIME",
-    "score": 0.6968808246332694,
+    "score": 0.7268808246332694,
     "score_out_of": 1.0,
     "reasoning": "LIME is the best available option with strong technical performance (0.93), but has low satisfaction (2.0/5). Consider improving explanation delivery or adjusting weights.",
     "technical_strengths": {
@@ -80,18 +80,18 @@
       "rule_length": "nan",
       "counterfactual_success": "nan",
       "counterfactual_sparsity": "nan",
-      "stability": "0.20525114891820465"
+      "stability": "0.1314991585249074"
     },
-    "persona_feedback": "This stakeholder type (Model Validation Analyst) rated LIME moderately on trust (2.5/5) and poorly on satisfaction (2.0/5).",
+    "persona_feedback": "This stakeholder type (Model Validation Analyst) rated LIME moderately on trust (3.0/5) and poorly on satisfaction (2.0/5).",
     "alternatives": {
-      "SHAP": 0.6272622872559982
+      "SHAP": 0.6072622872559982
     }
   },
   "Policy-Focused Loan Officer": {
     "recommended_method": "LIME",
-    "score": 0.6168808246332693,
+    "score": 0.6368808246332693,
     "score_out_of": 1.0,
-    "reasoning": "LIME is the best available option with strong technical performance (0.93), but has low stakeholder trust (1.5/5), low satisfaction (1.5/5). Consider improving explanation delivery or adjusting weights.",
+    "reasoning": "LIME is the best available option with strong technical performance (0.93), but has low stakeholder trust (1.5/5), low satisfaction (2.0/5). Consider improving explanation delivery or adjusting weights.",
     "technical_strengths": {
       "method": "LIME",
       "fidelity_deletion": "0.13247670146692275",
@@ -102,9 +102,9 @@
       "rule_length": "nan",
       "counterfactual_success": "nan",
       "counterfactual_sparsity": "nan",
-      "stability": "0.20525114891820465"
+      "stability": "0.1314991585249074"
     },
-    "persona_feedback": "This stakeholder type (Policy-Focused Loan Officer) rated LIME poorly on trust (1.5/5) and poorly on satisfaction (1.5/5).",
+    "persona_feedback": "This stakeholder type (Policy-Focused Loan Officer) rated LIME poorly on trust (1.5/5) and poorly on satisfaction (2.0/5).",
     "alternatives": {
       "SHAP": 0.5272622872559982
     }
@@ -124,7 +124,7 @@
       "rule_length": "nan",
       "counterfactual_success": "nan",
       "counterfactual_sparsity": "nan",
-      "stability": "0.20525114891820465"
+      "stability": "0.1314991585249074"
     },
     "persona_feedback": "This stakeholder type (Strategic Planning Director) rated LIME poorly on trust (2.0/5) and poorly on satisfaction (2.0/5).",
     "alternatives": {
