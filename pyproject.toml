@@ -34,4 +34,5 @@ dependencies = [
 dev = ["pytest", "black", "mypy"]
 
 [tool.setuptools]
-packages = ["hexeval", "hexeval.core", "hexeval.explainers", "hexeval.metrics", "hexeval.evaluation", "hexeval.ui", "hexeval.reports"]
+packages = ["hexeval", "hexeval.core", "hexeval.explainers", "hexeval.metrics", "hexeval.evaluation", "hexeval.ui"]
+
