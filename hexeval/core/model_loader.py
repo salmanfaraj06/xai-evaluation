@@ -49,11 +49,24 @@ def load_model(path: str | Path) -> ModelWrapper:
     
     LOG.info(f"Loading model from {path}")
     
+    # XGBoost compatibility fix: Add deprecated attribute BEFORE unpickling
+    # Models trained with XGBoost <1.6.0 have use_label_encoder attribute
+    try:
+        import xgboost as xgb
+        if hasattr(xgb, 'XGBClassifier'):
+            # Add the attribute if it doesn't exist (for newer XGBoost versions)
+            if not hasattr(xgb.XGBClassifier, 'use_label_encoder'):
+                xgb.XGBClassifier.use_label_encoder = False
+        if hasattr(xgb, 'XGBRegressor'):
+            if not hasattr(xgb.XGBRegressor, 'use_label_encoder'):
+                xgb.XGBRegressor.use_label_encoder = False
+    except ImportError:
+        pass  # XGBoost not installed, no problem
+    
     try:
         artifact = joblib.load(path)
     except Exception as e:
         raise ValueError(f"Failed to load model: {e}")
-    
     if isinstance(artifact, dict):
         # Already in artifact format
         model = artifact.get("model")
