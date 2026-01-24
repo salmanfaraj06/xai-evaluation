@@ -99,6 +99,18 @@ def load_data(
     
     LOG.info(f"  Train: {len(X_train)} samples, Test: {len(X_test)} samples")
     
+    # Encode categorical columns as numeric (label encoding)
+    if categorical_features:
+        from sklearn.preprocessing import LabelEncoder
+        for col in categorical_features:
+            le = LabelEncoder()
+            # Fit on combined data for consistent encoding
+            combined = pd.concat([X_train[col], X_test[col]])
+            le.fit(combined)
+            X_train[col] = le.transform(X_train[col])
+            X_test[col] = le.transform(X_test[col])
+        LOG.info(f"  Encoded {len(categorical_features)} categorical columns as numeric")
+    
     return {
         "X_train": X_train,
         "X_test": X_test,
@@ -170,7 +182,7 @@ def preprocess_for_model(
         X_proc = preprocessor.transform(X)
         return np.asarray(X_proc, dtype=np.float64)
     else:
-        # No preprocessing - return as-is
+        # No preprocessing - return as-is but handle categorical
         if feature_names:
             # Ensure column order matches
             missing_cols = set(feature_names) - set(X.columns)
@@ -178,11 +190,18 @@ def preprocess_for_model(
                 raise ValueError(f"Missing expected features: {missing_cols}")
             X = X[feature_names]
         
-        # Try converting to float for efficiency
-        try:
-            return X.values.astype(np.float64)
-        except ValueError:
-            # Fallback for mixed types (strings/categories)
-            # This allows pipelines with internal encoders to function
-            LOG.debug("Input contains non-numeric data, keeping as object dtype for pipeline processing")
-            return X.values.astype(object)
+        # Convert categorical columns to numeric codes
+        X_numeric = X.copy()
+        for col in X_numeric.columns:
+            if X_numeric[col].dtype.name == 'category':
+                X_numeric[col] = X_numeric[col].cat.codes
+            # Also handle any remaining object dtypes
+            elif X_numeric[col].dtype == 'object':
+                # Try to convert to numeric
+                X_numeric[col] = pd.to_numeric(X_numeric[col], errors='coerce')
+        
+        # Ensure all columns are numeric
+        result = X_numeric.values.astype(np.float64)
+        return result
+
+

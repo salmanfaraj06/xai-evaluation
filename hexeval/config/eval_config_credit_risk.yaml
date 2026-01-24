@@ -24,47 +24,47 @@ domain:
 
 # Evaluation Settings
 evaluation:
-  # Sample size for technical metrics (reduce for faster runs)
-  sample_size: 150
+  # Sample size for technical metrics (increased for research-level evaluation)
+  sample_size: 500
   
   # Random seed for reproducibility
   random_state: 42
   
   # Technical Metrics Configuration
   fidelity:
-    steps: 50  # Granularity for insertion/deletion curves
+    steps: 100  # Granularity for insertion/deletion curves (increased for precision)
   
   stability:
     noise_std: 0.02  # Noise level for robustness testing
-    repeats: 5  # Number of perturbations per instance
+    repeats: 10  # Number of perturbations per instance (increased for robustness)
   
   # Explainer-Specific Settings
   explainers:
     shap:
       enabled: true
-      background_size: 500  # Number of background samples
+      background_size: 1000  # Number of background samples (increased for accuracy)
     
     lime:
       enabled: true
-      num_samples: 3000  # Perturbations per explanation
+      num_samples: 5000  # Perturbations per explanation (increased for stability)
       num_features: 10  # Top features to explain
       stability_test: true
-      stability_subset: 30  # Instances to test stability
+      stability_subset: 50  # Instances to test stability (increased)
     
     anchor:
       enabled: true
-      precision_threshold: 0.9  # Minimum rule precision
-      max_instances: 30  # Max instances to explain (Anchor is slow)
+      precision_threshold: 0.95  # Minimum rule precision (increased for quality)
+      max_instances: 50  # Max instances to explain (increased for coverage)
     
     dice:
       enabled: true
-      num_counterfactuals: 3  # CFs to generate per instance
-      max_instances: 10  # Max instances (DiCE is slow)
+      num_counterfactuals: 3  # CFs to generate per instance (increased for diversity)
+      max_instances: 30  # Max instances (increased for coverage)
       method: "random"  # CF generation method
 
 # Human Proxy Evaluation (LLM Personas)
 personas:
-  enabled: true
+  enabled: false
   file: "hexeval/config/personas_credit_risk.yaml"
   
   # LLM Model Selection
@@ -72,7 +72,7 @@ personas:
   #   - "gpt-4" / "gpt-4-turbo" - Standard models (good balance)
   #   - "gpt-4o" - Optimized, faster
   #   - "o1-mini" / "o3-mini" - Reasoning models (GPT-5 range, better for complex evaluation)
-  llm_model: "gpt-4o"  # Default: fast and accurate
+  llm_model: "gpt-4o" 
   
   # For GPT-5/reasoning models, use fewer runs due to cost
   runs_per_method: 1  # Reduced from 2 → 1 run per method (faster)

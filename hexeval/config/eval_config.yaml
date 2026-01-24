@@ -33,36 +33,37 @@ personas:
   top_k_features: 5
 
 evaluation:
-  sample_size: 100           # Smaller size for faster testing
+  sample_size: 500           # Increased for research-level evaluation
   random_state: 42
   
   fidelity:
-    steps: 20                
+    steps: 100                # Increased for precision
   
   stability:
     noise_std: 0.05
-    repeats: 5
+    repeats: 10               # Increased for robustness
   
   explainers:
     shap:
       enabled: true
-      background_size: 100   
+      background_size: 1000   # Increased for accuracy
     
     lime:
       enabled: true
-      num_samples: 500      
+      num_samples: 5000      # Increased for stability
       num_features: 5       
       stability_test: true
+      stability_subset: 50   # Increased
     
     anchor:
       enabled: true
-      precision_threshold: 0.9
-      max_instances: 10      
+      precision_threshold: 0.95  # Increased for quality
+      max_instances: 50      # Increased for coverage
     
     dice:
       enabled: true
-      num_counterfactuals: 3
-      max_instances: 5      
+      num_counterfactuals: 5  # Increased for diversity
+      max_instances: 30      # Increased for coverage
       method: "random"
 
 

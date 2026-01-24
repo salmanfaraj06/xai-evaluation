@@ -26,7 +26,7 @@ class LimeExplainer:
             feature_names=feature_names,
             class_names=class_names,
             mode="classification",
-            discretize_continuous=True,
+            discretize_continuous=False,  # Disable to prevent truncnorm errors with encoded categoricals
             random_state=random_state,
         )
 

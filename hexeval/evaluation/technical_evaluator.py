@@ -73,6 +73,7 @@ def run_technical_evaluation(
     sample_idx = rng.choice(len(X_test_proc), size=sample_size, replace=False)
     X_sample = X_test_proc[sample_idx]
     
+    # Compute baseline (X_train_proc is already numeric numpy array from preprocess_for_model)
     baseline = X_train_proc.mean(axis=0)
     
     results = []
@@ -173,9 +174,30 @@ def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) ->
         domain_cfg.get("positive_outcome", "Class 0"),
         domain_cfg.get("negative_outcome", "Class 1")
     ]
+    
+    # Ensure X_train is numpy array and float64
+    if not isinstance(X_train, np.ndarray):
+        X_train = np.asarray(X_train, dtype=np.float64)
+    else:
+        X_train = X_train.astype(np.float64)
+    
+    # Add small jitter to prevent zero-variance features (LIME requirement)
+    X_train_jittered = X_train.copy()
+    
+    # Check for zero or very low variance columns
+    variances = np.var(X_train_jittered, axis=0)
+    min_variance = 1e-8  # Minimum acceptable variance
+    
+    for i in range(X_train_jittered.shape[1]):
+        if variances[i] < min_variance:
+            # Add small random noise proportional to the mean
+            mean_val = np.abs(np.mean(X_train_jittered[:, i]))
+            noise_scale = max(mean_val * 0.01, 0.01)  # 1% of mean or 0.01 minimum
+            noise = np.random.RandomState(42 + i).normal(0, noise_scale, X_train_jittered.shape[0])
+            X_train_jittered[:, i] += noise
 
     explainer = LimeExplainer(
-        training_data=X_train,
+        training_data=X_train_jittered,
         feature_names=feature_names,
         class_names=class_names,
         predict_fn=model.predict_proba,
