@@ -1,5 +1,8 @@
 # HEXEval Requirements
 
+# Install hexeval package itself (CRITICAL for Streamlit Cloud)
+-e .
+
 # Core Dependencies
 pandas>=1.5.0,<2.0.0
 numpy>=1.23.0,<2.0.0

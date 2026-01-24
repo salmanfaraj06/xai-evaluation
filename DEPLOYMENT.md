@@ -184,9 +184,16 @@ Once deployed, test all functionality:
 
 ### App Won't Start
 
-**Error**: `ModuleNotFoundError`
+**Error**: `ModuleNotFoundError: No module named 'hexeval'`
 
 **Solution**: 
+- Ensure `requirements.txt` contains `-e .` at the top to install the hexeval package
+- This installs the local package in editable mode on Streamlit Cloud
+- Redeploy the app after updating requirements.txt
+
+**Error**: Other `ModuleNotFoundError`
+
+**Solution**:  
 - Check `requirements.txt` has all dependencies
 - Verify Python version in `runtime.txt` matches
 
