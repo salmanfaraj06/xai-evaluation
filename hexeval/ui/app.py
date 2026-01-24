@@ -190,6 +190,224 @@ with tab1:
             help="Name of the prediction target in your dataset"
         )
         
+        # Custom Configuration Editors (only for Custom Upload)
+        if selected_use_case == "Custom Upload":
+            st.divider()
+            st.subheader("📝 Custom Configuration")
+            st.caption("Edit the YAML configurations below to customize your evaluation")
+            
+            # Default evaluation config template (ALL possible options)
+            default_eval_config = """# Customize this configuration for your use case
+
+domain:
+  name: "Custom Prediction Task"
+  prediction_task: "prediction"
+  decision_verb: "classify"
+  decision_noun: "case"
+  stakeholder_context: "in your organization"
+  end_user_context: "affected by this decision"
+  positive_outcome: "positive class"
+  negative_outcome: "negative class"
+  
+  terms:
+    applicant: "subject"
+    application: "case"
+    risk_factor: "risk indicator"
+    decision_maker: "analyst"
+
+personas:
+  enabled: true
+  file: "custom_personas.yaml"
+  llm_model: "gpt-4o"  # Options: "gpt-4o", "gpt-4", "gpt-4-turbo", "o1-mini", "o3-mini"
+  runs_per_method: 1
+  sample_instances: 3
+  top_k_features: 5
+
+evaluation:
+  sample_size: 100
+  random_state: 42
+  
+  fidelity:
+    steps: 20  # Granularity for insertion/deletion curves (20-50)
+  
+  stability:
+    noise_std: 0.05  # Standard deviation of noise (0.01-0.05)
+    repeats: 5       # Number of perturbations per instance (3-10)
+  
+  explainers:
+    shap:
+      enabled: true
+      background_size: 100  # Background samples for SHAP (100-1000)
+    
+    lime:
+      enabled: true
+      num_samples: 500       # Perturbations per explanation (500-5000)
+      num_features: 5        # Top K features to explain (5-15)
+      stability_test: true   # Whether to test stability
+      stability_subset: 30   # Instances to test for stability (20-50)
+    
+    anchor:
+      enabled: true
+      precision_threshold: 0.9  # Minimum rule precision (0.8-0.95)
+      max_instances: 10         # Max instances to explain (10-50)
+    
+    dice:
+      enabled: true
+      num_counterfactuals: 3  # How many CF examples to generate (3-5)
+      max_instances: 5        # Max instances to explain (5-20)
+      method: "random"        # Options: "random", "genetic", "kdtree"
+      sparsity_epsilon: 1e-6  # Tolerance for counting feature changes
+
+recommendations:
+  enabled: true
+  dice_sparsity_target: 3  # Target number of feature changes for quality scoring
+  weights:
+    technical_fidelity: 0.3      # Weight for accuracy (0.0-1.0)
+    technical_parsimony: 0.2     # Weight for simplicity (0.0-1.0)
+    persona_trust: 0.3           # Weight for stakeholder trust (0.0-1.0)
+    persona_satisfaction: 0.2    # Weight for stakeholder satisfaction (0.0-1.0)
+"""
+            
+            # Default persona template
+            default_personas = """- name: "Technical Expert"
+  role: "Data Scientist"
+  experience_years: 8
+  risk_profile: "Balanced, focused on model accuracy"
+  decision_style: "Analytical, data-driven"
+  ai_comfort: "High - expert in ML systems"
+  priorities:
+    - "Model accuracy and reliability"
+    - "Understanding feature importance"
+    - "Detecting potential biases"
+  mental_model: |
+    Models should be accurate and explainable. I need to understand
+    how the model makes decisions to validate its reasoning.
+  heuristics:
+    - "Check if important features make domain sense"
+    - "Look for unexpected correlations"
+    - "Verify consistency across predictions"
+  explanation_preferences: |
+    Needs comprehensive technical details. Values precision over simplicity.
+    Should show all meaningful factors.
+
+- name: "End User"
+  role: "Affected Individual"
+  experience_years: 0
+  risk_profile: "Wants to understand the decision about them"
+  decision_style: "Seeks clear, actionable guidance"
+  ai_comfort: "Low - unfamiliar with AI"
+  priorities:
+    - "Understanding why this decision was made"
+    - "Knowing what I can change"
+    - "Ensuring fairness"
+  mental_model: |
+    This decision affects my life. I need to know if it's fair
+    and what I can do about it.
+  heuristics:
+    - "Focus on factors I can control"
+    - "Check if the decision seems fair"
+    - "Look for concrete next steps"
+  explanation_preferences: |
+    Needs simple, jargon-free language. Should identify 2-3 key factors
+    and provide actionable next steps.
+"""
+            
+            # Initialize session state for configs
+            if 'custom_eval_config' not in st.session_state:
+                st.session_state['custom_eval_config'] = default_eval_config
+            if 'custom_personas' not in st.session_state:
+                st.session_state['custom_personas'] = default_personas
+            
+            # Reset counters to force editor re-render
+            if 'eval_reset_count' not in st.session_state:
+                st.session_state['eval_reset_count'] = 0
+            if 'personas_reset_count' not in st.session_state:
+                st.session_state['personas_reset_count'] = 0
+            
+            # Import Ace editor
+            from streamlit_ace import st_ace
+            
+            # Config editors in tabs
+            config_tab1, config_tab2 = st.tabs(["⚙️ Evaluation Config", "👥 Personas"])
+            
+            with config_tab1:
+                st.caption("Configure evaluation settings, domain context, and explainer parameters")
+                
+                # Ace editor for evaluation config
+                custom_eval_config = st_ace(
+                    value=st.session_state['custom_eval_config'],
+                    language='yaml',
+                    theme='github',  # Light theme
+                    keybinding='vscode',
+                    font_size=14,
+                    tab_size=2,
+                    show_gutter=True,  # Line numbers
+                    show_print_margin=False,
+                    wrap=False,
+                    auto_update=True,
+                    readonly=False,
+                    min_lines=25,
+                    key=f"eval_config_editor_{st.session_state['eval_reset_count']}",  # Change key on reset
+                    height=500
+                )
+                
+                # Update session state with current value
+                st.session_state['custom_eval_config'] = custom_eval_config
+                
+                col1, col2 = st.columns([3, 1])
+                with col1:
+                    if st.button("↻ Reset to Default", key="reset_eval_config"):
+                        st.session_state['custom_eval_config'] = default_eval_config
+                        st.session_state['eval_reset_count'] += 1  # Increment to change key
+                        st.rerun()
+                with col2:
+                    # Validate YAML using the updated value
+                    try:
+                        import yaml
+                        yaml.safe_load(custom_eval_config)  # Validate what user just typed
+                        st.success("✓ Valid", icon="✅")
+                    except yaml.YAMLError as e:
+                        st.error("✗ Invalid", icon="❌")
+            
+            with config_tab2:
+                st.caption("Define stakeholder personas who will evaluate the explanations")
+                
+                # Ace editor for personas
+                custom_personas = st_ace(
+                    value=st.session_state['custom_personas'],
+                    language='yaml',
+                    theme='github',  # Light theme
+                    keybinding='vscode',
+                    font_size=14,
+                    tab_size=2,
+                    show_gutter=True,  # Line numbers
+                    show_print_margin=False,
+                    wrap=False,
+                    auto_update=True,
+                    readonly=False,
+                    min_lines=25,
+                    key=f"personas_editor_{st.session_state['personas_reset_count']}",  # Change key on reset
+                    height=500
+                )
+                
+                # Update session state with current value
+                st.session_state['custom_personas'] = custom_personas
+                
+                col1, col2 = st.columns([3, 1])
+                with col1:
+                    if st.button("↻ Reset to Default", key="reset_personas"):
+                        st.session_state['custom_personas'] = default_personas
+                        st.session_state['personas_reset_count'] += 1  # Increment to change key
+                        st.rerun()
+                with col2:
+                    # Validate YAML using the updated value
+                    try:
+                        import yaml
+                        yaml.safe_load(custom_personas)  # Validate what user just typed
+                        st.success("✓ Valid", icon="✅")
+                    except yaml.YAMLError as e:
+                        st.error("✗ Invalid", icon="❌")
+        
         # Handle file saving
         if model_file and data_file:
             # We need to save them content to pass paths to evaluate()
@@ -256,12 +474,51 @@ with tab1:
                     st.write(f"Using Model: `{final_model_path}`")
                     st.write(f"Using Data: `{final_data_path}`")
 
+                    # Handle custom configs for Custom Upload
+                    config_path_to_use = use_case_config["config_path"]
+                    
+                    if selected_use_case == "Custom Upload" and 'custom_eval_config' in st.session_state:
+                        import yaml
+                        
+                        # Save custom configs to temporary files
+                        custom_config_dir = Path("outputs/custom_upload")
+                        custom_config_dir.mkdir(parents=True, exist_ok=True)
+                        
+                        # Save evaluation config
+                        custom_config_path = custom_config_dir / "custom_eval_config.yaml"
+                        try:
+                            custom_config_data = yaml.safe_load(st.session_state['custom_eval_config'])
+                            with open(custom_config_path, 'w') as f:
+                                yaml.dump(custom_config_data, f)
+                            config_path_to_use = str(custom_config_path)
+                            st.info(f"✓ Using custom evaluation config")
+                        except yaml.YAMLError as e:
+                            st.error(f"Invalid YAML in evaluation config: {e}")
+                            raise
+                        
+                        # Save personas config
+                        custom_personas_path = custom_config_dir / "custom_personas.yaml"
+                        try:
+                            custom_personas_data = yaml.safe_load(st.session_state['custom_personas'])
+                            with open(custom_personas_path, 'w') as f:
+                                yaml.dump(custom_personas_data, f)
+                            
+                            # Update the personas file path in the config
+                            custom_config_data['personas']['file'] = str(custom_personas_path)
+                            with open(custom_config_path, 'w') as f:
+                                yaml.dump(custom_config_data, f)
+                            
+                            st.info(f"✓ Using custom personas config")
+                        except yaml.YAMLError as e:
+                            st.error(f"Invalid YAML in personas config: {e}")
+                            raise
+
                     # Run evaluation
                     results = evaluate(
                         model_path=final_model_path,
                         data_path=final_data_path,
                         target_column=target_column,
-                        config_path=use_case_config["config_path"],
+                        config_path=config_path_to_use,
                         output_dir=use_case_config["output_dir"],
                         config_overrides={
                             "personas": {"enabled": enable_personas},

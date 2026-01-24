@@ -22,6 +22,7 @@ openai>=1.0.0,<2.0.0
 # UI (required for Streamlit Cloud)
 streamlit>=1.28.0,<2.0.0
 plotly>=5.17.0,<6.0.0
+streamlit-ace>=0.1.1,<1.0.0  # Code editor for custom configs
 
 # Utilities
 joblib>=1.3.0,<2.0.0
