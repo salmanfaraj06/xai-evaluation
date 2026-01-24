@@ -172,9 +172,19 @@ def generate_recommendations(
                 if pd.notna(tech_row.get("counterfactual_success")):
                     # Higher success = better (already 0-1)
                     success_score = tech_row["counterfactual_success"]
-                
-                # Only one metric for DiCE currently
-                technical_score = success_score
+
+                sparsity_score = None
+                if pd.notna(tech_row.get("counterfactual_sparsity")):
+                    # Fewer changed features = better parsimony
+                    target = config.get("dice_sparsity_target", 3)
+                    sparsity = tech_row["counterfactual_sparsity"]
+                    sparsity_score = min(1.0, target / max(sparsity, 1))
+
+                if sparsity_score is not None:
+                    technical_score = (success_score + sparsity_score) / 2
+                else:
+                    # Backward-compatible fallback
+                    technical_score = success_score
             
             else:
                 # Unknown method - default to 0

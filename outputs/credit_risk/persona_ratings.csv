@@ -1,433 +1,433 @@
 persona_name,persona_role,explanation_type,instance_index,run,interpretability,completeness,actionability,trust,satisfaction,decision_support,comment,raw_llm_response,used_llm
-Jordan Walsh,Policy-Focused Loan Officer,SHAP,581,0,2.0,2.0,1.0,2.0,2.0,2.0,"As a Policy-Focused Loan Officer, the explanation provided by the AI is difficult to interpret since it uses SHAP values without detailing how these were derived in a straightforward manner. The mention of factors like 'person_income' and 'loan_grade_D' offers some insights, but it lacks the depth and context around factors such as credit history and employment duration which are crucial for my decisions. There is no clear guidance on specific actions to take next, making it difficult to trust the system and confidently explain the decision to management or clients.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 2
-decision_support = 2
-comment = ""As a Policy-Focused Loan Officer, the explanation provided by the AI is difficult to interpret since it uses SHAP values without detailing how these were derived in a straightforward manner. The mention of factors like 'person_income' and 'loan_grade_D' offers some insights, but it lacks the depth and context around factors such as credit history and employment duration which are crucial for my decisions. There is no clear guidance on specific actions to take next, making it difficult to trust the system and confidently explain the decision to management or clients.""
-```",gpt-4o
-Jordan Walsh,Policy-Focused Loan Officer,LIME,581,0,2.0,2.0,1.0,2.0,2.0,1.0,"The explanation provided by the AI using the LIME method is difficult for me to interpret, as it relies on abstract weights without context or clear connection to our institutional policies. It doesn't cover all the factors I consider important, such as credit history and employment stability. There is no actionable guidance or consideration of compensatory factors, which makes it hard to trust fully. Overall, my needs as a risk-averse officer focused on justify decisions to management are not met. It doesn't offer clear, defendable reasons for the AI's prediction that I can comfortably explain to stakeholders.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 2
-decision_support = 1
-comment = ""The explanation provided by the AI using the LIME method is difficult for me to interpret, as it relies on abstract weights without context or clear connection to our institutional policies. It doesn't cover all the factors I consider important, such as credit history and employment stability. There is no actionable guidance or consideration of compensatory factors, which makes it hard to trust fully. Overall, my needs as a risk-averse officer focused on justify decisions to management are not met. It doesn't offer clear, defendable reasons for the AI's prediction that I can comfortably explain to stakeholders.""
-```",gpt-4o
-Jordan Walsh,Policy-Focused Loan Officer,ANCHOR,581,0,2.0,2.0,1.0,2.0,1.0,1.0,"As a Policy-Focused Loan Officer, I find this explanation lacking in critical areas. The 'ANCHOR' method shows a rule based on loan income percentage, but it doesn't align with my comprehensive criteria for decision-making like credit history and employment stability. It's not clear enough to explain or defend to management, nor does it provide actionable steps. Additionally, the one-dimensional focus undermines my confidence in the AI's prediction, as it doesn't cover the broader context I need.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 1
-decision_support = 1
-comment = ""As a Policy-Focused Loan Officer, I find this explanation lacking in critical areas. The 'ANCHOR' method shows a rule based on loan income percentage, but it doesn't align with my comprehensive criteria for decision-making like credit history and employment stability. It's not clear enough to explain or defend to management, nor does it provide actionable steps. Additionally, the one-dimensional focus undermines my confidence in the AI's prediction, as it doesn't cover the broader context I need.""
-```",gpt-4o
-Jordan Walsh,Policy-Focused Loan Officer,COUNTERFACTUAL,581,0,2.0,1.0,1.0,1.0,1.0,1.0,"The explanation provided by the AI is not clear and lacks the necessary context to be understandable or useful. As a policy-focused loan officer, I need details about credit history, employment tenure, and other relevant financial indicators, none of which are included here. The terms 'loan_intent_MEDICAL' and 'loan_intent_VENTURE' don't align with our established metrics or guidelines and do not provide actionable insights or justification for altering or confirming the loan decision. Therefore, I am unable to trust or rely on this explanation in my decision-making process.","```toml
-interpretability = 2
-completeness = 1
-actionability = 1
-trust = 1
-satisfaction = 1
-decision_support = 1
-comment = ""The explanation provided by the AI is not clear and lacks the necessary context to be understandable or useful. As a policy-focused loan officer, I need details about credit history, employment tenure, and other relevant financial indicators, none of which are included here. The terms 'loan_intent_MEDICAL' and 'loan_intent_VENTURE' don't align with our established metrics or guidelines and do not provide actionable insights or justification for altering or confirming the loan decision. Therefore, I am unable to trust or rely on this explanation in my decision-making process.""
-```",gpt-4o
-Jordan Walsh,Policy-Focused Loan Officer,SHAP,5043,0,2.0,3.0,2.0,2.0,2.0,2.0,"As a Policy-Focused Loan Officer, the SHAP values presented here are relatively abstract and don't provide clear, human-readable explanations needed for decision-making. While it lists factors like income and loan grade, it doesn't relate them to institutional policies or give insight into compensating factors or red flags. The AI explanation lacks specific guidance on actions or justification to confidently explain decisions to management or customers. Overall, the depth and contextual alignment to my methodology are insufficient.","```toml
+Jordan Walsh,Policy-Focused Loan Officer,SHAP,581,0,2.0,3.0,2.0,2.0,2.0,2.0,"The explanation is heavily reliant on SHAP values without context, making it difficult to interpret intuitively. While it provides some factors considered, it's missing narrative explanations for why these factors matter in this case and how they relate to institutional policies on loan default risks. There is insufficient guidance for next steps, and I cannot confidently utilize this in my decision-making or explain it clearly to management or customers.","```toml
 interpretability = 2
 completeness = 3
 actionability = 2
 trust = 2
 satisfaction = 2
 decision_support = 2
-comment = ""As a Policy-Focused Loan Officer, the SHAP values presented here are relatively abstract and don't provide clear, human-readable explanations needed for decision-making. While it lists factors like income and loan grade, it doesn't relate them to institutional policies or give insight into compensating factors or red flags. The AI explanation lacks specific guidance on actions or justification to confidently explain decisions to management or customers. Overall, the depth and contextual alignment to my methodology are insufficient.""
+comment = ""The explanation is heavily reliant on SHAP values without context, making it difficult to interpret intuitively. While it provides some factors considered, it's missing narrative explanations for why these factors matter in this case and how they relate to institutional policies on loan default risks. There is insufficient guidance for next steps, and I cannot confidently utilize this in my decision-making or explain it clearly to management or customers.""
 ```",gpt-4o
-Jordan Walsh,Policy-Focused Loan Officer,LIME,5043,0,2.0,2.0,1.0,2.0,2.0,2.0,"As a Policy-Focused Loan Officer, this explanation is difficult to understand because it's presented with technical jargon and numerical thresholds that don't align with my mental model. I'm not presented with a clear overview of the applicant's credit history, employment, or specific red flags. The explanation doesn't guide my next steps or offer confidence in the soundness of the recommendation. I can't easily map it to our institutional policies or defend it to management because it's insufficient and cryptic.","```toml
+Jordan Walsh,Policy-Focused Loan Officer,LIME,581,0,2.0,2.0,1.0,1.0,1.0,1.0,"The explanation provided by the AI system, expressed through LIME weights, is difficult to interpret as it lacks context and does not align with the institutional policies or provide a rationale for each factor affecting the loan's default risk. As a policy-focused loan officer, I find it challenging to extract meaningful insights from this output due to its technical nature. There are no clear actions or compelling justifications offered, which undermines my confidence and ability to justify decisions based on this explanation.","```toml
+interpretability = 2
+completeness = 2
+actionability = 1
+trust = 1
+satisfaction = 1
+decision_support = 1
+comment = ""The explanation provided by the AI system, expressed through LIME weights, is difficult to interpret as it lacks context and does not align with the institutional policies or provide a rationale for each factor affecting the loan's default risk. As a policy-focused loan officer, I find it challenging to extract meaningful insights from this output due to its technical nature. There are no clear actions or compelling justifications offered, which undermines my confidence and ability to justify decisions based on this explanation.""
+```",gpt-4o
+Jordan Walsh,Policy-Focused Loan Officer,ANCHOR,581,0,2.0,2.0,1.0,2.0,2.0,1.0,"As a Policy-Focused Loan Officer, I find the explanation provided by the AI using the ANCHOR method to be lacking in several aspects critical for my decision-making. The information about 'loan_percent_income' with precision and coverage lacks context and depth, making it difficult for me to understand its implications on the applicant's overall risk profile. It doesn't consider other vital aspects such as credit history, employment tenure, or recent credit issues, which I consider crucial. The explanation doesn't provide clear guidance or next steps, plus it falls short in helping me justify this decision to management or customers. Overall, I need more comprehensive information to make a responsible and defensible decision.","```toml
+interpretability = 2
+completeness = 2
+actionability = 1
+trust = 2
+satisfaction = 2
+decision_support = 1
+comment = ""As a Policy-Focused Loan Officer, I find the explanation provided by the AI using the ANCHOR method to be lacking in several aspects critical for my decision-making. The information about 'loan_percent_income' with precision and coverage lacks context and depth, making it difficult for me to understand its implications on the applicant's overall risk profile. It doesn't consider other vital aspects such as credit history, employment tenure, or recent credit issues, which I consider crucial. The explanation doesn't provide clear guidance or next steps, plus it falls short in helping me justify this decision to management or customers. Overall, I need more comprehensive information to make a responsible and defensible decision.""
+```",gpt-4o
+Jordan Walsh,Policy-Focused Loan Officer,COUNTERFACTUAL,581,0,2.0,1.0,2.0,1.0,1.0,1.0,"As a Policy-Focused Loan Officer, I find this explanation difficult to understand and incomplete. It lacks clarity on how these changes relate to institutional policies or specific decision factors like credit history and employment stability. The suggestion to change home ownership and loan grade without context doesn't offer actionable guidance aligned with my priorities. Overall, this lacks the depth and justification needed for me to confidently use or explain the decision.","```toml
+interpretability = 2
+completeness = 1
+actionability = 2
+trust = 1
+satisfaction = 1
+decision_support = 1
+comment = ""As a Policy-Focused Loan Officer, I find this explanation difficult to understand and incomplete. It lacks clarity on how these changes relate to institutional policies or specific decision factors like credit history and employment stability. The suggestion to change home ownership and loan grade without context doesn't offer actionable guidance aligned with my priorities. Overall, this lacks the depth and justification needed for me to confidently use or explain the decision.""
+```",gpt-4o
+Jordan Walsh,Policy-Focused Loan Officer,SHAP,5043,0,2.0,3.0,2.0,2.0,2.0,2.0,"The AI explanation using SHAP values is not very clear to me as I am unfamiliar with how these directly translate into risk assessment. It lacks the narrative and context I need to understand whether compensating factors offset any red flags. While it does identify influencing factors, it doesn’t guide me towards a decision nor reassure me of the reasoning. The absence of context behind these numeric values makes it challenging for me to justify to others.","```toml
+interpretability = 2
+completeness = 3
+actionability = 2
+trust = 2
+satisfaction = 2
+decision_support = 2
+comment = ""The AI explanation using SHAP values is not very clear to me as I am unfamiliar with how these directly translate into risk assessment. It lacks the narrative and context I need to understand whether compensating factors offset any red flags. While it does identify influencing factors, it doesn’t guide me towards a decision nor reassure me of the reasoning. The absence of context behind these numeric values makes it challenging for me to justify to others.""
+```",gpt-4o
+Jordan Walsh,Policy-Focused Loan Officer,LIME,5043,0,2.0,2.0,1.0,2.0,2.0,2.0,"As a Policy-Focused Loan Officer, this AI explanation is difficult to interpret and align with our institutional policies. The technical jargon and LIME weights aren't intuitive and don't map clearly to key criteria like credit history, employment stability, or debt levels. This explanation lacks the completeness needed to cover critical factors specific to loan approval, offering no clear next steps. Consequently, I find it hard to fully trust or defend this output as it doesn't enhance my ability to make a sound, justified decision.","```toml
 interpretability = 2
 completeness = 2
 actionability = 1
 trust = 2
 satisfaction = 2
 decision_support = 2
-comment = ""As a Policy-Focused Loan Officer, this explanation is difficult to understand because it's presented with technical jargon and numerical thresholds that don't align with my mental model. I'm not presented with a clear overview of the applicant's credit history, employment, or specific red flags. The explanation doesn't guide my next steps or offer confidence in the soundness of the recommendation. I can't easily map it to our institutional policies or defend it to management because it's insufficient and cryptic.""
+comment = ""As a Policy-Focused Loan Officer, this AI explanation is difficult to interpret and align with our institutional policies. The technical jargon and LIME weights aren't intuitive and don't map clearly to key criteria like credit history, employment stability, or debt levels. This explanation lacks the completeness needed to cover critical factors specific to loan approval, offering no clear next steps. Consequently, I find it hard to fully trust or defend this output as it doesn't enhance my ability to make a sound, justified decision.""
 ```",gpt-4o
-Jordan Walsh,Policy-Focused Loan Officer,ANCHOR,5043,0,1.0,2.0,1.0,2.0,1.0,1.0,"As a Policy-Focused Loan Officer, this explanation does not meet my needs. The technical detail of 'loan_percent_income <= -0.19' is unclear and doesn't relate to the factors I consider most crucial, such as credit history and employment stability. It gives me no clear steps to follow, and the output lacks enough context or detail to trust the decision or explain it to management or customers.","```toml
-interpretability = 1
-completeness = 2
+Jordan Walsh,Policy-Focused Loan Officer,ANCHOR,5043,0,2.0,1.0,1.0,1.0,1.0,1.0,"The explanation provided by the AI is too vague and technical for me to understand easily. It lacks critical information such as credit history, employment tenure, or other compensating factors that influence my decision process. Moreover, it doesn't offer any guidance on specific next steps or how to approach the approval decision. As a policy-focused loan officer, I cannot confidently or convincingly justify this decision to management based on these details. Consequently, the explanation fails to provide the support I need in making a responsible lending decision.","```toml
+interpretability = 2
+completeness = 1
 actionability = 1
-trust = 2
+trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""As a Policy-Focused Loan Officer, this explanation does not meet my needs. The technical detail of 'loan_percent_income <= -0.19' is unclear and doesn't relate to the factors I consider most crucial, such as credit history and employment stability. It gives me no clear steps to follow, and the output lacks enough context or detail to trust the decision or explain it to management or customers.""
+comment = ""The explanation provided by the AI is too vague and technical for me to understand easily. It lacks critical information such as credit history, employment tenure, or other compensating factors that influence my decision process. Moreover, it doesn't offer any guidance on specific next steps or how to approach the approval decision. As a policy-focused loan officer, I cannot confidently or convincingly justify this decision to management based on these details. Consequently, the explanation fails to provide the support I need in making a responsible lending decision.""
 ```",gpt-4o
-Jordan Walsh,Policy-Focused Loan Officer,COUNTERFACTUAL,5043,0,2.0,2.0,1.0,2.0,2.0,1.0,"As a Policy-Focused Loan Officer, the explanation provided by the AI lacks the clarity and completeness I need to make an informed decision. The use of 'COUNTERFACTUAL' explanations mentioning 'person_emp_length' and 'loan_grade_D' needing to change by specific amounts doesn't map clearly onto our institutional policies or explain why these factors are critical in this context. The explanation doesn't offer actionable insights or clear guidance on what steps to take next. Additionally, the absence of context about the applicant's credit history, employment stability, and any specific red flags makes it challenging to justify or trust this decision to management or customers.","```toml
+Jordan Walsh,Policy-Focused Loan Officer,COUNTERFACTUAL,5043,0,2.0,2.0,1.0,2.0,2.0,1.0,"The explanation provided by the AI system is quite cryptic and doesn't align with my needs as a loan officer. The numerical adjustments to loan grades don't give me a concrete understanding of why the risk prediction was made and its relation to the applicant's profile, such as credit history or employment stability. For trust, I need clearer insights into the factors impacting the decision, and this explanation lacks the necessary depth and clarity to make an informed and defensible decision.","```toml
 interpretability = 2
 completeness = 2
 actionability = 1
 trust = 2
 satisfaction = 2
 decision_support = 1
-comment = ""As a Policy-Focused Loan Officer, the explanation provided by the AI lacks the clarity and completeness I need to make an informed decision. The use of 'COUNTERFACTUAL' explanations mentioning 'person_emp_length' and 'loan_grade_D' needing to change by specific amounts doesn't map clearly onto our institutional policies or explain why these factors are critical in this context. The explanation doesn't offer actionable insights or clear guidance on what steps to take next. Additionally, the absence of context about the applicant's credit history, employment stability, and any specific red flags makes it challenging to justify or trust this decision to management or customers.""
+comment = ""The explanation provided by the AI system is quite cryptic and doesn't align with my needs as a loan officer. The numerical adjustments to loan grades don't give me a concrete understanding of why the risk prediction was made and its relation to the applicant's profile, such as credit history or employment stability. For trust, I need clearer insights into the factors impacting the decision, and this explanation lacks the necessary depth and clarity to make an informed and defensible decision.""
 ```",gpt-4o
-Sam Chen,Model Validation Analyst,SHAP,581,0,4.0,3.0,2.0,3.0,3.0,3.0,"The explanation is relatively interpretable due to the presentation of SHAP values, allowing me to understand the impact of specific features on the prediction. However, it lacks completeness as it only provides the top five features and doesn't explain their interaction or offer a broader context beyond the numerical values. This limits actionability because while I see the factors, there's no guidance on what to change if needed. Trust in the explanation is moderate because the SHAP values align with some domain knowledge, but without more context on model behavior, I cannot be fully confident. Overall, the explanation provides some decision support but does not fully satisfy my needs for ensuring alignment with domain knowledge and detecting potential model errors.","```toml
+Sam Chen,Model Validation Analyst,SHAP,581,0,4.0,3.0,2.0,3.0,3.0,3.0,"The explanation provides a clear breakdown of influential features with SHAP values, making it relatively easy to understand the direction of influence on the prediction. However, while it highlights key factors, it lacks comprehensive context on other potential contributing features that are equally important for a holistic assessment. This limits my confidence in determining next steps or fully trusting the model's reasoning, as understanding the interaction of all features is crucial. More details on additional factors and model metrics would enhance completeness and decision support.","```toml
 interpretability = 4
 completeness = 3
 actionability = 2
 trust = 3
 satisfaction = 3
 decision_support = 3
-comment = ""The explanation is relatively interpretable due to the presentation of SHAP values, allowing me to understand the impact of specific features on the prediction. However, it lacks completeness as it only provides the top five features and doesn't explain their interaction or offer a broader context beyond the numerical values. This limits actionability because while I see the factors, there's no guidance on what to change if needed. Trust in the explanation is moderate because the SHAP values align with some domain knowledge, but without more context on model behavior, I cannot be fully confident. Overall, the explanation provides some decision support but does not fully satisfy my needs for ensuring alignment with domain knowledge and detecting potential model errors.""
+comment = ""The explanation provides a clear breakdown of influential features with SHAP values, making it relatively easy to understand the direction of influence on the prediction. However, while it highlights key factors, it lacks comprehensive context on other potential contributing features that are equally important for a holistic assessment. This limits my confidence in determining next steps or fully trusting the model's reasoning, as understanding the interaction of all features is crucial. More details on additional factors and model metrics would enhance completeness and decision support.""
 ```",gpt-4o
-Sam Chen,Model Validation Analyst,LIME,581,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation provides some insight into which features were important, but it doesn't delve into why these factors influence the prediction in a business context. While I understand the LIME weights, it lacks connection to domain knowledge, making it harder to evaluate if the model's reasoning aligns with what we know about loan default risks. There's no guidance on next actions or whether these features may suggest overfitting. It lacks depth in explaining minor factors that might cumulatively impact the prediction, reducing my ability to fully trust the prediction.","```toml
+Sam Chen,Model Validation Analyst,LIME,581,0,3.0,2.0,2.0,3.0,2.0,2.0,"The list of LIME weights is somewhat clear in showing the factors influencing the prediction, but it lacks in-depth context to ensure these weights align with domain knowledge. The explanation does not cover all factors comprehensively, making it difficult to verify the model's entire reasoning process. There is limited actionable insight provided, as it doesn't suggest how to address biases or improve model performance, leading to moderate trust and low satisfaction with its support for decision-making.","```toml
 interpretability = 3
 completeness = 2
 actionability = 2
 trust = 3
 satisfaction = 2
 decision_support = 2
-comment = ""The explanation provides some insight into which features were important, but it doesn't delve into why these factors influence the prediction in a business context. While I understand the LIME weights, it lacks connection to domain knowledge, making it harder to evaluate if the model's reasoning aligns with what we know about loan default risks. There's no guidance on next actions or whether these features may suggest overfitting. It lacks depth in explaining minor factors that might cumulatively impact the prediction, reducing my ability to fully trust the prediction.""
+comment = ""The list of LIME weights is somewhat clear in showing the factors influencing the prediction, but it lacks in-depth context to ensure these weights align with domain knowledge. The explanation does not cover all factors comprehensively, making it difficult to verify the model's entire reasoning process. There is limited actionable insight provided, as it doesn't suggest how to address biases or improve model performance, leading to moderate trust and low satisfaction with its support for decision-making.""
 ```",gpt-4o
-Sam Chen,Model Validation Analyst,ANCHOR,581,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation is straightforward in its presentation, making it relatively easy to understand. However, it lacks depth as it only focuses on a single rule without detailing other factors contributing to the decision, which impacts completeness. There's limited actionability since it doesn't suggest further investigation or actions based on its output. My trust is moderate because while the precision and coverage are noted, I would need more context to fully rely on it. Overall, the explanation does not fully meet my needs for understanding the decision thoroughly and ensuring that the model aligns with domain knowledge.","```toml
+Sam Chen,Model Validation Analyst,ANCHOR,581,0,3.0,2.0,2.0,2.0,2.0,2.0,"The explanation provides a simple rule indicating that if the loan is less than or equal to 56% of the applicant's income, there's a high precision of 90% for the prediction. However, it lacks depth and context. It doesn't adequately communicate why 56% is a critical threshold or explore other potentially influential factors considered by the model. This makes it difficult to fully trust the explanation, as I need more comprehensive information to ensure the model's reasoning aligns with domain knowledge and to detect potential inaccuracies. There are no clear next steps or actions provided, leaving much to be desired for thorough validation.","```toml
 interpretability = 3
 completeness = 2
-actionability = 2
-trust = 3
-satisfaction = 2
-decision_support = 2
-comment = ""The explanation is straightforward in its presentation, making it relatively easy to understand. However, it lacks depth as it only focuses on a single rule without detailing other factors contributing to the decision, which impacts completeness. There's limited actionability since it doesn't suggest further investigation or actions based on its output. My trust is moderate because while the precision and coverage are noted, I would need more context to fully rely on it. Overall, the explanation does not fully meet my needs for understanding the decision thoroughly and ensuring that the model aligns with domain knowledge.""
-```",gpt-4o
-Sam Chen,Model Validation Analyst,COUNTERFACTUAL,581,0,2.0,1.0,2.0,2.0,1.0,1.0,"As a Model Validation Analyst, this explanation lacks clarity and depth. The use of 'COUNTERFACTUAL' is not explained well enough for understanding why these specific changes to 'loan_intent' affect the prediction. It provides minimal insight into the model's reasoning and does not connect to other features that could be relevant, such as credit score or income level. The explanation doesn't give me enough confidence or information to verify model correctness or align with domain knowledge.","```toml
-interpretability = 2
-completeness = 1
 actionability = 2
 trust = 2
-satisfaction = 1
-decision_support = 1
-comment = ""As a Model Validation Analyst, this explanation lacks clarity and depth. The use of 'COUNTERFACTUAL' is not explained well enough for understanding why these specific changes to 'loan_intent' affect the prediction. It provides minimal insight into the model's reasoning and does not connect to other features that could be relevant, such as credit score or income level. The explanation doesn't give me enough confidence or information to verify model correctness or align with domain knowledge.""
+satisfaction = 2
+decision_support = 2
+comment = ""The explanation provides a simple rule indicating that if the loan is less than or equal to 56% of the applicant's income, there's a high precision of 90% for the prediction. However, it lacks depth and context. It doesn't adequately communicate why 56% is a critical threshold or explore other potentially influential factors considered by the model. This makes it difficult to fully trust the explanation, as I need more comprehensive information to ensure the model's reasoning aligns with domain knowledge and to detect potential inaccuracies. There are no clear next steps or actions provided, leaving much to be desired for thorough validation.""
 ```",gpt-4o
-Sam Chen,Model Validation Analyst,SHAP,5043,0,3.0,3.0,2.0,3.0,3.0,3.0,"The explanation using SHAP values gives a quantitative sense of which features affected the prediction, but it lacks context to determine if these features make business sense for loan risk evaluation. While the important factors are identified, it doesn't cover all factors necessary for a full audit of the decision, which leaves room for potential oversight. This explanation doesn't offer clear next steps or why these features correlate with risk, making it difficult to trust the decision entirely or explain it convincingly to stakeholders.","```toml
+Sam Chen,Model Validation Analyst,COUNTERFACTUAL,581,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation is somewhat understandable as it gives specific changes needed to flip the prediction. However, it lacks completeness, as it does not explain why these factors are important or how they affect the prediction comprehensively. While I can see what changes would alter the prediction, it doesn't provide actionable guidance on what to do next or how to improve the model or decision-making accuracy. My trust is moderate because I can't verify if the model aligns with domain knowledge given the limited explanation. Overall, it's not very satisfying or supportive for thorough validation.","```toml
 interpretability = 3
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""The explanation is somewhat understandable as it gives specific changes needed to flip the prediction. However, it lacks completeness, as it does not explain why these factors are important or how they affect the prediction comprehensively. While I can see what changes would alter the prediction, it doesn't provide actionable guidance on what to do next or how to improve the model or decision-making accuracy. My trust is moderate because I can't verify if the model aligns with domain knowledge given the limited explanation. Overall, it's not very satisfying or supportive for thorough validation.""
+```",gpt-4o
+Sam Chen,Model Validation Analyst,SHAP,5043,0,4.0,3.0,2.0,3.0,3.0,3.0,"The explanation using SHAP values provides a clear indication of which features are impacting the prediction and their direction. However, it only lists a limited set of factors without detailing potential interactions or additional context needed to thoroughly validate the model's reasoning. While it instills some level of trust in the decision, it lacks actionable insights on how to adjust the model if needed or identify potential weaknesses in this particular case. Ultimately, while useful, the explanation does not fully satisfy my need to ensure alignment with domain knowledge and detect unexpected behavior.","```toml
+interpretability = 4
 completeness = 3
 actionability = 2
 trust = 3
 satisfaction = 3
 decision_support = 3
-comment = ""The explanation using SHAP values gives a quantitative sense of which features affected the prediction, but it lacks context to determine if these features make business sense for loan risk evaluation. While the important factors are identified, it doesn't cover all factors necessary for a full audit of the decision, which leaves room for potential oversight. This explanation doesn't offer clear next steps or why these features correlate with risk, making it difficult to trust the decision entirely or explain it convincingly to stakeholders.""
+comment = ""The explanation using SHAP values provides a clear indication of which features are impacting the prediction and their direction. However, it only lists a limited set of factors without detailing potential interactions or additional context needed to thoroughly validate the model's reasoning. While it instills some level of trust in the decision, it lacks actionable insights on how to adjust the model if needed or identify potential weaknesses in this particular case. Ultimately, while useful, the explanation does not fully satisfy my need to ensure alignment with domain knowledge and detect unexpected behavior.""
 ```",gpt-4o
-Sam Chen,Model Validation Analyst,LIME,5043,0,3.0,2.0,2.0,2.0,2.0,2.0,"As a Model Validation Analyst, the explanation provided by LIME is somewhat unclear, as it lacks context around the significance of each feature and how they align with business logic or domain knowledge. It lists feature weights with thresholds but doesn't explain why these values were chosen, or their impact on the decision. This raises concerns about overfitting, as no background is given on the data distribution. It leaves me hesitant to trust the judgment and doesn't sufficiently guide next steps in either supporting or questioning the AI's recommendation.","```toml
+Sam Chen,Model Validation Analyst,LIME,5043,0,2.0,2.0,1.0,2.0,2.0,1.0,"The explanation provided is not clear enough for a comprehensive understanding of the AI's decision-making process. The use of LIME did not offer sufficient detail on how these feature weights interact with each other, or how this leads to the final prediction. Moreover, it doesn't align well with my need to ensure that important features make business sense and that the model isn't overfitting. The lack of guidance on next steps or potential actions further reduces its utility in my decision-making.","```toml
+interpretability = 2
+completeness = 2
+actionability = 1
+trust = 2
+satisfaction = 2
+decision_support = 1
+comment = ""The explanation provided is not clear enough for a comprehensive understanding of the AI's decision-making process. The use of LIME did not offer sufficient detail on how these feature weights interact with each other, or how this leads to the final prediction. Moreover, it doesn't align well with my need to ensure that important features make business sense and that the model isn't overfitting. The lack of guidance on next steps or potential actions further reduces its utility in my decision-making.""
+```",gpt-4o
+Sam Chen,Model Validation Analyst,ANCHOR,5043,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation using the ANCHOR method provides a rule that is somewhat clear, but it lacks thoroughness in detailing how the feature 'loan_percent_income' interacts with other factors. The explanation does not sufficiently cover all critical aspects needed for a comprehensive assessment, showing only a singular focus on one metric, which limits insight into the model's behavior. As a result, I'm concerned about potential overfitting or reliance on incomplete data. This provides limited actionable information for next steps and doesn't fully align with my need for a robust, multi-faceted justification to validate or contest the model's prediction effectively.","```toml
 interpretability = 3
 completeness = 2
 actionability = 2
-trust = 2
+trust = 3
 satisfaction = 2
 decision_support = 2
-comment = ""As a Model Validation Analyst, the explanation provided by LIME is somewhat unclear, as it lacks context around the significance of each feature and how they align with business logic or domain knowledge. It lists feature weights with thresholds but doesn't explain why these values were chosen, or their impact on the decision. This raises concerns about overfitting, as no background is given on the data distribution. It leaves me hesitant to trust the judgment and doesn't sufficiently guide next steps in either supporting or questioning the AI's recommendation.""
+comment = ""The explanation using the ANCHOR method provides a rule that is somewhat clear, but it lacks thoroughness in detailing how the feature 'loan_percent_income' interacts with other factors. The explanation does not sufficiently cover all critical aspects needed for a comprehensive assessment, showing only a singular focus on one metric, which limits insight into the model's behavior. As a result, I'm concerned about potential overfitting or reliance on incomplete data. This provides limited actionable information for next steps and doesn't fully align with my need for a robust, multi-faceted justification to validate or contest the model's prediction effectively.""
 ```",gpt-4o
-Sam Chen,Model Validation Analyst,ANCHOR,5043,0,2.0,1.0,1.0,1.0,1.0,1.0,"The explanation provided is very limited and not aligned with my needs as an analyst. The 'ANCHOR' explanation only gives a single rule based on loan_percent_income without context or additional factors that are vital for assessing loan default risk. The lack of coverage on other features raises concerns about overfitting and gives me no confidence to rely on this explanation for decision-making. I cannot defend this explanation to others, nor does it align with my requirement for a comprehensive understanding of the model's reasoning.","```toml
+Sam Chen,Model Validation Analyst,COUNTERFACTUAL,5043,0,2.0,1.0,1.0,2.0,1.0,1.0,"The explanation provided is minimal and lacks context or detail, making it challenging to understand the AI's reasoning. The information about changing loan grades is vague and does not connect to specific business outcomes or other contributing factors. It doesn't offer actionable insights on addressing potential default risk. Overall, the explanation feels inadequate to rely on for a comprehensive decision, and it doesn't align well with my methodical approach to verification and validation of models.","```toml
 interpretability = 2
 completeness = 1
+actionability = 1
+trust = 2
+satisfaction = 1
+decision_support = 1
+comment = ""The explanation provided is minimal and lacks context or detail, making it challenging to understand the AI's reasoning. The information about changing loan grades is vague and does not connect to specific business outcomes or other contributing factors. It doesn't offer actionable insights on addressing potential default risk. Overall, the explanation feels inadequate to rely on for a comprehensive decision, and it doesn't align well with my methodical approach to verification and validation of models.""
+```",gpt-4o
+Taylor Kim,Compliance & Risk Officer,SHAP,581,0,2.0,2.0,1.0,2.0,2.0,1.0,"The explanation lacks clarity since it provides raw SHAP values without context or definitions for these terms. It doesn't offer a comprehensive overview of all risk factors, nor does it provide actionable steps for decision-making. The lack of clear reasoning and documentation makes it difficult to use this explanation to defend a decision to regulators. Overall, it fails to provide the robust documentation and guidance I require in compliance and risk assessment.","```toml
+interpretability = 2
+completeness = 2
+actionability = 1
+trust = 2
+satisfaction = 2
+decision_support = 1
+comment = ""The explanation lacks clarity since it provides raw SHAP values without context or definitions for these terms. It doesn't offer a comprehensive overview of all risk factors, nor does it provide actionable steps for decision-making. The lack of clear reasoning and documentation makes it difficult to use this explanation to defend a decision to regulators. Overall, it fails to provide the robust documentation and guidance I require in compliance and risk assessment.""
+```",gpt-4o
+Taylor Kim,Compliance & Risk Officer,LIME,581,0,2.0,2.0,1.0,1.0,1.0,1.0,"As a Compliance & Risk Officer, the AI explanation using LIME weights is difficult to interpret, as the explanation lacks clarity on the relevance of each factor and does not provide an understandable narrative about why these weights lead to a particular prediction. The completeness is also lacking as it does not cover the full range of risk factors necessary for making a defensible decision. Without clear guidance on next steps or sufficient context, I cannot trust these AI-generated insights or adequately document them for regulatory scrutiny, making overall satisfaction with the explanation very low.","```toml
+interpretability = 2
+completeness = 2
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""The explanation provided is very limited and not aligned with my needs as an analyst. The 'ANCHOR' explanation only gives a single rule based on loan_percent_income without context or additional factors that are vital for assessing loan default risk. The lack of coverage on other features raises concerns about overfitting and gives me no confidence to rely on this explanation for decision-making. I cannot defend this explanation to others, nor does it align with my requirement for a comprehensive understanding of the model's reasoning.""
+comment = ""As a Compliance & Risk Officer, the AI explanation using LIME weights is difficult to interpret, as the explanation lacks clarity on the relevance of each factor and does not provide an understandable narrative about why these weights lead to a particular prediction. The completeness is also lacking as it does not cover the full range of risk factors necessary for making a defensible decision. Without clear guidance on next steps or sufficient context, I cannot trust these AI-generated insights or adequately document them for regulatory scrutiny, making overall satisfaction with the explanation very low.""
 ```",gpt-4o
-Sam Chen,Model Validation Analyst,COUNTERFACTUAL,5043,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation provided by the AI using counterfactual reasoning is somewhat interpretable, but lacks detail. It indicates changes like 'person_emp_length' and 'loan_grade_D' affecting the prediction, but does not provide context as to why these factors impact the risk level, nor does it touch on other possibly relevant features. This undermines completeness and limits trust because I can't verify if the model is reasoning sensibly or missing key factors. Additionally, the explanation doesn't suggest clear next steps or actions, making it less actionable for real-world decision-making. Overall, while it gives a glimpse into some feature impacts, it's insufficient for a thorough validation process.","```toml
-interpretability = 3
+Taylor Kim,Compliance & Risk Officer,ANCHOR,581,0,2.0,2.0,1.0,2.0,2.0,1.0,"The explanation is simplistic and lacks depth, focusing solely on a single rule without context. It doesn't provide the comprehensive detail needed to make a defensible decision or withstand regulatory scrutiny. The lack of actionable insights or broader risk factors diminishes my confidence in using this as the basis for a decision.","```toml
+interpretability = 2
 completeness = 2
-actionability = 2
-trust = 3
+actionability = 1
+trust = 2
+satisfaction = 2
+decision_support = 1
+comment = ""The explanation is simplistic and lacks depth, focusing solely on a single rule without context. It doesn't provide the comprehensive detail needed to make a defensible decision or withstand regulatory scrutiny. The lack of actionable insights or broader risk factors diminishes my confidence in using this as the basis for a decision.""
+```",gpt-4o
+Taylor Kim,Compliance & Risk Officer,COUNTERFACTUAL,581,0,2.0,2.0,1.0,2.0,2.0,1.0,"As a Compliance & Risk Officer, the explanation provided by the AI lacks clarity and detail needed for regulatory compliance. The use of 'COUNTERFACTUAL' explanation method is not easily understood and does not align with the thorough and defensible decision-making process I adhere to. There is insufficient information on the specific risk factors impacting the prediction, which limits its usefulness in actionability and building trust. This explanation doesn't provide clear next steps or insights into the broader portfolio risk, making it challenging to apply in practice.","```toml
+interpretability = 2
+completeness = 2
+actionability = 1
+trust = 2
+satisfaction = 2
+decision_support = 1
+comment = ""As a Compliance & Risk Officer, the explanation provided by the AI lacks clarity and detail needed for regulatory compliance. The use of 'COUNTERFACTUAL' explanation method is not easily understood and does not align with the thorough and defensible decision-making process I adhere to. There is insufficient information on the specific risk factors impacting the prediction, which limits its usefulness in actionability and building trust. This explanation doesn't provide clear next steps or insights into the broader portfolio risk, making it challenging to apply in practice.""
+```",gpt-4o
+Taylor Kim,Compliance & Risk Officer,SHAP,5043,0,2.0,2.0,1.0,2.0,2.0,2.0,"The explanation provided by the AI, using SHAP values, does not align well with my risk-averse approach. The numerical values given lack context and do not convincingly explain how each factor contributes to the final prediction. There's insufficient information for defensible decision-making, especially in making regulatory-compliant choices. The explanation is not detailed enough to support or reject the AI's prediction, and fails to provide clear, actionable steps for my decision-making process.","```toml
+interpretability = 2
+completeness = 2
+actionability = 1
+trust = 2
 satisfaction = 2
 decision_support = 2
-comment = ""The explanation provided by the AI using counterfactual reasoning is somewhat interpretable, but lacks detail. It indicates changes like 'person_emp_length' and 'loan_grade_D' affecting the prediction, but does not provide context as to why these factors impact the risk level, nor does it touch on other possibly relevant features. This undermines completeness and limits trust because I can't verify if the model is reasoning sensibly or missing key factors. Additionally, the explanation doesn't suggest clear next steps or actions, making it less actionable for real-world decision-making. Overall, while it gives a glimpse into some feature impacts, it's insufficient for a thorough validation process.""
+comment = ""The explanation provided by the AI, using SHAP values, does not align well with my risk-averse approach. The numerical values given lack context and do not convincingly explain how each factor contributes to the final prediction. There's insufficient information for defensible decision-making, especially in making regulatory-compliant choices. The explanation is not detailed enough to support or reject the AI's prediction, and fails to provide clear, actionable steps for my decision-making process.""
 ```",gpt-4o
-Taylor Kim,Compliance & Risk Officer,SHAP,581,0,3.0,2.0,2.0,2.0,2.0,2.0,"The explanation provided through SHAP values gives some insight into the AI's decision-making process. However, it lacks sufficient context on why certain factors were weighted as they were, which makes it challenging to understand and defend to auditors. Without a clear rationale for why these specific inputs and their weights impact the decision, it's hard to take specific actions or fully trust the explanation. As a risk-averse officer, I require more comprehensive documentation to ensure regulatory compliance and portfolio protection.","```toml
-interpretability = 3
+Taylor Kim,Compliance & Risk Officer,LIME,5043,0,2.0,2.0,2.0,2.0,2.0,2.0,"The explanation provided by the AI lacks clarity and detailed elaboration on why these factors were weighted as such, making it difficult to interpret the rationale. The explanation doesn't fully cover the regulatory and compliance factors I focus on, nor does it link to potential patterns of risk in the portfolio. It doesn't give a clear course of action or assurance to defend the decision to auditors, which is critical from a compliance perspective.","```toml
+interpretability = 2
 completeness = 2
 actionability = 2
 trust = 2
 satisfaction = 2
 decision_support = 2
-comment = ""The explanation provided through SHAP values gives some insight into the AI's decision-making process. However, it lacks sufficient context on why certain factors were weighted as they were, which makes it challenging to understand and defend to auditors. Without a clear rationale for why these specific inputs and their weights impact the decision, it's hard to take specific actions or fully trust the explanation. As a risk-averse officer, I require more comprehensive documentation to ensure regulatory compliance and portfolio protection.""
+comment = ""The explanation provided by the AI lacks clarity and detailed elaboration on why these factors were weighted as such, making it difficult to interpret the rationale. The explanation doesn't fully cover the regulatory and compliance factors I focus on, nor does it link to potential patterns of risk in the portfolio. It doesn't give a clear course of action or assurance to defend the decision to auditors, which is critical from a compliance perspective.""
 ```",gpt-4o
-Taylor Kim,Compliance & Risk Officer,LIME,581,0,2.0,2.0,1.0,1.0,2.0,1.0,"As a Compliance & Risk Officer, this explanation is difficult to understand due to the use of what appear to be coded variables and coefficients without much context. The information is not comprehensive enough for me to explain or defend to auditors, lacking clear insight into risk factors and their implications. It does not provide clear guidance or actionable steps, nor does it align with my thorough, compliance-focused decision-making approach. This undermines my trust and satisfaction with the AI's explanation.","```toml
+Taylor Kim,Compliance & Risk Officer,ANCHOR,5043,0,2.0,1.0,1.0,2.0,1.0,1.0,"From my perspective as a Compliance & Risk Officer, the explanation is not very helpful. The use of a single rule without context or comparison to industry standards makes it difficult to interpret and incomplete for regulatory purposes. There's no actionable guidance on the next steps, and the lack of broader analysis reduces trust in the explanation. For regulatory compliance, I need a holistic view of risk factors, not a single data point.","```toml
+interpretability = 2
+completeness = 1
+actionability = 1
+trust = 2
+satisfaction = 1
+decision_support = 1
+comment = ""From my perspective as a Compliance & Risk Officer, the explanation is not very helpful. The use of a single rule without context or comparison to industry standards makes it difficult to interpret and incomplete for regulatory purposes. There's no actionable guidance on the next steps, and the lack of broader analysis reduces trust in the explanation. For regulatory compliance, I need a holistic view of risk factors, not a single data point.""
+```",gpt-4o
+Taylor Kim,Compliance & Risk Officer,COUNTERFACTUAL,5043,0,2.0,2.0,1.0,1.0,1.0,1.0,"As a Compliance & Risk Officer, the explanation provided by the AI is highly technical and lacks clarity. The terms 'change by 0.50' or 'change by 1.00' are ambiguous and do not clearly indicate how the loan grade adjustments impact the default risk or provide a defensible rationale for the decision. There is no context or detailed analysis of risk factors that are necessary for thorough documentation and regulatory defense. This explanation does not align with the stringent requirements of compliance and risk management.","```toml
 interpretability = 2
 completeness = 2
 actionability = 1
 trust = 1
-satisfaction = 2
-decision_support = 1
-comment = ""As a Compliance & Risk Officer, this explanation is difficult to understand due to the use of what appear to be coded variables and coefficients without much context. The information is not comprehensive enough for me to explain or defend to auditors, lacking clear insight into risk factors and their implications. It does not provide clear guidance or actionable steps, nor does it align with my thorough, compliance-focused decision-making approach. This undermines my trust and satisfaction with the AI's explanation.""
-```",gpt-4o
-Taylor Kim,Compliance & Risk Officer,ANCHOR,581,0,3.0,2.0,1.0,2.0,2.0,2.0,"As a Compliance & Risk Officer, I find the explanation moderately interpretable but lacking in completeness. It provides a specific metric, loan_percent_income, and some statistics around it but fails to include additional risk factors I usually consider, such as credit history or past payment behavior. It's challenging to determine actionable steps or fully trust this explanation without more context or a comprehensive set of risk signals. Overall, it offers limited support for my decision-making needs, especially under regulatory scrutiny.","```toml
-interpretability = 3
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 2
-decision_support = 2
-comment = ""As a Compliance & Risk Officer, I find the explanation moderately interpretable but lacking in completeness. It provides a specific metric, loan_percent_income, and some statistics around it but fails to include additional risk factors I usually consider, such as credit history or past payment behavior. It's challenging to determine actionable steps or fully trust this explanation without more context or a comprehensive set of risk signals. Overall, it offers limited support for my decision-making needs, especially under regulatory scrutiny.""
-```",gpt-4o
-Taylor Kim,Compliance & Risk Officer,COUNTERFACTUAL,581,0,2.0,1.0,2.0,1.0,1.0,1.0,"The explanation is not clear and lacks details. It refers to changing variables in 'loan_intent,' but doesn't provide context or correlate with risk factors that can be defended in regulatory terms. This doesn't align with my requirement for clear risk factors. There is no specific guidance for action, such as which other factors were considered, leaving little room for regulatory defense.","```toml
-interpretability = 2
-completeness = 1
-actionability = 2
-trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""The explanation is not clear and lacks details. It refers to changing variables in 'loan_intent,' but doesn't provide context or correlate with risk factors that can be defended in regulatory terms. This doesn't align with my requirement for clear risk factors. There is no specific guidance for action, such as which other factors were considered, leaving little room for regulatory defense.""
+comment = ""As a Compliance & Risk Officer, the explanation provided by the AI is highly technical and lacks clarity. The terms 'change by 0.50' or 'change by 1.00' are ambiguous and do not clearly indicate how the loan grade adjustments impact the default risk or provide a defensible rationale for the decision. There is no context or detailed analysis of risk factors that are necessary for thorough documentation and regulatory defense. This explanation does not align with the stringent requirements of compliance and risk management.""
 ```",gpt-4o
-Taylor Kim,Compliance & Risk Officer,SHAP,5043,0,2.0,2.0,1.0,2.0,2.0,1.0,"The AI explanation using SHAP values is relatively opaque to me. It doesn't provide the narrative behind these scores or how they link to risk or compliance issues. There's no guidance on how to proceed or whether this decision aligns with regulatory standards. I lack confidence in this explanation to make a defensible decision, which concerns both compliance and portfolio risk.","```toml
+Morgan Patel,Customer Success Manager,SHAP,581,0,2.0,3.0,2.0,3.0,2.0,2.0,"As a Customer Success Manager, I find this explanation to be somewhat technical and unclear, with numerical SHAP values that don't translate well for explaining decisions to customers. While it highlights factors influencing the prediction, it doesn't provide a comprehensive overview of the individual's situation, like recent income trends or potential life events affecting their risk profile. Moreover, it lacks specific guidance on how the applicant might improve their chances in the future, which is critical for maintaining positive customer relations and offering constructive feedback.","```toml
 interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 2
-decision_support = 1
-comment = ""The AI explanation using SHAP values is relatively opaque to me. It doesn't provide the narrative behind these scores or how they link to risk or compliance issues. There's no guidance on how to proceed or whether this decision aligns with regulatory standards. I lack confidence in this explanation to make a defensible decision, which concerns both compliance and portfolio risk.""
-```",gpt-4o
-Taylor Kim,Compliance & Risk Officer,LIME,5043,0,2.0,2.0,1.0,2.0,2.0,1.0,"The explanation provided by the AI using LIME weights is difficult to understand and interpret within my risk-averse and compliance-focused framework. It lacks a clear and comprehensive breakdown of risk factors, and does not suggest specific actions for decision-making. Trust is limited due to the cryptic nature of the explanation without substantial documentation to support the rationale. As a Compliance & Risk Officer, I need in-depth risk factor analysis to ensure regulatory compliance and defend decisions.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 2
-decision_support = 1
-comment = ""The explanation provided by the AI using LIME weights is difficult to understand and interpret within my risk-averse and compliance-focused framework. It lacks a clear and comprehensive breakdown of risk factors, and does not suggest specific actions for decision-making. Trust is limited due to the cryptic nature of the explanation without substantial documentation to support the rationale. As a Compliance & Risk Officer, I need in-depth risk factor analysis to ensure regulatory compliance and defend decisions.""
-```",gpt-4o
-Taylor Kim,Compliance & Risk Officer,ANCHOR,5043,0,2.0,1.0,2.0,1.0,1.0,1.0,"The explanation using 'loan_percent_income' and its threshold lacks clarity and context necessary for making a defensive decision. It fails to detail why this specific threshold is significant and doesn't cover other potential risk factors. Without a broader view or additional independent signals, I find it hard to trust or act upon this explanation, especially since it doesn't align with my risk-averse nature and the need for defensible decisions.","```toml
-interpretability = 2
-completeness = 1
-actionability = 2
-trust = 1
-satisfaction = 1
-decision_support = 1
-comment = ""The explanation using 'loan_percent_income' and its threshold lacks clarity and context necessary for making a defensive decision. It fails to detail why this specific threshold is significant and doesn't cover other potential risk factors. Without a broader view or additional independent signals, I find it hard to trust or act upon this explanation, especially since it doesn't align with my risk-averse nature and the need for defensible decisions.""
-```",gpt-4o
-Taylor Kim,Compliance & Risk Officer,COUNTERFACTUAL,5043,0,2.0,1.0,1.0,1.0,1.0,1.0,"The explanation provided is vague and lacks the necessary context to make an informed decision. It fails to articulate the underlying risks clearly or provide a comprehensive overview of critical factors like credit history, income stability, and economic conditions. As a Compliance & Risk Officer, I need documentation that can withstand regulatory scrutiny and this explanation offers little in terms of compliance-friendly rationale.","```toml
-interpretability = 2
-completeness = 1
-actionability = 1
-trust = 1
-satisfaction = 1
-decision_support = 1
-comment = ""The explanation provided is vague and lacks the necessary context to make an informed decision. It fails to articulate the underlying risks clearly or provide a comprehensive overview of critical factors like credit history, income stability, and economic conditions. As a Compliance & Risk Officer, I need documentation that can withstand regulatory scrutiny and this explanation offers little in terms of compliance-friendly rationale.""
-```",gpt-4o
-Morgan Patel,Customer Success Manager,SHAP,581,0,2.0,2.0,2.0,3.0,2.0,2.0,"As a Customer Success Manager, I find this explanation challenging to understand due to the technical jargon like 'SHAP values' and lack of contextual description about what each feature represents and how they contribute to the decision. It isn't complete because it doesn't cover the underlying reasons behind these numbers which I could explain to a customer to help them improve. There's barely any guidance on concrete actions the customer can take. While I recognize the numerical values and can assume some risk implications, I'm moderately trusting the AI could have valid reasons, but overall, I'm not very satisfied or supported by this explanation.","```toml
-interpretability = 2
-completeness = 2
+completeness = 3
 actionability = 2
 trust = 3
 satisfaction = 2
 decision_support = 2
-comment = ""As a Customer Success Manager, I find this explanation challenging to understand due to the technical jargon like 'SHAP values' and lack of contextual description about what each feature represents and how they contribute to the decision. It isn't complete because it doesn't cover the underlying reasons behind these numbers which I could explain to a customer to help them improve. There's barely any guidance on concrete actions the customer can take. While I recognize the numerical values and can assume some risk implications, I'm moderately trusting the AI could have valid reasons, but overall, I'm not very satisfied or supported by this explanation.""
+comment = ""As a Customer Success Manager, I find this explanation to be somewhat technical and unclear, with numerical SHAP values that don't translate well for explaining decisions to customers. While it highlights factors influencing the prediction, it doesn't provide a comprehensive overview of the individual's situation, like recent income trends or potential life events affecting their risk profile. Moreover, it lacks specific guidance on how the applicant might improve their chances in the future, which is critical for maintaining positive customer relations and offering constructive feedback.""
 ```",gpt-4o
-Morgan Patel,Customer Success Manager,LIME,581,0,2.0,2.0,1.0,2.0,1.0,2.0,"As a Customer Success Manager, the explanation lacks clarity and is filled with technical jargon like 'LIME weights,' which is difficult to translate into customer-friendly language. It does not provide a complete picture or factors such as improving credit scores or life events impacting the customer, which are crucial for a holistic review. The absence of actionable steps or guidance on what the customer or I should do next makes it challenging to maintain a transparent relationship or to give constructive feedback.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 1
-decision_support = 2
-comment = ""As a Customer Success Manager, the explanation lacks clarity and is filled with technical jargon like 'LIME weights,' which is difficult to translate into customer-friendly language. It does not provide a complete picture or factors such as improving credit scores or life events impacting the customer, which are crucial for a holistic review. The absence of actionable steps or guidance on what the customer or I should do next makes it challenging to maintain a transparent relationship or to give constructive feedback.""
-```",gpt-4o
-Morgan Patel,Customer Success Manager,ANCHOR,581,0,2.0,1.0,1.0,2.0,1.0,1.0,"As a Customer Success Manager, the explanation provided by the AI is not very useful. The anchor rule 'loan_percent_income <= 0.56; precision=0.92, coverage=0.77' is confusing without context or a human-friendly explanation. It doesn't cover all the factors I need to consider, such as life circumstances or improvements in a customer's financial situation. There's no actionable guidance on how the customer could improve their application in the future. Without understanding how these technical metrics translate into customer behavior and potential, I find it hard to trust or feel satisfied with this explanation.","```toml
-interpretability = 2
-completeness = 1
-actionability = 1
-trust = 2
-satisfaction = 1
-decision_support = 1
-comment = ""As a Customer Success Manager, the explanation provided by the AI is not very useful. The anchor rule 'loan_percent_income <= 0.56; precision=0.92, coverage=0.77' is confusing without context or a human-friendly explanation. It doesn't cover all the factors I need to consider, such as life circumstances or improvements in a customer's financial situation. There's no actionable guidance on how the customer could improve their application in the future. Without understanding how these technical metrics translate into customer behavior and potential, I find it hard to trust or feel satisfied with this explanation.""
-```",gpt-4o
-Morgan Patel,Customer Success Manager,COUNTERFACTUAL,581,0,2.0,2.0,2.0,2.0,2.0,2.0,"As a Customer Success Manager, I find this explanation quite technical and not easy to translate into customer-friendly language. It mentions changing 'loan_intent_MEDICAL' and 'loan_intent_VENTURE', which isn't something I can directly advise a customer to act on without more context. It doesn't provide a clear path for the customer to improve their situation or show a comprehensive view of why the prediction was made. My role is to support customers and guide them toward future success, but this explanation doesn't help me do that effectively.","```toml
-interpretability = 2
-completeness = 2
-actionability = 2
-trust = 2
-satisfaction = 2
-decision_support = 2
-comment = ""As a Customer Success Manager, I find this explanation quite technical and not easy to translate into customer-friendly language. It mentions changing 'loan_intent_MEDICAL' and 'loan_intent_VENTURE', which isn't something I can directly advise a customer to act on without more context. It doesn't provide a clear path for the customer to improve their situation or show a comprehensive view of why the prediction was made. My role is to support customers and guide them toward future success, but this explanation doesn't help me do that effectively.""
-```",gpt-4o
-Morgan Patel,Customer Success Manager,SHAP,5043,0,2.0,2.0,2.0,3.0,2.0,2.0,"The explanation, while providing SHAP values, lacks clarity for me to easily translate into customer-friendly language. It does not give a comprehensive view of the customer's situation or suggest specific next steps for improvement. I find it challenging to explain or defend this to others, and it does not sufficiently support my decision-making needs as I prioritize understanding and helping customers improve. The technical terms require more context to be actionable.","```toml
-interpretability = 2
-completeness = 2
-actionability = 2
-trust = 3
-satisfaction = 2
-decision_support = 2
-comment = ""The explanation, while providing SHAP values, lacks clarity for me to easily translate into customer-friendly language. It does not give a comprehensive view of the customer's situation or suggest specific next steps for improvement. I find it challenging to explain or defend this to others, and it does not sufficiently support my decision-making needs as I prioritize understanding and helping customers improve. The technical terms require more context to be actionable.""
-```",gpt-4o
-Morgan Patel,Customer Success Manager,LIME,5043,0,2.0,1.0,2.0,2.0,2.0,1.0,"As a Customer Success Manager, the explanation provided by the AI is highly technical and lacks clarity for someone who doesn't have a technical background. It fails to translate into customer-friendly language or provide specific, actionable next steps for guiding the customer toward loan approval in the future. The explanation seems incomplete, as it only presents weights without context or suggestions. Therefore, I find it difficult to trust the explanation fully, and it does not support my needs in helping customers understand their positions or improve.","```toml
-interpretability = 2
-completeness = 1
-actionability = 2
-trust = 2
-satisfaction = 2
-decision_support = 1
-comment = ""As a Customer Success Manager, the explanation provided by the AI is highly technical and lacks clarity for someone who doesn't have a technical background. It fails to translate into customer-friendly language or provide specific, actionable next steps for guiding the customer toward loan approval in the future. The explanation seems incomplete, as it only presents weights without context or suggestions. Therefore, I find it difficult to trust the explanation fully, and it does not support my needs in helping customers understand their positions or improve.""
-```",gpt-4o
-Morgan Patel,Customer Success Manager,ANCHOR,5043,0,2.0,2.0,1.0,2.0,2.0,1.0,"The explanation using the 'ANCHOR' method is confusing without context, as the technical terms like 'loan_percent_income' and 'precision' aren't meaningful to someone without a technical background. It's not clear how to transform these insights into practical steps for the customer to improve. Moreover, I'm left unsure about how this affects my ability to communicate the decision to the customer in a way that maintains transparency and fosters a positive relationship. The lack of actionable advice or comprehensive understanding of the applicant's full scenario limits my confidence in relying solely on this explanation.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 2
-decision_support = 1
-comment = ""The explanation using the 'ANCHOR' method is confusing without context, as the technical terms like 'loan_percent_income' and 'precision' aren't meaningful to someone without a technical background. It's not clear how to transform these insights into practical steps for the customer to improve. Moreover, I'm left unsure about how this affects my ability to communicate the decision to the customer in a way that maintains transparency and fosters a positive relationship. The lack of actionable advice or comprehensive understanding of the applicant's full scenario limits my confidence in relying solely on this explanation.""
-```",gpt-4o
-Morgan Patel,Customer Success Manager,COUNTERFACTUAL,5043,0,2.0,2.0,1.0,2.0,2.0,1.0,"As a Customer Success Manager, I find the explanation quite technical and difficult to translate for customers. It lacks clarity on what 'person_emp_length' and 'loan_grade_D' mean in practical, everyday terms for the customer, making it hard to identify specific actions they can take to improve their situation. Thus, it hampers the ability to maintain transparency and provide actionable advice. The explanation does not align well with the need for a relationship-focused decision-making process.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 2
-decision_support = 1
-comment = ""As a Customer Success Manager, I find the explanation quite technical and difficult to translate for customers. It lacks clarity on what 'person_emp_length' and 'loan_grade_D' mean in practical, everyday terms for the customer, making it hard to identify specific actions they can take to improve their situation. Thus, it hampers the ability to maintain transparency and provide actionable advice. The explanation does not align well with the need for a relationship-focused decision-making process.""
-```",gpt-4o
-Casey Rodriguez,Strategic Planning Director,SHAP,581,0,3.0,2.0,2.0,3.0,2.0,2.0,"As a Strategic Planning Director, I find the explanation moderately clear due to the numerical SHAP values. However, it lacks a high-level summary linking these factors to broader strategic implications, which diminishes completeness. The actionability is low as it doesn't suggest clear next steps or policy adjustments. While I can understand the prediction components, the explanation doesn't enhance my trust in aligning decisions with strategic goals or aid in identifying systematic patterns for portfolio optimization.","```toml
-interpretability = 3
-completeness = 2
-actionability = 2
-trust = 3
-satisfaction = 2
-decision_support = 2
-comment = ""As a Strategic Planning Director, I find the explanation moderately clear due to the numerical SHAP values. However, it lacks a high-level summary linking these factors to broader strategic implications, which diminishes completeness. The actionability is low as it doesn't suggest clear next steps or policy adjustments. While I can understand the prediction components, the explanation doesn't enhance my trust in aligning decisions with strategic goals or aid in identifying systematic patterns for portfolio optimization.""
-```",gpt-4o
-Casey Rodriguez,Strategic Planning Director,LIME,581,0,2.0,2.0,2.0,2.0,2.0,1.0,"The explanation provided by LIME is not aligned with my strategic overview needs. It focuses too much on granular data points without providing comprehensive insights into how these factors affect our overall portfolio or strategic objectives. Additionally, the explanation lacks clear guidance on next steps and does not enhance my confidence in the decision-making process, especially in aligning with our broader policies and goals.","```toml
-interpretability = 2
-completeness = 2
-actionability = 2
-trust = 2
-satisfaction = 2
-decision_support = 1
-comment = ""The explanation provided by LIME is not aligned with my strategic overview needs. It focuses too much on granular data points without providing comprehensive insights into how these factors affect our overall portfolio or strategic objectives. Additionally, the explanation lacks clear guidance on next steps and does not enhance my confidence in the decision-making process, especially in aligning with our broader policies and goals.""
-```",gpt-4o
-Casey Rodriguez,Strategic Planning Director,ANCHOR,581,0,3.0,2.0,2.0,3.0,2.0,2.0,"As a Strategic Planning Director focused on high-level patterns and strategic alignment, this explanation is moderately clear but lacks depth. It touches on a single rule with metrics provided, which is not sufficient for understanding broader systemic trends or informing strategic policy refinement. The explanation doesn't guide me on broader implications or next steps needed for strategic decision-making. It feels too narrow and tactical, limiting its usefulness for my needs.","```toml
-interpretability = 3
-completeness = 2
-actionability = 2
-trust = 3
-satisfaction = 2
-decision_support = 2
-comment = ""As a Strategic Planning Director focused on high-level patterns and strategic alignment, this explanation is moderately clear but lacks depth. It touches on a single rule with metrics provided, which is not sufficient for understanding broader systemic trends or informing strategic policy refinement. The explanation doesn't guide me on broader implications or next steps needed for strategic decision-making. It feels too narrow and tactical, limiting its usefulness for my needs.""
-```",gpt-4o
-Casey Rodriguez,Strategic Planning Director,COUNTERFACTUAL,581,0,2.0,2.0,1.0,2.0,2.0,1.0,"As a Strategic Planning Director, I need high-level summaries that focus on strategic implications, not detailed changes in loan intent variables. This explanation lacks clarity and completeness since it doesn't provide context or trend data across the portfolio. The suggestion to change specific variables offers no clear next steps or strategic insights, which reduces trust and satisfaction for my needs. Overall, this doesn't support my focus on understanding patterns for policy refinement.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 2
-decision_support = 1
-comment = ""As a Strategic Planning Director, I need high-level summaries that focus on strategic implications, not detailed changes in loan intent variables. This explanation lacks clarity and completeness since it doesn't provide context or trend data across the portfolio. The suggestion to change specific variables offers no clear next steps or strategic insights, which reduces trust and satisfaction for my needs. Overall, this doesn't support my focus on understanding patterns for policy refinement.""
-```",gpt-4o
-Casey Rodriguez,Strategic Planning Director,SHAP,5043,0,3.0,2.0,2.0,3.0,2.0,2.0,"As a Strategic Planning Director, the SHAP values give some insight into the factors impacting the AI's decision, but this information is too granular for my role. I need higher-level strategic insights and trends affecting the overall portfolio, not just individual loan factors. While the explanation uses understandable quantifiers like SHAP values, it lacks actionable guidance at my decision-making level, making it hard to align with broader business objectives.","```toml
-interpretability = 3
-completeness = 2
-actionability = 2
-trust = 3
-satisfaction = 2
-decision_support = 2
-comment = ""As a Strategic Planning Director, the SHAP values give some insight into the factors impacting the AI's decision, but this information is too granular for my role. I need higher-level strategic insights and trends affecting the overall portfolio, not just individual loan factors. While the explanation uses understandable quantifiers like SHAP values, it lacks actionable guidance at my decision-making level, making it hard to align with broader business objectives.""
-```",gpt-4o
-Casey Rodriguez,Strategic Planning Director,LIME,5043,0,2.0,2.0,1.0,2.0,2.0,1.0,"The explanation using 'LIME' weights is technical and lacks a strategic overview, making it difficult to comprehend without deeper context. As a Strategic Planning Director, I need insights that align with broader strategic objectives rather than individual data points. The explanation does not provide actionable steps or highlight systematic policy insights, hence offering minimal support for decision-making or fostering trust in the AI's predictions.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 2
-decision_support = 1
-comment = ""The explanation using 'LIME' weights is technical and lacks a strategic overview, making it difficult to comprehend without deeper context. As a Strategic Planning Director, I need insights that align with broader strategic objectives rather than individual data points. The explanation does not provide actionable steps or highlight systematic policy insights, hence offering minimal support for decision-making or fostering trust in the AI's predictions.""
-```",gpt-4o
-Casey Rodriguez,Strategic Planning Director,ANCHOR,5043,0,2.0,2.0,1.0,2.0,2.0,1.0,"As a Strategic Planning Director, I'm looking for explanations that inform high-level strategies and patterns. This explanation is too technical and isolated, focusing on a single rule which doesn't help me understand broader trends or align with our strategic objectives. It lacks completeness and does not suggest any clear actions or guidance on next steps. Moreover, the explanation provides little confidence in the decision-making process or how it affects our portfolio goals.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 2
-decision_support = 1
-comment = ""As a Strategic Planning Director, I'm looking for explanations that inform high-level strategies and patterns. This explanation is too technical and isolated, focusing on a single rule which doesn't help me understand broader trends or align with our strategic objectives. It lacks completeness and does not suggest any clear actions or guidance on next steps. Moreover, the explanation provides little confidence in the decision-making process or how it affects our portfolio goals.""
-```",gpt-4o
-Casey Rodriguez,Strategic Planning Director,COUNTERFACTUAL,5043,0,2.0,2.0,1.0,2.0,1.0,1.0,"As a Strategic Planning Director, I need explanations that highlight strategic insights rather than individual case adjustments. The counterfactual explanation provided here is too focused on how to change a specific prediction rather than offering a broader understanding of trends or policy optimization. It lacks actionability for high-level decision-making and does not instill a strong sense of trust or satisfaction, as it does not align with my strategic objectives.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 1
-decision_support = 1
-comment = ""As a Strategic Planning Director, I need explanations that highlight strategic insights rather than individual case adjustments. The counterfactual explanation provided here is too focused on how to change a specific prediction rather than offering a broader understanding of trends or policy optimization. It lacks actionability for high-level decision-making and does not instill a strong sense of trust or satisfaction, as it does not align with my strategic objectives.""
-```",gpt-4o
-Riley Martinez,Loan Applicant (End User),SHAP,581,0,2.0,2.0,1.0,2.0,2.0,1.0,"As a loan applicant, I find the explanation using 'SHAP' values very hard to understand because it doesn't tell me in clear terms why my application was affected. It mentions technical terms and numbers that don't translate into actionable advice or next steps for me. I don't feel like it provides all the information I need, such as how these factors compare to typical successful applicants. Overall, I'm left unsure about what I can do to improve my chances next time.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 2
-decision_support = 1
-comment = ""As a loan applicant, I find the explanation using 'SHAP' values very hard to understand because it doesn't tell me in clear terms why my application was affected. It mentions technical terms and numbers that don't translate into actionable advice or next steps for me. I don't feel like it provides all the information I need, such as how these factors compare to typical successful applicants. Overall, I'm left unsure about what I can do to improve my chances next time.""
-```",gpt-4o
-Riley Martinez,Loan Applicant (End User),LIME,581,0,1.0,2.0,1.0,2.0,1.0,1.0,"The explanation is filled with technical jargon that is difficult to understand from my perspective. It mentions weights and categorical values that don't give me insight into why my loan application might be accepted or rejected. There’s no guidance on steps I can take to improve my chances, leaving me unsure how to address any potential issues. I need clear and actionable advice to make the decision useful and trustable.","```toml
+Morgan Patel,Customer Success Manager,LIME,581,0,1.0,2.0,1.0,2.0,1.0,1.0,"As a Customer Success Manager, I'm struggling to understand this explanation because it's too technical and lacks clear language. There is limited information on what these factors mean or how to address them to improve the customer's loan eligibility. It's difficult to translate this into customer-friendly language or actionable advice. Without context or suggestions for improvement, I lack confidence in defending this decision or aiding the customer effectively.","```toml
 interpretability = 1
 completeness = 2
 actionability = 1
 trust = 2
 satisfaction = 1
 decision_support = 1
-comment = ""The explanation is filled with technical jargon that is difficult to understand from my perspective. It mentions weights and categorical values that don't give me insight into why my loan application might be accepted or rejected. There’s no guidance on steps I can take to improve my chances, leaving me unsure how to address any potential issues. I need clear and actionable advice to make the decision useful and trustable.""
+comment = ""As a Customer Success Manager, I'm struggling to understand this explanation because it's too technical and lacks clear language. There is limited information on what these factors mean or how to address them to improve the customer's loan eligibility. It's difficult to translate this into customer-friendly language or actionable advice. Without context or suggestions for improvement, I lack confidence in defending this decision or aiding the customer effectively.""
 ```",gpt-4o
-Riley Martinez,Loan Applicant (End User),ANCHOR,581,0,2.0,2.0,1.0,2.0,2.0,2.0,"As a loan applicant, I find this explanation quite confusing. It uses terms like 'loan_percent_income,' 'precision,' and 'coverage,' which I'm not familiar with. It doesn't tell me what I can do to improve my chances of loan approval in the future, nor does it explain enough about why this specific rule matters. This impacts my trust and satisfaction because I feel I'm not fully informed to manage my financial goals effectively.","```toml
+Morgan Patel,Customer Success Manager,ANCHOR,581,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation provided is somewhat interpretable in terms of understanding that a specific rule involving income percentage has been used to make the prediction. However, it lacks completeness as it does not cover other potential factors that could influence the default risk decision beyond income percentage. In terms of actionability, it does not offer guidance on steps a customer could take to potentially improve their situation. My trust in the explanation is moderate, as it's based on a quantifiable rule, but I'm not fully satisfied due to the lack of a holistic view. It also doesn't fully support my decision needs, as it does not help identify opportunities or provide clear explanations to customers. I need more comprehensive and actionable information to maintain positive customer relationships.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""The explanation provided is somewhat interpretable in terms of understanding that a specific rule involving income percentage has been used to make the prediction. However, it lacks completeness as it does not cover other potential factors that could influence the default risk decision beyond income percentage. In terms of actionability, it does not offer guidance on steps a customer could take to potentially improve their situation. My trust in the explanation is moderate, as it's based on a quantifiable rule, but I'm not fully satisfied due to the lack of a holistic view. It also doesn't fully support my decision needs, as it does not help identify opportunities or provide clear explanations to customers. I need more comprehensive and actionable information to maintain positive customer relationships.""
+```",gpt-4o
+Morgan Patel,Customer Success Manager,COUNTERFACTUAL,581,0,2.0,2.0,1.0,2.0,2.0,1.0,"From my perspective as a Customer Success Manager, this explanation is quite technical and lacks clarity. The terms 'person_home_ownership_MORTGAGE' and 'loan_grade_G' don't directly translate into actionable steps that I can easily communicate to the customer. Moreover, the guidance on what needs changing is abstract and doesn't suggest practical improvements the customer can make. It's challenging to trust and act upon this information as it stands. I would need a more detailed, customer-friendly breakdown to maintain transparency and help customers succeed in securing future loans.","```toml
+interpretability = 2
+completeness = 2
+actionability = 1
+trust = 2
+satisfaction = 2
+decision_support = 1
+comment = ""From my perspective as a Customer Success Manager, this explanation is quite technical and lacks clarity. The terms 'person_home_ownership_MORTGAGE' and 'loan_grade_G' don't directly translate into actionable steps that I can easily communicate to the customer. Moreover, the guidance on what needs changing is abstract and doesn't suggest practical improvements the customer can make. It's challenging to trust and act upon this information as it stands. I would need a more detailed, customer-friendly breakdown to maintain transparency and help customers succeed in securing future loans.""
+```",gpt-4o
+Morgan Patel,Customer Success Manager,SHAP,5043,0,2.0,3.0,2.0,3.0,2.0,2.0,"From my perspective as a Customer Success Manager, the explanation is somewhat technical with 'SHAP values,' which aren't easily digestible or translatable into customer-friendly language. It lists factors influencing the decision without context on what each means for the applicant’s overall risk. While it hints at income and ownership being significant, it doesn't provide clear steps the customer can take to improve their chances. For me, more specific insights on addressing these factors would enhance trust and practical decision support.","```toml
+interpretability = 2
+completeness = 3
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""From my perspective as a Customer Success Manager, the explanation is somewhat technical with 'SHAP values,' which aren't easily digestible or translatable into customer-friendly language. It lists factors influencing the decision without context on what each means for the applicant’s overall risk. While it hints at income and ownership being significant, it doesn't provide clear steps the customer can take to improve their chances. For me, more specific insights on addressing these factors would enhance trust and practical decision support.""
+```",gpt-4o
+Morgan Patel,Customer Success Manager,LIME,5043,0,2.0,2.0,2.0,2.0,2.0,2.0,"As a Customer Success Manager, this explanation is difficult to interpret and lacks clarity, translating to challenges when trying to relay information to a customer. The use of LIME weights and technical terms doesn't provide clear guidance on next steps or how customers can improve their situation. For a relationship-focused and optimistic approach, we need insights that are both understandable and actionable. More consumer-friendly language and specific recommendations would enhance trust and usefulness significantly.","```toml
+interpretability = 2
+completeness = 2
+actionability = 2
+trust = 2
+satisfaction = 2
+decision_support = 2
+comment = ""As a Customer Success Manager, this explanation is difficult to interpret and lacks clarity, translating to challenges when trying to relay information to a customer. The use of LIME weights and technical terms doesn't provide clear guidance on next steps or how customers can improve their situation. For a relationship-focused and optimistic approach, we need insights that are both understandable and actionable. More consumer-friendly language and specific recommendations would enhance trust and usefulness significantly.""
+```",gpt-4o
+Morgan Patel,Customer Success Manager,ANCHOR,5043,0,2.0,1.0,1.0,2.0,1.0,1.0,"The explanation provided is highly technical and does not translate well into customer-friendly language. It lacks completeness as it only provides a rule with no context about what 'loan_percent_income <= -0.19' means in real life. There is no actionable advice or suggestions on how the applicant might improve their situation. This explanation doesn't inspire confidence or provide enough information to discuss or make a decision effectively. As a Customer Success Manager, I need more context and a way to guide the customer toward improvement.","```toml
+interpretability = 2
+completeness = 1
+actionability = 1
+trust = 2
+satisfaction = 1
+decision_support = 1
+comment = ""The explanation provided is highly technical and does not translate well into customer-friendly language. It lacks completeness as it only provides a rule with no context about what 'loan_percent_income <= -0.19' means in real life. There is no actionable advice or suggestions on how the applicant might improve their situation. This explanation doesn't inspire confidence or provide enough information to discuss or make a decision effectively. As a Customer Success Manager, I need more context and a way to guide the customer toward improvement.""
+```",gpt-4o
+Morgan Patel,Customer Success Manager,COUNTERFACTUAL,5043,0,2.0,2.0,1.0,2.0,2.0,2.0,"From my perspective as a Customer Success Manager, the explanation lacks clarity and context. The terms 'loan_grade_D' and 'loan_grade_F' don't translate into actionable steps or meaningful insights for the customer. Without understanding what changes are needed or why, I can't use the explanation to guide the customer towards improvement or reassure them in a customer-centric way. The explanation does not align with my focus on fostering positive customer relationships and supporting their long-term success.","```toml
 interpretability = 2
 completeness = 2
 actionability = 1
 trust = 2
 satisfaction = 2
 decision_support = 2
-comment = ""As a loan applicant, I find this explanation quite confusing. It uses terms like 'loan_percent_income,' 'precision,' and 'coverage,' which I'm not familiar with. It doesn't tell me what I can do to improve my chances of loan approval in the future, nor does it explain enough about why this specific rule matters. This impacts my trust and satisfaction because I feel I'm not fully informed to manage my financial goals effectively.""
+comment = ""From my perspective as a Customer Success Manager, the explanation lacks clarity and context. The terms 'loan_grade_D' and 'loan_grade_F' don't translate into actionable steps or meaningful insights for the customer. Without understanding what changes are needed or why, I can't use the explanation to guide the customer towards improvement or reassure them in a customer-centric way. The explanation does not align with my focus on fostering positive customer relationships and supporting their long-term success.""
 ```",gpt-4o
-Riley Martinez,Loan Applicant (End User),COUNTERFACTUAL,581,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a loan applicant, I have no idea what 'COUNTERFACTUAL' means or how 'loan_intent_MEDICAL' or 'loan_intent_VENTURE' relate to my application. There's no clear explanation of what these factors mean or how they affect my application. It doesn't tell me what I can do to improve my chances next time. This explanation doesn't answer my key concerns, like what I need to improve or if this was a fair evaluation.","```toml
+Casey Rodriguez,Strategic Planning Director,SHAP,581,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation provides SHAP values for specific features, which are somewhat interpretable, but it lacks a high-level summary. It doesn't give a comprehensive view of the broader trends or strategic implications, which are important for my role. I need guidance on how this fits into our overall portfolio risk, not just individual predictions. This output doesn’t fully support strategic decision-making or policy refinement.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""The explanation provides SHAP values for specific features, which are somewhat interpretable, but it lacks a high-level summary. It doesn't give a comprehensive view of the broader trends or strategic implications, which are important for my role. I need guidance on how this fits into our overall portfolio risk, not just individual predictions. This output doesn’t fully support strategic decision-making or policy refinement.""
+```",gpt-4o
+Casey Rodriguez,Strategic Planning Director,LIME,581,0,2.0,2.0,1.0,2.0,2.0,1.0,"As a Strategic Planning Director, this explanation is not easily interpretable or actionable for my needs. The use of LIME weights is too technical and doesn't align with my approach of focusing on strategic trends and implications. It lacks guidance on what actions to take or how this case impacts broader policy decisions, which is critical for aligning with our organization's objectives and optimizing our loan portfolio. I'm left without the high-level insights necessary to make strategic decisions or to explain this to stakeholders in a meaningful way.","```toml
+interpretability = 2
+completeness = 2
+actionability = 1
+trust = 2
+satisfaction = 2
+decision_support = 1
+comment = ""As a Strategic Planning Director, this explanation is not easily interpretable or actionable for my needs. The use of LIME weights is too technical and doesn't align with my approach of focusing on strategic trends and implications. It lacks guidance on what actions to take or how this case impacts broader policy decisions, which is critical for aligning with our organization's objectives and optimizing our loan portfolio. I'm left without the high-level insights necessary to make strategic decisions or to explain this to stakeholders in a meaningful way.""
+```",gpt-4o
+Casey Rodriguez,Strategic Planning Director,ANCHOR,581,0,3.0,2.0,2.0,3.0,2.0,2.0,"As a Strategic Planning Director, I find the explanation using the 'ANCHOR' method somewhat limited. The interpretability is moderate, providing a basic rule that is easy to understand but lacks depth. However, the completeness is insufficient because it doesn't cover the broader context or strategic implications I'm interested in. Actionability is low since the explanation provides no clear guidance on policy refinement or strategic decision-making. Therefore, my trust in this output is moderate, as I suspect the explanation is missing critical factors that could influence portfolio-level strategies. Overall, this explanation does not significantly aid my strategic decision-making or alignment with organizational objectives.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""As a Strategic Planning Director, I find the explanation using the 'ANCHOR' method somewhat limited. The interpretability is moderate, providing a basic rule that is easy to understand but lacks depth. However, the completeness is insufficient because it doesn't cover the broader context or strategic implications I'm interested in. Actionability is low since the explanation provides no clear guidance on policy refinement or strategic decision-making. Therefore, my trust in this output is moderate, as I suspect the explanation is missing critical factors that could influence portfolio-level strategies. Overall, this explanation does not significantly aid my strategic decision-making or alignment with organizational objectives.""
+```",gpt-4o
+Casey Rodriguez,Strategic Planning Director,COUNTERFACTUAL,581,0,3.0,2.0,2.0,3.0,2.0,2.0,"As a Strategic Planning Director, I find the explanation moderately interpretable; I understand what the AI suggests but it lacks context. The explanation about the 'COUNTERFACTUAL' method is incomplete, as it doesn't link this information to strategic objectives or patterns across the portfolio. There's limited actionable insight at a strategic level; it focuses on factors specific to this individual case rather than informing broader policy refinement. The trust level is average because while I can see the AI's logic, more data-driven insights would reinforce confidence. Overall, it's not satisfying or supportive in helping with my strategic planning and prediction alignment duties.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""As a Strategic Planning Director, I find the explanation moderately interpretable; I understand what the AI suggests but it lacks context. The explanation about the 'COUNTERFACTUAL' method is incomplete, as it doesn't link this information to strategic objectives or patterns across the portfolio. There's limited actionable insight at a strategic level; it focuses on factors specific to this individual case rather than informing broader policy refinement. The trust level is average because while I can see the AI's logic, more data-driven insights would reinforce confidence. Overall, it's not satisfying or supportive in helping with my strategic planning and prediction alignment duties.""
+```",gpt-4o
+Casey Rodriguez,Strategic Planning Director,SHAP,5043,0,3.0,2.0,2.0,3.0,2.0,2.0,"As a Strategic Planning Director, I need high-level summaries that connect to strategic objectives. This explanation on SHAP values doesn't easily map to our broader goals or show trends across the portfolio. While I understand the individual factors, it lacks actionable insights and doesn't suggest what to do next strategically. It provides some trust since it uses a recognized method, but overall doesn't support my needs efficiently for making decisions aimed at policy refinement.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""As a Strategic Planning Director, I need high-level summaries that connect to strategic objectives. This explanation on SHAP values doesn't easily map to our broader goals or show trends across the portfolio. While I understand the individual factors, it lacks actionable insights and doesn't suggest what to do next strategically. It provides some trust since it uses a recognized method, but overall doesn't support my needs efficiently for making decisions aimed at policy refinement.""
+```",gpt-4o
+Casey Rodriguez,Strategic Planning Director,LIME,5043,0,2.0,2.0,1.0,2.0,2.0,1.0,"As a Strategic Planning Director, I focus on understanding how these insights align with our broader strategic objectives. This explanation is too technical and detail-focused on individual cases without providing a clear high-level summary of its implications on our loan portfolio. I need to see trends or systematic patterns that help refine our policies, rather than specific factor weights that are hard to translate into strategic actions.","```toml
+interpretability = 2
+completeness = 2
+actionability = 1
+trust = 2
+satisfaction = 2
+decision_support = 1
+comment = ""As a Strategic Planning Director, I focus on understanding how these insights align with our broader strategic objectives. This explanation is too technical and detail-focused on individual cases without providing a clear high-level summary of its implications on our loan portfolio. I need to see trends or systematic patterns that help refine our policies, rather than specific factor weights that are hard to translate into strategic actions.""
+```",gpt-4o
+Casey Rodriguez,Strategic Planning Director,ANCHOR,5043,0,2.0,2.0,2.0,3.0,2.0,2.0,"As a Strategic Planning Director, this explanation is not very useful for my needs. The technical nature of the anchor rule ('loan_percent_income <= -0.19') isn't easily interpretable without more context on its business implications. The explanation lacks completeness as it focuses on a narrow rule without considering broader trends or providing strategic insights. While I trust the underlying precision of 0.92 indicates some reliability, it does little to inform high-level policy decisions or strategic alignment.","```toml
+interpretability = 2
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""As a Strategic Planning Director, this explanation is not very useful for my needs. The technical nature of the anchor rule ('loan_percent_income <= -0.19') isn't easily interpretable without more context on its business implications. The explanation lacks completeness as it focuses on a narrow rule without considering broader trends or providing strategic insights. While I trust the underlying precision of 0.92 indicates some reliability, it does little to inform high-level policy decisions or strategic alignment.""
+```",gpt-4o
+Casey Rodriguez,Strategic Planning Director,COUNTERFACTUAL,5043,0,3.0,2.0,2.0,3.0,2.0,2.0,"As a Strategic Planning Director, I need high-level summaries that inform our strategic objectives. The explanation uses a counterfactual approach that is not intuitive for me to interpret quickly and apply strategically. It lacks the comprehensiveness needed to cover the wider business implications. While the 'loan_grade' adjustments are clear, they don't provide direct guidance on next steps at the portfolio level, impacting my ability to use this for decision-making.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""As a Strategic Planning Director, I need high-level summaries that inform our strategic objectives. The explanation uses a counterfactual approach that is not intuitive for me to interpret quickly and apply strategically. It lacks the comprehensiveness needed to cover the wider business implications. While the 'loan_grade' adjustments are clear, they don't provide direct guidance on next steps at the portfolio level, impacting my ability to use this for decision-making.""
+```",gpt-4o
+Riley Martinez,Loan Applicant (End User),SHAP,581,0,1.0,1.0,1.0,2.0,1.0,1.0,"As a loan applicant, this explanation based on SHAP values is confusing and lacks clarity. I don't understand what these values mean or how they relate to my loan application. There are no specific steps or guidance on how I can improve my chances for future applications. The terms like 'SHAP values' or 'loan_grade_D' don't help me grasp what factors were most important or what to do next.","```toml
 interpretability = 1
 completeness = 1
 actionability = 1
-trust = 1
+trust = 2
 satisfaction = 1
 decision_support = 1
-comment = ""As a loan applicant, I have no idea what 'COUNTERFACTUAL' means or how 'loan_intent_MEDICAL' or 'loan_intent_VENTURE' relate to my application. There's no clear explanation of what these factors mean or how they affect my application. It doesn't tell me what I can do to improve my chances next time. This explanation doesn't answer my key concerns, like what I need to improve or if this was a fair evaluation.""
+comment = ""As a loan applicant, this explanation based on SHAP values is confusing and lacks clarity. I don't understand what these values mean or how they relate to my loan application. There are no specific steps or guidance on how I can improve my chances for future applications. The terms like 'SHAP values' or 'loan_grade_D' don't help me grasp what factors were most important or what to do next.""
 ```",gpt-4o
-Riley Martinez,Loan Applicant (End User),SHAP,5043,0,2.0,2.0,1.0,2.0,1.0,1.0,"As someone not familiar with technical terms like SHAP or how these values translate to my loan application, this explanation feels confusing. It doesn't clarify what these factors mean for my approval chances or provide any specific steps to improve my chances in the future. The technical jargon makes it hard for me to trust and use this information effectively, leaving me dissatisfied and unsupported in reaching my financial goals.","```toml
+Riley Martinez,Loan Applicant (End User),LIME,581,0,1.0,2.0,1.0,2.0,1.0,1.0,"As someone without technical expertise, the explanation using 'LIME weights' and specific coefficients is confusing and doesn't help me understand why my loan was approved or rejected. It doesn't cover the key reasons in plain language, nor does it offer clear actions for me to take to improve my application in the future. The technical jargon limits my ability to trust and feel satisfied with the explanation, as it fails to provide meaningful decision support for my personal situation.","```toml
+interpretability = 1
+completeness = 2
+actionability = 1
+trust = 2
+satisfaction = 1
+decision_support = 1
+comment = ""As someone without technical expertise, the explanation using 'LIME weights' and specific coefficients is confusing and doesn't help me understand why my loan was approved or rejected. It doesn't cover the key reasons in plain language, nor does it offer clear actions for me to take to improve my application in the future. The technical jargon limits my ability to trust and feel satisfied with the explanation, as it fails to provide meaningful decision support for my personal situation.""
+```",gpt-4o
+Riley Martinez,Loan Applicant (End User),ANCHOR,581,0,2.0,2.0,1.0,2.0,1.0,1.0,"As a loan applicant, the explanation is quite confusing. The technical term 'loan_percent_income' is not clear to me, nor is how its specific value affects my loan application. The explanation lacks details on what I need to improve or focus on for future applications. I need more guidance on the factors affecting the decision and what concrete steps I can take to positively influence them.","```toml
 interpretability = 2
 completeness = 2
 actionability = 1
 trust = 2
 satisfaction = 1
 decision_support = 1
-comment = ""As someone not familiar with technical terms like SHAP or how these values translate to my loan application, this explanation feels confusing. It doesn't clarify what these factors mean for my approval chances or provide any specific steps to improve my chances in the future. The technical jargon makes it hard for me to trust and use this information effectively, leaving me dissatisfied and unsupported in reaching my financial goals.""
+comment = ""As a loan applicant, the explanation is quite confusing. The technical term 'loan_percent_income' is not clear to me, nor is how its specific value affects my loan application. The explanation lacks details on what I need to improve or focus on for future applications. I need more guidance on the factors affecting the decision and what concrete steps I can take to positively influence them.""
 ```",gpt-4o
-Riley Martinez,Loan Applicant (End User),LIME,5043,0,1.0,1.0,1.0,2.0,1.0,1.0,"As a loan applicant, I found this explanation very confusing and not relevant to my understanding. Terms like LIME weights, home ownership codes, and other technical factors don't tell me the key reasons my application was judged. It doesn't suggest clear actions I can take to improve my situation or indicate fairness in decision-making. This wouldn't help me optimize my financial situation or understand my next steps.","```toml
-interpretability = 1
+Riley Martinez,Loan Applicant (End User),COUNTERFACTUAL,581,0,2.0,1.0,2.0,2.0,2.0,2.0,"As a loan applicant, the explanation was quite technical and not easy to grasp. It didn't cover all the factors I need to understand, such as why these specific changes matter and what they mean for me personally. While it suggests some changes, they're not actionable or clear about what steps I can take to implement them. Overall, it didn't provide a satisfying or helpful understanding of the decision.","```toml
+interpretability = 2
 completeness = 1
+actionability = 2
+trust = 2
+satisfaction = 2
+decision_support = 2
+comment = ""As a loan applicant, the explanation was quite technical and not easy to grasp. It didn't cover all the factors I need to understand, such as why these specific changes matter and what they mean for me personally. While it suggests some changes, they're not actionable or clear about what steps I can take to implement them. Overall, it didn't provide a satisfying or helpful understanding of the decision.""
+```",gpt-4o
+Riley Martinez,Loan Applicant (End User),SHAP,5043,0,2.0,2.0,1.0,2.0,2.0,2.0,"As a loan applicant, this explanation is difficult to understand. The list of factors with numbers doesn't clarify why my application was approved or rejected. It doesn't cover all the elements impacting my financial situation. There's no clear advice on what specific actions I should take next. Without these, it's hard to trust the process or feel supported in reaching my goals.","```toml
+interpretability = 2
+completeness = 2
 actionability = 1
 trust = 2
-satisfaction = 1
-decision_support = 1
-comment = ""As a loan applicant, I found this explanation very confusing and not relevant to my understanding. Terms like LIME weights, home ownership codes, and other technical factors don't tell me the key reasons my application was judged. It doesn't suggest clear actions I can take to improve my situation or indicate fairness in decision-making. This wouldn't help me optimize my financial situation or understand my next steps.""
+satisfaction = 2
+decision_support = 2
+comment = ""As a loan applicant, this explanation is difficult to understand. The list of factors with numbers doesn't clarify why my application was approved or rejected. It doesn't cover all the elements impacting my financial situation. There's no clear advice on what specific actions I should take next. Without these, it's hard to trust the process or feel supported in reaching my goals.""
 ```",gpt-4o
-Riley Martinez,Loan Applicant (End User),ANCHOR,5043,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a loan applicant trying to understand my situation, this explanation is completely baffling. It uses technical terms like 'loan_percent_income' without explaining their meaning or relevance to my case. I don't know what steps to take to improve my chances next time, and I am unsure if this decision was based on the right factors. This does not meet my need for a clear, actionable explanation that helps me achieve my financial goals.","```toml
+Riley Martinez,Loan Applicant (End User),LIME,5043,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a loan applicant, I find this explanation completely confusing and unhelpful. The terms like 'LIME weights' and the numerical values don't mean anything to me, and there's no clear information on why my loan might be approved or rejected. There's missing context on how these factors directly impact my ability to improve my financial situation, and no actionable steps are provided to help me in future applications. Overall, I cannot trust or use this explanation to make any meaningful decisions about my loan or financial goals.","```toml
 interpretability = 1
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""As a loan applicant trying to understand my situation, this explanation is completely baffling. It uses technical terms like 'loan_percent_income' without explaining their meaning or relevance to my case. I don't know what steps to take to improve my chances next time, and I am unsure if this decision was based on the right factors. This does not meet my need for a clear, actionable explanation that helps me achieve my financial goals.""
+comment = ""As a loan applicant, I find this explanation completely confusing and unhelpful. The terms like 'LIME weights' and the numerical values don't mean anything to me, and there's no clear information on why my loan might be approved or rejected. There's missing context on how these factors directly impact my ability to improve my financial situation, and no actionable steps are provided to help me in future applications. Overall, I cannot trust or use this explanation to make any meaningful decisions about my loan or financial goals.""
 ```",gpt-4o
-Riley Martinez,Loan Applicant (End User),COUNTERFACTUAL,5043,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a loan applicant, this explanation is completely confusing to me. The terms 'person_emp_length' and 'loan_grade_D' mean nothing to me, and I have no idea how I would go about changing them by specific amounts. There's no guidance on what I can practically do next, making it difficult to improve my chances in the future. Overall, this explanation offers no valuable insight or actionable information as a consumer trying to navigate this process.","```toml
-interpretability = 1
+Riley Martinez,Loan Applicant (End User),ANCHOR,5043,0,2.0,1.0,1.0,1.0,1.0,2.0,"As a loan applicant, this explanation is quite confusing. The technical term 'loan_percent_income' isn't clear, and no clear details are offered on what this means for my situation or how I can address it. It doesn't provide any suggestions on what I can do to improve my chances. Overall, it leaves me with many questions and little confidence in the decision, and doesn't support my goal of understanding and improving my financial situation.","```toml
+interpretability = 2
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
-decision_support = 1
-comment = ""As a loan applicant, this explanation is completely confusing to me. The terms 'person_emp_length' and 'loan_grade_D' mean nothing to me, and I have no idea how I would go about changing them by specific amounts. There's no guidance on what I can practically do next, making it difficult to improve my chances in the future. Overall, this explanation offers no valuable insight or actionable information as a consumer trying to navigate this process.""
+decision_support = 2
+comment = ""As a loan applicant, this explanation is quite confusing. The technical term 'loan_percent_income' isn't clear, and no clear details are offered on what this means for my situation or how I can address it. It doesn't provide any suggestions on what I can do to improve my chances. Overall, it leaves me with many questions and little confidence in the decision, and doesn't support my goal of understanding and improving my financial situation.""
+```",gpt-4o
+Riley Martinez,Loan Applicant (End User),COUNTERFACTUAL,5043,0,2.0,2.0,1.0,2.0,2.0,2.0,"As a loan applicant trying to understand this decision, the explanation uses unclear terms like 'loan_grade_D' and 'change by 0.50', which don't make sense to me. It doesn't cover the factors affecting my application or suggest what I can do to improve. There's not enough information for me to trust the decision or feel satisfied with this explanation. I need steps like 'improve credit by paying bills on time for 6 months' rather than vague changes in loan grades.","```toml
+interpretability = 2
+completeness = 2
+actionability = 1
+trust = 2
+satisfaction = 2
+decision_support = 2
+comment = ""As a loan applicant trying to understand this decision, the explanation uses unclear terms like 'loan_grade_D' and 'change by 0.50', which don't make sense to me. It doesn't cover the factors affecting my application or suggest what I can do to improve. There's not enough information for me to trust the decision or feel satisfied with this explanation. I need steps like 'improve credit by paying bills on time for 6 months' rather than vague changes in loan grades.""
 ```",gpt-4o

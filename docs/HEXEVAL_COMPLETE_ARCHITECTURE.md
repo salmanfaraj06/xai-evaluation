@@ -369,7 +369,7 @@ CODE/
 |  | 1. Create LimeTabularExplainer                                     |  |
 |  | 2. Generate explanations (num_samples perturbations)               |  |
 |  | 3. Compute Fidelity (same as SHAP)                                 |  |
-|  | 4. Compute Stability: Add noise, measure variance                  |  |
+|  | 4. Compute Stability: Add noise, cosine similarity                 |  |
 |  +--------------------------------------------------------------------+  |
 |                                                                          |
 |  +--------------------------------------------------------------------+  |
@@ -385,11 +385,14 @@ CODE/
 |  +--------------------------------------------------------------------+  |
 |  | 1. Create DiCE explainer in processed feature space                |  |
 |  | 2. Generate counterfactuals for max_instances samples              |  |
-|  | 3. Compute: success_rate (% valid CFs that flip prediction)        |  |
+|  | 3. Compute: success_rate + sparsity (# features changed)           |  |
 |  +--------------------------------------------------------------------+  |
 |                                                                          |
 |  OUTPUT: DataFrame -> technical_metrics.csv                              |
-|  Columns: method, fidelity_deletion, fidelity_insertion, sparsity, etc.  |
+|  Columns: method, fidelity_deletion, fidelity_insertion,                 |
+|           num_important_features, rule_accuracy, rule_applicability,     |
+|           rule_length, counterfactual_success, counterfactual_sparsity,  |
+|           stability                                                     |
 |                                                                          |
 +--------------------------------------------------------------------------+
                                    |
@@ -459,7 +462,7 @@ CODE/
 |  3. Calculate Method-Specific Technical Score:                           |
 |     - SHAP/LIME: normalize(fidelity + parsimony)                         |
 |     - Anchor: 0.8 x precision + 0.2 x coverage                           |
-|     - DiCE: success_rate                                                 |
+|     - DiCE: success_rate + sparsity (validity + simplicity)              |
 |                                                                          |
 |  4. Calculate Combined Score:                                            |
 |     score = 0.3 x technical_score + 0.2 x parsimony +                    |
@@ -509,10 +512,10 @@ CODE/
 
 | Method | Steps | Metrics |
 |--------|-------|---------|
-| SHAP | Create Explainer, generate values | fidelity_deletion, fidelity_insertion, sparsity |
-| LIME | Create LimeTabularExplainer | fidelity, stability |
-| Anchor | Create AnchorTabularExplainer | precision, coverage, n_conditions |
-| DiCE | Generate counterfactuals | success_rate |
+| SHAP | Create Explainer, generate values | fidelity_deletion, fidelity_insertion, num_important_features |
+| LIME | Create LimeTabularExplainer | fidelity, parsimony, stability (cosine similarity under noise) |
+| Anchor | Create AnchorTabularExplainer | rule_accuracy, rule_applicability, rule_length |
+| DiCE | Generate counterfactuals | counterfactual_success, counterfactual_sparsity |
 
 #### Step 4: Persona Evaluation Details
 
@@ -740,10 +743,11 @@ def run_technical_evaluation(model_wrapper, data, config) -> pd.DataFrame:
     - method: SHAP, LIME, Anchor, DiCE
     - fidelity_deletion: Lower is better
     - fidelity_insertion: Higher is better
-    - sparsity: Number of important features
-    - stability: Variance under noise (LIME only)
-    - anchor_precision, anchor_coverage, anchor_n_conditions (Anchor only)
-    - dice_success_rate (DiCE only)
+    - num_important_features: Sparsity for SHAP/LIME
+    - stability: Mean cosine similarity under noise (LIME only)
+    - rule_accuracy, rule_applicability, rule_length (Anchor only)
+    - counterfactual_success (DiCE only)
+    - counterfactual_sparsity: Avg # features changed (DiCE only)
     """
 ```
 
@@ -908,6 +912,7 @@ personas:
 ```yaml
 recommendations:
   enabled: true
+  dice_sparsity_target: 3  # Avg changed features for full score
   weights:
     technical_fidelity: 0.3
     technical_parsimony: 0.2
@@ -1088,8 +1093,9 @@ elif method == "Anchor":
     tech_score = 0.8 * precision + 0.2 * coverage
     
 elif method == "DiCE":
-    # DiCE only has success rate
-    tech_score = success_rate
+    # DiCE uses success rate and counterfactual sparsity
+    # sparsity_score is derived from avg changed features (lower is better)
+    tech_score = 0.5 * success_rate + 0.5 * sparsity_score
 ```
 
 ---
@@ -1361,10 +1367,11 @@ Runs technical evaluation only (no LLM calls).
 - `method`: SHAP, LIME, Anchor, DiCE
 - `fidelity_deletion`: Lower is better
 - `fidelity_insertion`: Higher is better
-- `sparsity`: Number of important features
-- `stability`: Variance under noise (LIME only)
-- `anchor_precision`, `anchor_coverage` (Anchor only)
-- `dice_success_rate` (DiCE only)
+- `num_important_features`: Sparsity for SHAP/LIME
+- `stability`: Mean cosine similarity under noise (LIME only)
+- `rule_accuracy`, `rule_applicability`, `rule_length` (Anchor only)
+- `counterfactual_success` (DiCE only)
+- `counterfactual_sparsity`: Avg # features changed (DiCE only)
 
 #### `hexeval.evaluation.generate_recommendations()`
 
@@ -1536,7 +1543,7 @@ streamlit run hexeval/ui/app.py
 - ⚠️ May show too many features (low parsimony)
 
 **LIME:**
-- ⚠️ Can be unstable (high variance across runs)
+- ⚠️ Can be unstable (sensitive to perturbations/sampling)
 - ⚠️ Local approximations may not reflect global behavior
 - ⚠️ Requires careful tuning of `num_samples`
 
@@ -1549,6 +1556,7 @@ streamlit run hexeval/ui/app.py
 - ⚠️ Slowest method (3-10 seconds per instance)
 - ⚠️ Requires feasible ranges for all features
 - ⚠️ Counterfactuals may be unrealistic
+- ⚠️ Technical metrics cover validity and sparsity only (no proximity)
 
 ### Persona Evaluation Limitations
 
@@ -1914,9 +1922,9 @@ Include:
 
 **Method-Specific Insights:**
 - **SHAP:** High fidelity but low interpretability (too many features, technical jargon)
-- **LIME:** Balanced but unstable (high variance across runs)
+- **LIME:** Balanced but unstable (sensitive to perturbations/sampling)
 - **Anchor:** High precision but low coverage (overly specific rules)
-- **DiCE:** Actionable but slow (computational bottleneck)
+- **DiCE:** Actionable but slow (computational bottleneck; sparsity now tracked)
 
 ### Academic Positioning
 

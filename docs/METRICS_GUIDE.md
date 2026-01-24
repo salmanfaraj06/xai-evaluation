@@ -128,6 +128,20 @@ Measure explanation simplicity and comprehensibility.
 - Counterfactual: "Increase income by $10k"
 - Success: New prediction = "Approve" (prob = 0.3)
 
+### Counterfactual Sparsity (Lower is Better)
+
+**What it measures:** Average number of features changed in generated counterfactuals.
+
+**Interpretation:**
+- **Lower = Simpler, more actionable**
+- Good: <= 2
+- Acceptable: 3 - 5
+- Poor: > 5
+
+**Example:**
+- Counterfactual A changes 1 feature (income +$2k) -> sparse, easy to act on
+- Counterfactual B changes 12 features -> complex, hard to act on
+
 ---
 
 ## Stability Metrics (LIME only)
@@ -157,7 +171,7 @@ Measure explanation simplicity and comprehensibility.
 | **SHAP** | Technical users | ⭐⭐⭐⭐⭐ | ⭐⭐ | - |
 | **LIME** | Balanced use | ⭐⭐⭐⭐ | ⭐⭐⭐ | Stability |
 | **Anchor** | Non-technical users | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | Rule accuracy, Coverage |
-| **DiCE** | Actionable recourse | - | - | Counterfactual success |
+| **DiCE** | Actionable recourse | - | - | Counterfactual success, Counterfactual sparsity |
 
 ---
 
@@ -187,6 +201,7 @@ Measure explanation simplicity and comprehensibility.
 | Rule accuracy | - | - | 0.88 | - |
 | Rule coverage | - | - | 0.22 | - |
 | CF success | - | - | - | 0.85 |
+| CF sparsity (avg changed features) | - | - | - | 2.0 |
 | Stability | - | 0.82 | - | - |
 
 Use these as benchmarks when evaluating your model!

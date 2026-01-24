@@ -18,7 +18,11 @@ from hexeval.explainers.lime_explainer import LimeExplainer
 from hexeval.explainers.anchor_explainer import AnchorExplainer
 from hexeval.explainers.dice_counterfactuals import DiceExplainer
 from hexeval.metrics.fidelity import insertion_deletion_auc
-from hexeval.metrics.parsimony_coverage import sparsity_from_importances, anchor_parsimony_and_coverage
+from hexeval.metrics.parsimony_coverage import (
+    sparsity_from_importances,
+    anchor_parsimony_and_coverage,
+    counterfactual_sparsity,
+)
 from hexeval.metrics.robustness import explanation_stability
 
 LOG = logging.getLogger(__name__)
@@ -156,6 +160,7 @@ def _evaluate_shap(model, X_train, X_sample, baseline, feature_names, config) ->
         "rule_applicability": np.nan,
         "rule_length": np.nan,
         "counterfactual_success": np.nan,
+        "counterfactual_sparsity": np.nan,
         "stability": np.nan,
     }
 
@@ -222,6 +227,7 @@ def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) ->
         "rule_applicability": np.nan,
         "rule_length": np.nan,
         "counterfactual_success": np.nan,
+        "counterfactual_sparsity": np.nan,
         "stability": stability_score,
     }
 
@@ -270,6 +276,7 @@ def _evaluate_anchor(model, X_train, X_sample, feature_names, config, model_wrap
         "rule_applicability": df["coverage"].mean(),
         "rule_length": df["n_conditions"].mean(),
         "counterfactual_success": np.nan,
+        "counterfactual_sparsity": np.nan,
         "stability": np.nan,
     }
 
@@ -290,6 +297,8 @@ def _evaluate_dice(model, X_train, X_sample, y_train, feature_names, config) -> 
     max_instances = min(dice_cfg["max_instances"], len(X_sample))
     
     validity_scores = []
+    sparsity_scores = []
+    tolerance = dice_cfg.get("sparsity_epsilon", 1e-6)
     for i in range(max_instances):
         try:
             cf_exp = explainer.generate_counterfactuals(
@@ -306,6 +315,14 @@ def _evaluate_dice(model, X_train, X_sample, y_train, feature_names, config) -> 
             
             validity = np.mean(cf_preds != base_pred)
             validity_scores.append(validity)
+
+            sparsity = counterfactual_sparsity(
+                X_sample[i].astype(np.float64),
+                cf_arr.astype(np.float64),
+                tolerance=tolerance,
+            )
+            if not np.isnan(sparsity):
+                sparsity_scores.append(sparsity)
         except Exception:
             continue
     
@@ -320,5 +337,6 @@ def _evaluate_dice(model, X_train, X_sample, y_train, feature_names, config) -> 
         "rule_applicability": np.nan,
         "rule_length": np.nan,
         "counterfactual_success": np.mean(validity_scores),
+        "counterfactual_sparsity": float(np.mean(sparsity_scores)) if sparsity_scores else np.nan,
         "stability": np.nan,
     }

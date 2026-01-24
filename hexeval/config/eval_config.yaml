@@ -28,7 +28,7 @@ personas:
   enabled: true
   file: "hexeval/config/personas_healthcare.yaml"
   llm_model: "gpt-4o"
-  runs_per_method: 1            # 1 run to save cost/time
+  runs_per_method: 1         # 1 run to save cost/time
   sample_instances: 3           # Small sample for testing
   top_k_features: 5
 
@@ -65,9 +65,10 @@ evaluation:
       max_instances: 5      
       method: "random"
 
-# Recommendation Settings
+
 recommendations:
   enabled: true
+  dice_sparsity_target: 3 
   weights:
     technical_fidelity: 0.3
     technical_parsimony: 0.2

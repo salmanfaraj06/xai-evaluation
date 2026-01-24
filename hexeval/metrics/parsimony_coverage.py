@@ -18,3 +18,17 @@ def anchor_parsimony_and_coverage(anchor_exp) -> dict:
         "precision": float(anchor_exp.precision()),
         "coverage": float(anchor_exp.coverage()),
     }
+
+
+def counterfactual_sparsity(
+    x_row: np.ndarray,
+    cf_rows: np.ndarray,
+    tolerance: float = 1e-6,
+) -> float:
+    """Average number of features changed between an instance and its counterfactuals."""
+    if cf_rows.size == 0:
+        return float("nan")
+    cf_arr = np.atleast_2d(cf_rows)
+    diffs = np.abs(cf_arr - x_row)
+    changed = diffs > tolerance
+    return float(changed.sum(axis=1).mean())

@@ -1,433 +1,433 @@
 persona_name,persona_role,explanation_type,instance_index,run,interpretability,completeness,actionability,trust,satisfaction,decision_support,comment,raw_llm_response,used_llm
-Dr. Sarah Jenkins,Lead Cardiologist,SHAP,134,0,2.0,1.0,1.0,1.0,1.0,1.0,"As a Lead Cardiologist, this explanation is far from useful. It focuses on sex and age, which are less clinically relevant for risk prediction compared to specific symptoms and test results like chest pain type or thallium stress test. It doesn't align with my evidence-based approach that prioritizes physiological markers. Without insights into key clinical signs, I can't trust or act on this, compromising patient safety and early detection.","```toml
+Dr. Sarah Jenkins,Lead Cardiologist,SHAP,134,0,2.0,1.0,1.0,1.0,1.0,1.0,"The AI explanation is not useful in its current form. It only provides SHAP values for 'sex' and 'age,' without mentioning critical clinical indicators like chest pain type or max heart rate, which are crucial for heart disease risk assessment. This lacks depth and does not guide any medical action, failing to align with my evidence-based decision-making approach and patient safety priorities.","```toml
 interpretability = 2
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""As a Lead Cardiologist, this explanation is far from useful. It focuses on sex and age, which are less clinically relevant for risk prediction compared to specific symptoms and test results like chest pain type or thallium stress test. It doesn't align with my evidence-based approach that prioritizes physiological markers. Without insights into key clinical signs, I can't trust or act on this, compromising patient safety and early detection.""
+comment = ""The AI explanation is not useful in its current form. It only provides SHAP values for 'sex' and 'age,' without mentioning critical clinical indicators like chest pain type or max heart rate, which are crucial for heart disease risk assessment. This lacks depth and does not guide any medical action, failing to align with my evidence-based decision-making approach and patient safety priorities.""
 ```",gpt-4o
-Dr. Sarah Jenkins,Lead Cardiologist,LIME,134,0,1.0,2.0,1.0,1.0,1.0,1.0,"From my perspective as a Lead Cardiologist, the explanation provided by the AI is quite confusing. LIME weights are expressed as arbitrary numerical values on factors like sex and chest pain, but it doesn't provide a clear physiological rationale for the prediction. Important clinical indicators such as chest pain type (cp), thallium stress test (thal), and ST depression (oldpeak) are not adequately addressed. The explanation lacks completeness and actionable guidance, leaving me with low trust and satisfaction. Furthermore, it doesn't align with my evidence-based decision-making approach or priorities in patient safety and early detection.","```toml
-interpretability = 1
-completeness = 2
-actionability = 1
-trust = 1
-satisfaction = 1
-decision_support = 1
-comment = ""From my perspective as a Lead Cardiologist, the explanation provided by the AI is quite confusing. LIME weights are expressed as arbitrary numerical values on factors like sex and chest pain, but it doesn't provide a clear physiological rationale for the prediction. Important clinical indicators such as chest pain type (cp), thallium stress test (thal), and ST depression (oldpeak) are not adequately addressed. The explanation lacks completeness and actionable guidance, leaving me with low trust and satisfaction. Furthermore, it doesn't align with my evidence-based decision-making approach or priorities in patient safety and early detection.""
-```",gpt-4o
-Dr. Sarah Jenkins,Lead Cardiologist,ANCHOR,134,0,3.0,2.0,2.0,2.0,2.0,2.0,"The explanation focuses on the number of major coronary vessels (ca) and results from the thallium stress test (thal), which are relevant, but it doesn't integrate other critical clinical markers like chest pain or ST depression during exercise. This limited focus makes it difficult to fully understand the patient's risk profile. While the precision is high, the coverage is low, which limits the broader application of this rule. Overall, this explanation lacks depth in terms of clinical context, which affects my trust and satisfaction ratings.","```toml
-interpretability = 3
-completeness = 2
-actionability = 2
-trust = 2
-satisfaction = 2
-decision_support = 2
-comment = ""The explanation focuses on the number of major coronary vessels (ca) and results from the thallium stress test (thal), which are relevant, but it doesn't integrate other critical clinical markers like chest pain or ST depression during exercise. This limited focus makes it difficult to fully understand the patient's risk profile. While the precision is high, the coverage is low, which limits the broader application of this rule. Overall, this explanation lacks depth in terms of clinical context, which affects my trust and satisfaction ratings.""
-```",gpt-4o
-Dr. Sarah Jenkins,Lead Cardiologist,COUNTERFACTUAL,134,0,2.0,2.0,2.0,2.0,2.0,2.0,"The explanation provided by the AI is not particularly useful for my needs as a Lead Cardiologist. The use of a 'COUNTERFACTUAL' method and alterations in cp and thal values lacks clarity and detail, making it difficult to comprehend the underlying biological mechanisms or validate clinical significance. This does not offer a thorough explanation or actions to take, nor is it aligned with well-established clinical guidelines. I require more robust and medically-aligned rationale to trust and act on the AI's prediction.","```toml
+Dr. Sarah Jenkins,Lead Cardiologist,LIME,134,0,2.0,2.0,2.0,2.0,2.0,2.0,"The explanation is focused on numerical weights and thresholds that don't translate well to clinical terminology, making it difficult to interpret. Important clinical indicators like chest pain type and thallium stress test results are mentioned, but the weights and thresholds aren't meaningful without context. It lacks guidance on the biological mechanisms at play, which I need to understand to take action. As a risk-averse clinician, I require more robust information to make confident decisions.","```toml
 interpretability = 2
 completeness = 2
 actionability = 2
 trust = 2
 satisfaction = 2
 decision_support = 2
-comment = ""The explanation provided by the AI is not particularly useful for my needs as a Lead Cardiologist. The use of a 'COUNTERFACTUAL' method and alterations in cp and thal values lacks clarity and detail, making it difficult to comprehend the underlying biological mechanisms or validate clinical significance. This does not offer a thorough explanation or actions to take, nor is it aligned with well-established clinical guidelines. I require more robust and medically-aligned rationale to trust and act on the AI's prediction.""
+comment = ""The explanation is focused on numerical weights and thresholds that don't translate well to clinical terminology, making it difficult to interpret. Important clinical indicators like chest pain type and thallium stress test results are mentioned, but the weights and thresholds aren't meaningful without context. It lacks guidance on the biological mechanisms at play, which I need to understand to take action. As a risk-averse clinician, I require more robust information to make confident decisions.""
 ```",gpt-4o
-Dr. Sarah Jenkins,Lead Cardiologist,SHAP,18,0,2.0,1.0,1.0,1.0,1.0,1.0,"As a Lead Cardiologist, I find this explanation unhelpful. The SHAP values only highlight age and sex, which are less critical than signs like chest pain type, max heart rate, and ST depression during exercise. There's no mention of key clinical indicators essential for assessing heart disease risk. This lacks the depth needed for making a patient-safe decision and does not suggest any actionable steps or support in understanding the biological mechanisms involved.","```toml
+Dr. Sarah Jenkins,Lead Cardiologist,ANCHOR,134,0,2.0,2.0,1.0,2.0,2.0,2.0,"As a Lead Cardiologist, I find this explanation lacking in clarity and clinical relevance. The rule provided by the AI focuses on 'ca' and 'thal', but it doesn't specify how these values correlate with clinical practices or physiological mechanisms for heart disease. This is not helpful for guiding my next steps, as it lacks specific information about commonly considered factors like chest pain type (cp) and ST depression during exercise. Overall, this explanation provides limited trust and does not align well with my evidence-based and clinically-driven decision-making approach.","```toml
+interpretability = 2
+completeness = 2
+actionability = 1
+trust = 2
+satisfaction = 2
+decision_support = 2
+comment = ""As a Lead Cardiologist, I find this explanation lacking in clarity and clinical relevance. The rule provided by the AI focuses on 'ca' and 'thal', but it doesn't specify how these values correlate with clinical practices or physiological mechanisms for heart disease. This is not helpful for guiding my next steps, as it lacks specific information about commonly considered factors like chest pain type (cp) and ST depression during exercise. Overall, this explanation provides limited trust and does not align well with my evidence-based and clinically-driven decision-making approach.""
+```",gpt-4o
+Dr. Sarah Jenkins,Lead Cardiologist,COUNTERFACTUAL,134,0,2.0,2.0,1.0,2.0,2.0,1.0,"As a Lead Cardiologist, I'm finding this explanation challenging to interpret. The numeric change suggested for chest pain (cp) and thallium stress test (thal) isn't clearly tying into physiological markers I usually rely on. It feels incomplete because it doesn't explain what these changes mean in terms of clinical physiology or guidelines, making it difficult to trust and offer actionable next steps. As such, this explanation is not very helpful in aiding my decision-making.","```toml
+interpretability = 2
+completeness = 2
+actionability = 1
+trust = 2
+satisfaction = 2
+decision_support = 1
+comment = ""As a Lead Cardiologist, I'm finding this explanation challenging to interpret. The numeric change suggested for chest pain (cp) and thallium stress test (thal) isn't clearly tying into physiological markers I usually rely on. It feels incomplete because it doesn't explain what these changes mean in terms of clinical physiology or guidelines, making it difficult to trust and offer actionable next steps. As such, this explanation is not very helpful in aiding my decision-making.""
+```",gpt-4o
+Dr. Sarah Jenkins,Lead Cardiologist,SHAP,18,0,2.0,1.0,1.0,1.0,1.0,1.0,"The explanation using SHAP values highlights 'sex' and 'age' as influential, but these are not sufficient to understand the heart disease risk. Critical factors like chest pain type, thallium stress test, or ST depression are missing. Without these clinical markers, I struggle to trust this as a reliable assessment tool. As a cardiologist, I need detailed physiological insights, not just demographic data.","```toml
 interpretability = 2
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""As a Lead Cardiologist, I find this explanation unhelpful. The SHAP values only highlight age and sex, which are less critical than signs like chest pain type, max heart rate, and ST depression during exercise. There's no mention of key clinical indicators essential for assessing heart disease risk. This lacks the depth needed for making a patient-safe decision and does not suggest any actionable steps or support in understanding the biological mechanisms involved.""
+comment = ""The explanation using SHAP values highlights 'sex' and 'age' as influential, but these are not sufficient to understand the heart disease risk. Critical factors like chest pain type, thallium stress test, or ST depression are missing. Without these clinical markers, I struggle to trust this as a reliable assessment tool. As a cardiologist, I need detailed physiological insights, not just demographic data.""
 ```",gpt-4o
-Dr. Sarah Jenkins,Lead Cardiologist,LIME,18,0,2.0,2.0,1.0,2.0,2.0,2.0,"As a Lead Cardiologist, the explanation provides LIME weights but doesn't clarify which specific clinical signs are driving the prediction. The terms like 'cp,' 'sex,' 'ca,' 'oldpeak,' and 'exang' are familiar but the explanation lacks context on their role concerning the patient's condition. Although I prioritize clinical validity and patient safety, this explanation fails to reassure me with the necessary clinical insight or actionable next steps.","```toml
+Dr. Sarah Jenkins,Lead Cardiologist,LIME,18,0,2.0,2.0,2.0,2.0,2.0,2.0,"As a Lead Cardiologist, the explanation provided by the AI using LIME weights is difficult to interpret. The numeric weights for features don't translate directly into clinical actions or risk assessment, which hinders the interpretability. Critical factors like 'cp' and 'oldpeak' appear, but their arbitrary numeric values relative to the patient’s condition aren't explained. The explanation lacks completeness since it doesn't clearly connect these metrics to physiological mechanisms or present clear next steps. This makes it hard to trust and utilize in clinical decision-making, thus diminishing overall satisfaction and support for decision-making.","```toml
 interpretability = 2
 completeness = 2
-actionability = 1
+actionability = 2
 trust = 2
 satisfaction = 2
 decision_support = 2
-comment = ""As a Lead Cardiologist, the explanation provides LIME weights but doesn't clarify which specific clinical signs are driving the prediction. The terms like 'cp,' 'sex,' 'ca,' 'oldpeak,' and 'exang' are familiar but the explanation lacks context on their role concerning the patient's condition. Although I prioritize clinical validity and patient safety, this explanation fails to reassure me with the necessary clinical insight or actionable next steps.""
+comment = ""As a Lead Cardiologist, the explanation provided by the AI using LIME weights is difficult to interpret. The numeric weights for features don't translate directly into clinical actions or risk assessment, which hinders the interpretability. Critical factors like 'cp' and 'oldpeak' appear, but their arbitrary numeric values relative to the patient’s condition aren't explained. The explanation lacks completeness since it doesn't clearly connect these metrics to physiological mechanisms or present clear next steps. This makes it hard to trust and utilize in clinical decision-making, thus diminishing overall satisfaction and support for decision-making.""
 ```",gpt-4o
-Dr. Sarah Jenkins,Lead Cardiologist,ANCHOR,18,0,3.0,2.0,3.0,2.0,2.0,2.0,"The explanation is somewhat understandable due to its simplicity but lacks depth in clinical context, particularly regarding why these specific factors were chosen. It focuses on ca (number of major vessels colored by flouroscopy) and oldpeak (ST depression), which are relevant, but it doesn't address other critical symptoms like chest pain or max heart rate. It hints at a high precision, but the coverage is low, suggesting this rule applies to a small number of cases. Overall, the explanation offers insufficient guidance on the next steps and generates limited trust given the potential implications for patient safety.","```toml
+Dr. Sarah Jenkins,Lead Cardiologist,ANCHOR,18,0,3.0,2.0,3.0,2.0,2.0,3.0,"The explanation is somewhat understandable, but doesn't provide a complete picture. I value detailed clinical indicators such as chest pain type and max heart rate, which are not mentioned here. The suggestion that patients with certain 'ca' and 'oldpeak' values are at risk is understandable, but lacks context around other critical physiological signs. It gives a partial guidance, but not enough to make me feel confident in the decision. The explanation is not sufficiently complete to align with the clinical guidelines I rely on, and I am hesitant to fully trust it without more data and context.","```toml
 interpretability = 3
 completeness = 2
 actionability = 3
 trust = 2
 satisfaction = 2
-decision_support = 2
-comment = ""The explanation is somewhat understandable due to its simplicity but lacks depth in clinical context, particularly regarding why these specific factors were chosen. It focuses on ca (number of major vessels colored by flouroscopy) and oldpeak (ST depression), which are relevant, but it doesn't address other critical symptoms like chest pain or max heart rate. It hints at a high precision, but the coverage is low, suggesting this rule applies to a small number of cases. Overall, the explanation offers insufficient guidance on the next steps and generates limited trust given the potential implications for patient safety.""
+decision_support = 3
+comment = ""The explanation is somewhat understandable, but doesn't provide a complete picture. I value detailed clinical indicators such as chest pain type and max heart rate, which are not mentioned here. The suggestion that patients with certain 'ca' and 'oldpeak' values are at risk is understandable, but lacks context around other critical physiological signs. It gives a partial guidance, but not enough to make me feel confident in the decision. The explanation is not sufficiently complete to align with the clinical guidelines I rely on, and I am hesitant to fully trust it without more data and context.""
 ```",gpt-4o
-Dr. Sarah Jenkins,Lead Cardiologist,COUNTERFACTUAL,18,0,2.0,1.0,1.0,1.0,1.0,1.0,"From my perspective as a Lead Cardiologist, this explanation is confusing and lacks clarity. It doesn't cover critical clinical factors like chest pain type or thallium stress test results, which are crucial for risk assessment. The explanation doesn't provide any clinical rationale or suggest actionable steps, making it hard to trust or use for decision-making.","```toml
+Dr. Sarah Jenkins,Lead Cardiologist,COUNTERFACTUAL,18,0,2.0,1.0,1.0,2.0,1.0,1.0,"As a Lead Cardiologist, this explanation is lacking. It provides a single feature change (thalach: change by 39.70) but doesn't relate to known clinical indicators like chest pain or abnormal ST depression. It doesn't align with how I assess risk factors, nor does it offer actionable guidance or instill confidence in the decision. I expect a comprehensive analysis that ties back to clinical guidelines and physiological mechanisms. Overall, this explanation offers minimal support for my decision-making process.","```toml
+interpretability = 2
+completeness = 1
+actionability = 1
+trust = 2
+satisfaction = 1
+decision_support = 1
+comment = ""As a Lead Cardiologist, this explanation is lacking. It provides a single feature change (thalach: change by 39.70) but doesn't relate to known clinical indicators like chest pain or abnormal ST depression. It doesn't align with how I assess risk factors, nor does it offer actionable guidance or instill confidence in the decision. I expect a comprehensive analysis that ties back to clinical guidelines and physiological mechanisms. Overall, this explanation offers minimal support for my decision-making process.""
+```",gpt-4o
+Dr. Sarah Jenkins,Lead Cardiologist,SHAP,157,0,2.0,1.0,1.0,1.0,1.0,1.0,"The SHAP explanation here lacks key clinical information crucial for heart disease assessment. It highlights 'sex' and 'age' without any direct mention of critical indicators I rely on, like chest pain type or thallium stress test results. As a Lead Cardiologist, I need detailed, clinically-relevant factors to make informed decisions. This explanation provides minimal actionable insights and falls short of fostering trust or aiding in early detection of heart disease.","```toml
 interpretability = 2
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""From my perspective as a Lead Cardiologist, this explanation is confusing and lacks clarity. It doesn't cover critical clinical factors like chest pain type or thallium stress test results, which are crucial for risk assessment. The explanation doesn't provide any clinical rationale or suggest actionable steps, making it hard to trust or use for decision-making.""
+comment = ""The SHAP explanation here lacks key clinical information crucial for heart disease assessment. It highlights 'sex' and 'age' without any direct mention of critical indicators I rely on, like chest pain type or thallium stress test results. As a Lead Cardiologist, I need detailed, clinically-relevant factors to make informed decisions. This explanation provides minimal actionable insights and falls short of fostering trust or aiding in early detection of heart disease.""
 ```",gpt-4o
-Dr. Sarah Jenkins,Lead Cardiologist,SHAP,157,0,2.0,1.0,1.0,1.0,1.0,1.0,"The explanation using SHAP values 'sex: 0.151' and 'age: -0.151' is not interpretable in a clinical context. It lacks completeness as it does not address significant clinical indicators such as chest pain type, max heart rate, or abnormal ST depression during exercise. There are no clear next steps or actions based on this information, nor does it provide any understanding of the biological mechanisms involved. As a result, I have low trust in this explanation and find it not helpful for decision-making regarding patient safety or early detection of heart disease.","```toml
-interpretability = 2
-completeness = 1
-actionability = 1
-trust = 1
-satisfaction = 1
-decision_support = 1
-comment = ""The explanation using SHAP values 'sex: 0.151' and 'age: -0.151' is not interpretable in a clinical context. It lacks completeness as it does not address significant clinical indicators such as chest pain type, max heart rate, or abnormal ST depression during exercise. There are no clear next steps or actions based on this information, nor does it provide any understanding of the biological mechanisms involved. As a result, I have low trust in this explanation and find it not helpful for decision-making regarding patient safety or early detection of heart disease.""
+Dr. Sarah Jenkins,Lead Cardiologist,LIME,157,0,3.0,2.0,2.0,2.0,2.0,2.0,"The explanation provides a list of weighted factors, but it lacks clarity in medical terminology which is essential for me as a cardiologist. The weights assigned to sex, chest pain, and thallium test don't provide enough context about their relative clinical importance or how these factors interact biologically. The explanation doesn't suggest any specific clinical steps or considerations, making it difficult to trust or take action upon without further investigation. Overall, the explanation is somewhat interpretable but incomplete and lacks actionable guidance or sufficient detail to support my decision-making confidently.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 2
+satisfaction = 2
+decision_support = 2
+comment = ""The explanation provides a list of weighted factors, but it lacks clarity in medical terminology which is essential for me as a cardiologist. The weights assigned to sex, chest pain, and thallium test don't provide enough context about their relative clinical importance or how these factors interact biologically. The explanation doesn't suggest any specific clinical steps or considerations, making it difficult to trust or take action upon without further investigation. Overall, the explanation is somewhat interpretable but incomplete and lacks actionable guidance or sufficient detail to support my decision-making confidently.""
 ```",gpt-4o
-Dr. Sarah Jenkins,Lead Cardiologist,LIME,157,0,2.0,2.0,1.0,2.0,2.0,2.0,"The explanation through LIME provides numerical weights and intervals, which lack the clinical context of physiological markers. While factors like 'cp' and 'thal' are mentioned, it doesn't explain their roles or meanings or how they interact. This hinders my ability to truly understand risk implications. Without linking these factors to known clinical guidelines or physiological mechanisms, I find the explanation hard to trust and act upon.","```toml
+Dr. Sarah Jenkins,Lead Cardiologist,ANCHOR,157,0,3.0,2.0,2.0,2.0,2.0,2.0,"As a Lead Cardiologist, the explanation is somewhat clear in what factors are considered (cp and oldpeak), but it lacks completeness. It does not address other crucial factors like thal or other ECG changes. The lack of guidance on specific actions lowers its actionability. While chest pain is an important factor, I cannot fully trust this explanation due to the limited coverage and absence of a comprehensive clinical rationale or detailed physiological mechanisms. Overall, it provides limited support for my decision-making needs.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 2
+satisfaction = 2
+decision_support = 2
+comment = ""As a Lead Cardiologist, the explanation is somewhat clear in what factors are considered (cp and oldpeak), but it lacks completeness. It does not address other crucial factors like thal or other ECG changes. The lack of guidance on specific actions lowers its actionability. While chest pain is an important factor, I cannot fully trust this explanation due to the limited coverage and absence of a comprehensive clinical rationale or detailed physiological mechanisms. Overall, it provides limited support for my decision-making needs.""
+```",gpt-4o
+Dr. Sarah Jenkins,Lead Cardiologist,COUNTERFACTUAL,157,0,2.0,2.0,1.0,2.0,2.0,2.0,"As a Lead Cardiologist, the explanation provided by the AI system lacks clarity and clinical relevance. The suggestion to adjust features like 'fbs' (fasting blood sugar) and 'oldpeak' without explaining their biological implications makes it difficult to trust and act upon. It doesn't align with my focus on clinically significant markers like chest pain type or thallium stress test, and without these being addressed, my confidence in the prediction is low.","```toml
 interpretability = 2
 completeness = 2
 actionability = 1
 trust = 2
 satisfaction = 2
 decision_support = 2
-comment = ""The explanation through LIME provides numerical weights and intervals, which lack the clinical context of physiological markers. While factors like 'cp' and 'thal' are mentioned, it doesn't explain their roles or meanings or how they interact. This hinders my ability to truly understand risk implications. Without linking these factors to known clinical guidelines or physiological mechanisms, I find the explanation hard to trust and act upon.""
+comment = ""As a Lead Cardiologist, the explanation provided by the AI system lacks clarity and clinical relevance. The suggestion to adjust features like 'fbs' (fasting blood sugar) and 'oldpeak' without explaining their biological implications makes it difficult to trust and act upon. It doesn't align with my focus on clinically significant markers like chest pain type or thallium stress test, and without these being addressed, my confidence in the prediction is low.""
 ```",gpt-4o
-Dr. Sarah Jenkins,Lead Cardiologist,ANCHOR,157,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation provides some insight into the factors the AI used (chest pain type and ST depression), but it's lacking in detail and justification according to known physiological mechanisms. There's insufficient information on other critical factors such as max heart rate that are relevant for heart disease assessment. I would need more context and a comprehensive view to make an informed clinical decision, and this explanation doesn't fully align with my risk-averse approach focusing on patient safety.","```toml
+Mark Thompson,Medical Researcher / Data Scientist,SHAP,134,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation using SHAP values is somewhat helpful in understanding feature contributions but lacks depth. The values for sex and age seem counterintuitive; I would expect age to play a more significant positive role in heart disease risk. More context on why these specific values were assigned is needed. There is no guidance on next steps or how these values fit within recognized medical literature, which limits my ability to rely on this for decision-making or to explain the decision justly.","```toml
 interpretability = 3
 completeness = 2
 actionability = 2
 trust = 3
 satisfaction = 2
 decision_support = 2
-comment = ""The explanation provides some insight into the factors the AI used (chest pain type and ST depression), but it's lacking in detail and justification according to known physiological mechanisms. There's insufficient information on other critical factors such as max heart rate that are relevant for heart disease assessment. I would need more context and a comprehensive view to make an informed clinical decision, and this explanation doesn't fully align with my risk-averse approach focusing on patient safety.""
+comment = ""The explanation using SHAP values is somewhat helpful in understanding feature contributions but lacks depth. The values for sex and age seem counterintuitive; I would expect age to play a more significant positive role in heart disease risk. More context on why these specific values were assigned is needed. There is no guidance on next steps or how these values fit within recognized medical literature, which limits my ability to rely on this for decision-making or to explain the decision justly.""
 ```",gpt-4o
-Dr. Sarah Jenkins,Lead Cardiologist,COUNTERFACTUAL,157,0,2.0,2.0,1.0,2.0,2.0,2.0,"From my perspective as a Lead Cardiologist, the explanation by the AI system is not very useful. It mentions changing thalach and oldpeak values, but fails to connect this information to specific clinical signs or guidelines. The explanation is also insufficient for suggesting a clear next step or action plan. Due to this lack of context and direction, I find it difficult to fully trust the output or to feel satisfied and supported in my decision-making.","```toml
+Mark Thompson,Medical Researcher / Data Scientist,LIME,134,0,3.0,2.0,2.0,3.0,2.0,2.0,"The use of LIME provides some level of interpretability, but the explanation lacks context and doesn't align well with established clinical risk factors like those in the Framingham Risk Score. Crucial details on other influential factors such as age, cholesterol levels, and blood pressure are missing. While I understand the numerical contributions of features, there is limited guidance on handling inconsistencies or validating against clinical literature, thus reducing its actionability and overall decision support.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""The use of LIME provides some level of interpretability, but the explanation lacks context and doesn't align well with established clinical risk factors like those in the Framingham Risk Score. Crucial details on other influential factors such as age, cholesterol levels, and blood pressure are missing. While I understand the numerical contributions of features, there is limited guidance on handling inconsistencies or validating against clinical literature, thus reducing its actionability and overall decision support.""
+```",gpt-4o
+Mark Thompson,Medical Researcher / Data Scientist,ANCHOR,134,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation using the ANCHOR method is somewhat interpretable with a rule-based output, but it lacks context about the implications of 'ca' and 'thal' in heart disease risk factors, making it incomplete. There's no clear action suggested beyond interpreting these rules, and the low coverage doesn't instill confidence in its applicability across the population. While I can understand the precision, this doesn't align fully with the Framingham Risk Score factors. Overall, this isn't very satisfying or supportive for my needs as a researcher focused on population-level accuracy.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""The explanation using the ANCHOR method is somewhat interpretable with a rule-based output, but it lacks context about the implications of 'ca' and 'thal' in heart disease risk factors, making it incomplete. There's no clear action suggested beyond interpreting these rules, and the low coverage doesn't instill confidence in its applicability across the population. While I can understand the precision, this doesn't align fully with the Framingham Risk Score factors. Overall, this isn't very satisfying or supportive for my needs as a researcher focused on population-level accuracy.""
+```",gpt-4o
+Mark Thompson,Medical Researcher / Data Scientist,COUNTERFACTUAL,134,0,2.0,2.0,2.0,3.0,2.0,2.0,"The explanation provided is quite vague and lacks sufficient context for understanding the prediction's rationale. 'Counterfactual' changes in 'cp' and 'thal' are not easily interpretable without understanding what 'cp' and 'thal' represent in this context. The counterfactual changes alone don't guide meaningful clinical actions or suggest next steps. Without additional information on the current values and how these specific changes were determined, it's difficult to trust the AI's assessment entirely. Overall, this explanation needs more details to be useful in making informed decisions or adjustments.","```toml
+interpretability = 2
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""The explanation provided is quite vague and lacks sufficient context for understanding the prediction's rationale. 'Counterfactual' changes in 'cp' and 'thal' are not easily interpretable without understanding what 'cp' and 'thal' represent in this context. The counterfactual changes alone don't guide meaningful clinical actions or suggest next steps. Without additional information on the current values and how these specific changes were determined, it's difficult to trust the AI's assessment entirely. Overall, this explanation needs more details to be useful in making informed decisions or adjustments.""
+```",gpt-4o
+Mark Thompson,Medical Researcher / Data Scientist,SHAP,18,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation provides high-level insights into the factors influencing the prediction, but it falls short in terms of depth and context. While it shows SHAP values for sex and age, it lacks information on how these factors interact with other variables and their overall impact. The lack of additional context or an explicit connection to well-known risk factors like the Framingham Risk Score reduces trust and actionability. More comprehensive coverage of all critical features and their interactions is necessary for informed decision-making.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""The explanation provides high-level insights into the factors influencing the prediction, but it falls short in terms of depth and context. While it shows SHAP values for sex and age, it lacks information on how these factors interact with other variables and their overall impact. The lack of additional context or an explicit connection to well-known risk factors like the Framingham Risk Score reduces trust and actionability. More comprehensive coverage of all critical features and their interactions is necessary for informed decision-making.""
+```",gpt-4o
+Mark Thompson,Medical Researcher / Data Scientist,LIME,18,0,2.0,2.0,1.0,2.0,2.0,2.0,"The explanation provided by LIME is relatively cryptic, offering only a list of feature weights without context or a comprehensive global view. As a Medical Researcher focused on population-level accuracy, I need more detailed insights into feature importance and correlations consistent with the medical literature, such as those provided by SHAP plots. The explanation lacks actionable guidance and fails to align with familiar medical frameworks, undermining my confidence and leaving me unsatisfied.","```toml
 interpretability = 2
 completeness = 2
 actionability = 1
 trust = 2
 satisfaction = 2
 decision_support = 2
-comment = ""From my perspective as a Lead Cardiologist, the explanation by the AI system is not very useful. It mentions changing thalach and oldpeak values, but fails to connect this information to specific clinical signs or guidelines. The explanation is also insufficient for suggesting a clear next step or action plan. Due to this lack of context and direction, I find it difficult to fully trust the output or to feel satisfied and supported in my decision-making.""
+comment = ""The explanation provided by LIME is relatively cryptic, offering only a list of feature weights without context or a comprehensive global view. As a Medical Researcher focused on population-level accuracy, I need more detailed insights into feature importance and correlations consistent with the medical literature, such as those provided by SHAP plots. The explanation lacks actionable guidance and fails to align with familiar medical frameworks, undermining my confidence and leaving me unsatisfied.""
 ```",gpt-4o
-Mark Thompson,Medical Researcher / Data Scientist,SHAP,134,0,2.0,2.0,1.0,2.0,2.0,2.0,"The explanation given by the AI is minimal and lacks depth. The SHAP values provided for sex and age are mentioned, but without context or comparison to expected averages, it provides little insight into the underlying risk factors. The explanation does not address potential biases or correlations with medical literature, which is crucial for my role. Furthermore, there are no suggestions for next steps or deeper analysis.","```toml
+Mark Thompson,Medical Researcher / Data Scientist,ANCHOR,18,0,3.0,2.0,2.0,3.0,2.0,2.0,"As a Medical Researcher / Data Scientist, I found the explanation using 'ANCHOR' rules to be somewhat understandable but lacking in depth. While I can discern that the AI focused on 'ca' and 'oldpeak' for its prediction, it doesn't cover all the necessary factors, like cholesterol or age, which are crucial for a holistic risk assessment. The rule's precision and coverage provide some quantifiable insight, but there's no clear guidance on the next steps. Overall, this output doesn't offer the robust, global perspective needed to be actionable or to build full trust in the decision-making process.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""As a Medical Researcher / Data Scientist, I found the explanation using 'ANCHOR' rules to be somewhat understandable but lacking in depth. While I can discern that the AI focused on 'ca' and 'oldpeak' for its prediction, it doesn't cover all the necessary factors, like cholesterol or age, which are crucial for a holistic risk assessment. The rule's precision and coverage provide some quantifiable insight, but there's no clear guidance on the next steps. Overall, this output doesn't offer the robust, global perspective needed to be actionable or to build full trust in the decision-making process.""
+```",gpt-4o
+Mark Thompson,Medical Researcher / Data Scientist,COUNTERFACTUAL,18,0,3.0,2.0,2.0,3.0,2.0,2.0,"The counterfactual explanation provides a single change in heart rate (thalach) to alter the prediction, which is somewhat clear but lacks broader context. It doesn't cover other critical risk factors like cholesterol, age, etc., and doesn't align with the need for a comprehensive understanding of feature interactions or biases as per medical literature. While it suggests a direct action (adjusting thalach), it doesn't indicate how feasible or clinically relevant this change is, reducing its actionability and completeness. Overall, this provides limited support for robust decision-making.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""The counterfactual explanation provides a single change in heart rate (thalach) to alter the prediction, which is somewhat clear but lacks broader context. It doesn't cover other critical risk factors like cholesterol, age, etc., and doesn't align with the need for a comprehensive understanding of feature interactions or biases as per medical literature. While it suggests a direct action (adjusting thalach), it doesn't indicate how feasible or clinically relevant this change is, reducing its actionability and completeness. Overall, this provides limited support for robust decision-making.""
+```",gpt-4o
+Mark Thompson,Medical Researcher / Data Scientist,SHAP,157,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation provided by the SHAP values is somewhat interpretative in terms of identifying that sex and age are contributing factors to the risk prediction, but it lacks depth and context. The feature importances are given, but without the complete set of all features considered, it's difficult to determine the accuracy and bias. There are no clear next steps or indications of model validation against medical literature, so I find it somewhat lacking in usefulness for my analytical decision-making needs.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""The explanation provided by the SHAP values is somewhat interpretative in terms of identifying that sex and age are contributing factors to the risk prediction, but it lacks depth and context. The feature importances are given, but without the complete set of all features considered, it's difficult to determine the accuracy and bias. There are no clear next steps or indications of model validation against medical literature, so I find it somewhat lacking in usefulness for my analytical decision-making needs.""
+```",gpt-4o
+Mark Thompson,Medical Researcher / Data Scientist,LIME,157,0,3.0,2.0,2.0,3.0,2.0,2.0,"While the LIME explanation provides some insights by showing feature importance and weights, it is not particularly intuitive or clear. It lists feature weightings without offering much context, making it challenging to assess if these align with well-established medical literature like the Framingham Risk Score. Given my focus on population-level accuracy, more comprehensive details and a global explanation using SHAP values would be more useful. Additionally, the explanation falls short in terms of suggesting actionable steps or verifying stability across patient sub-groups.","```toml
+interpretability = 3
+completeness = 2
+actionability = 2
+trust = 3
+satisfaction = 2
+decision_support = 2
+comment = ""While the LIME explanation provides some insights by showing feature importance and weights, it is not particularly intuitive or clear. It lists feature weightings without offering much context, making it challenging to assess if these align with well-established medical literature like the Framingham Risk Score. Given my focus on population-level accuracy, more comprehensive details and a global explanation using SHAP values would be more useful. Additionally, the explanation falls short in terms of suggesting actionable steps or verifying stability across patient sub-groups.""
+```",gpt-4o
+Mark Thompson,Medical Researcher / Data Scientist,ANCHOR,157,0,2.0,2.0,1.0,2.0,2.0,2.0,"The explanation provided by the AI is not very useful to me as a Medical Researcher/Data Scientist. The use of the ANCHOR explanation with a simple rule lacks depth and does not cover all the factors I consider essential, such as covariance of features and their alignment with established medical literature. The explanation is not clear or comprehensive enough for me to take confident action or to trust the assessment fully. Additionally, it does not suggest any next steps, and the limited precision and coverage of this rule do not align with my priority for population-level accuracy and generalizability.","```toml
 interpretability = 2
 completeness = 2
 actionability = 1
 trust = 2
 satisfaction = 2
 decision_support = 2
-comment = ""The explanation given by the AI is minimal and lacks depth. The SHAP values provided for sex and age are mentioned, but without context or comparison to expected averages, it provides little insight into the underlying risk factors. The explanation does not address potential biases or correlations with medical literature, which is crucial for my role. Furthermore, there are no suggestions for next steps or deeper analysis.""
+comment = ""The explanation provided by the AI is not very useful to me as a Medical Researcher/Data Scientist. The use of the ANCHOR explanation with a simple rule lacks depth and does not cover all the factors I consider essential, such as covariance of features and their alignment with established medical literature. The explanation is not clear or comprehensive enough for me to take confident action or to trust the assessment fully. Additionally, it does not suggest any next steps, and the limited precision and coverage of this rule do not align with my priority for population-level accuracy and generalizability.""
 ```",gpt-4o
-Mark Thompson,Medical Researcher / Data Scientist,LIME,134,0,3.0,2.0,2.0,3.0,2.0,2.0,"As a Medical Researcher, the LIME explanation provides a list of feature weights, which is somewhat interpretable but lacks the holistic view I expect. While it lists the features influencing the prediction, it does not provide a global context or align well with established medical risk factors such as those in the Framingham Risk Score. This makes it hard to assess potential biases or verify correlation with medical literature, which are critical for my decision-making. The explanation doesn't guide me on next steps, reducing its actionability and decision support value for ensuring accurate, generalizable risk assessments.","```toml
+Mark Thompson,Medical Researcher / Data Scientist,COUNTERFACTUAL,157,0,3.0,2.0,2.0,3.0,2.0,3.0,"From my perspective, the explanation lacks context about why those specific feature changes impact the prediction. While the information is somewhat interpretable, it doesn't cover all the factors I'd typically consider, such as whether these features have an expected correlation with heart disease risk based on medical literature. The explanation doesn't provide actionable steps or guidance on how to handle or adjust these factors realistically in a clinical setting. Consequently, it's difficult to fully trust or gain satisfaction from this limited explanation, although it does minimally support my decision-making by highlighting key features.","```toml
 interpretability = 3
 completeness = 2
 actionability = 2
-trust = 3
-satisfaction = 2
-decision_support = 2
-comment = ""As a Medical Researcher, the LIME explanation provides a list of feature weights, which is somewhat interpretable but lacks the holistic view I expect. While it lists the features influencing the prediction, it does not provide a global context or align well with established medical risk factors such as those in the Framingham Risk Score. This makes it hard to assess potential biases or verify correlation with medical literature, which are critical for my decision-making. The explanation doesn't guide me on next steps, reducing its actionability and decision support value for ensuring accurate, generalizable risk assessments.""
-```",gpt-4o
-Mark Thompson,Medical Researcher / Data Scientist,ANCHOR,134,0,3.0,2.0,2.0,3.0,2.0,2.0,"As a Medical Researcher / Data Scientist, the rule-based explanation provided (ca > 1.00 and thal > 2.00) is relatively clear in its logical form but lacks a deeper layer of information completeness that I seek, such as how these factors covary with other important predictors like age or cholesterol. Actionability is limited because this rule set doesn't guide next steps for a comprehensive diagnosis or treatment. The trust is moderate since precision is high, but coverage is low, implying the rule applies to a minority of cases, which may not generalize well. Overall, I'm left desiring more insight into how these factors integrate with established medical knowledge like the Framingham Risk Score.","```toml
-interpretability = 3
-completeness = 2
-actionability = 2
-trust = 3
-satisfaction = 2
-decision_support = 2
-comment = ""As a Medical Researcher / Data Scientist, the rule-based explanation provided (ca > 1.00 and thal > 2.00) is relatively clear in its logical form but lacks a deeper layer of information completeness that I seek, such as how these factors covary with other important predictors like age or cholesterol. Actionability is limited because this rule set doesn't guide next steps for a comprehensive diagnosis or treatment. The trust is moderate since precision is high, but coverage is low, implying the rule applies to a minority of cases, which may not generalize well. Overall, I'm left desiring more insight into how these factors integrate with established medical knowledge like the Framingham Risk Score.""
-```",gpt-4o
-Mark Thompson,Medical Researcher / Data Scientist,COUNTERFACTUAL,134,0,3.0,2.0,3.0,3.0,2.0,3.0,"As a medical researcher, the use of counterfactual explanations aligns with my focus on verifying model logic. However, the explanation is vague in its presentation of why these specific changes are needed. It lacks context, particularly around what 'cp' and 'thal' changes imply biologically. Also, it doesn't address potential biases or explain the global feature importance, making it insufficiently complete for robust, trusting decision support.","```toml
-interpretability = 3
-completeness = 2
-actionability = 3
 trust = 3
 satisfaction = 2
 decision_support = 3
-comment = ""As a medical researcher, the use of counterfactual explanations aligns with my focus on verifying model logic. However, the explanation is vague in its presentation of why these specific changes are needed. It lacks context, particularly around what 'cp' and 'thal' changes imply biologically. Also, it doesn't address potential biases or explain the global feature importance, making it insufficiently complete for robust, trusting decision support.""
+comment = ""From my perspective, the explanation lacks context about why those specific feature changes impact the prediction. While the information is somewhat interpretable, it doesn't cover all the factors I'd typically consider, such as whether these features have an expected correlation with heart disease risk based on medical literature. The explanation doesn't provide actionable steps or guidance on how to handle or adjust these factors realistically in a clinical setting. Consequently, it's difficult to fully trust or gain satisfaction from this limited explanation, although it does minimally support my decision-making by highlighting key features.""
 ```",gpt-4o
-Mark Thompson,Medical Researcher / Data Scientist,SHAP,18,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation provides SHAP values for age and sex, showing their contributions to the prediction. However, this is overly simplistic and doesn't account for other important features, such as cholesterol or blood pressure, which are crucial for assessing heart disease risk. Furthermore, it lacks any guidance on what to do with this information, and doesn't offer a full picture for me to verify against established medical literature like the Framingham Risk Score. Thus, the explanation is partial and not especially useful for robust decision-making.","```toml
-interpretability = 3
+Linda Martinez,Hospital Administrator,SHAP,134,0,2.0,1.0,2.0,2.0,1.0,1.0,"As a hospital administrator, this explanation is quite unclear in terms of providing actionable insights. The mention of SHAP values for 'sex' and 'age' lacks context and does not guide me on the next steps, such as whether to prioritize further tests or discharge. It also doesn't address the completeness needed to evaluate heart disease risk comprehensively, missing critical factors like medical history, symptoms, or lifestyle. Without these, the explanation does not instill confidence or satisfy my need for robust, defendable decision support.","```toml
+interpretability = 2
+completeness = 1
+actionability = 2
+trust = 2
+satisfaction = 1
+decision_support = 1
+comment = ""As a hospital administrator, this explanation is quite unclear in terms of providing actionable insights. The mention of SHAP values for 'sex' and 'age' lacks context and does not guide me on the next steps, such as whether to prioritize further tests or discharge. It also doesn't address the completeness needed to evaluate heart disease risk comprehensively, missing critical factors like medical history, symptoms, or lifestyle. Without these, the explanation does not instill confidence or satisfy my need for robust, defendable decision support.""
+```",gpt-4o
+Linda Martinez,Hospital Administrator,LIME,134,0,1.0,2.0,1.0,2.0,1.0,1.0,"The explanation is not user-friendly and lacks clarity about which specific patient attributes contribute to the risk assessment. As a Hospital Administrator focused on resource optimization, I need actionable insights or clear recommendations, which this explanation lacks. The technical parameters (e.g., 'sex <= 0.00') don't convey practical information. This reduces my trust in the system making a reliable or defendable prediction.","```toml
+interpretability = 1
+completeness = 2
+actionability = 1
+trust = 2
+satisfaction = 1
+decision_support = 1
+comment = ""The explanation is not user-friendly and lacks clarity about which specific patient attributes contribute to the risk assessment. As a Hospital Administrator focused on resource optimization, I need actionable insights or clear recommendations, which this explanation lacks. The technical parameters (e.g., 'sex <= 0.00') don't convey practical information. This reduces my trust in the system making a reliable or defendable prediction.""
+```",gpt-4o
+Linda Martinez,Hospital Administrator,ANCHOR,134,0,2.0,2.0,2.0,3.0,2.0,2.0,"From my perspective as a Hospital Administrator, the explanation provided is too technical and lacks the high-level summary I need for decision-making. The information on 'ca' and 'thal' along with precision and coverage metrics does not clearly guide my next actions, like recommending a stress test or discharge. I may trust the precision statistic (0.97) to some extent, but overall, the explanation does not align well with my focus on efficiently prioritizing patient care and minimizing unnecessary procedures.","```toml
+interpretability = 2
 completeness = 2
 actionability = 2
 trust = 3
 satisfaction = 2
 decision_support = 2
-comment = ""The explanation provides SHAP values for age and sex, showing their contributions to the prediction. However, this is overly simplistic and doesn't account for other important features, such as cholesterol or blood pressure, which are crucial for assessing heart disease risk. Furthermore, it lacks any guidance on what to do with this information, and doesn't offer a full picture for me to verify against established medical literature like the Framingham Risk Score. Thus, the explanation is partial and not especially useful for robust decision-making.""
+comment = ""From my perspective as a Hospital Administrator, the explanation provided is too technical and lacks the high-level summary I need for decision-making. The information on 'ca' and 'thal' along with precision and coverage metrics does not clearly guide my next actions, like recommending a stress test or discharge. I may trust the precision statistic (0.97) to some extent, but overall, the explanation does not align well with my focus on efficiently prioritizing patient care and minimizing unnecessary procedures.""
 ```",gpt-4o
-Mark Thompson,Medical Researcher / Data Scientist,LIME,18,0,3.0,2.0,2.0,2.0,2.0,2.0,"The LIME explanation provides localized weights, but it doesn't offer clarity on how features like 'cp', 'sex', 'ca', 'oldpeak', and 'exang' align with medical literature or global feature importance. Missing global context and Framingham alignment diminish completeness. It's hard to act on localized weights without broader context. Trust is limited due to lack of verification against known biases, impacting satisfaction and decision support.","```toml
-interpretability = 3
+Linda Martinez,Hospital Administrator,COUNTERFACTUAL,134,0,2.0,2.0,1.0,2.0,2.0,1.0,"As a Hospital Administrator, this explanation is not very useful. The 'COUNTERFACTUAL' method is too technical and lacks clarity on what specific steps should be taken next. It doesn't provide the action-oriented guidance I need to make a decision, such as whether a stress test or immediate intervention is recommended. Additionally, the explanation doesn't give insights into the actual risk of heart disease, which is crucial for understanding liability and ensuring high-risk patients aren't missed.","```toml
+interpretability = 2
 completeness = 2
-actionability = 2
+actionability = 1
 trust = 2
 satisfaction = 2
-decision_support = 2
-comment = ""The LIME explanation provides localized weights, but it doesn't offer clarity on how features like 'cp', 'sex', 'ca', 'oldpeak', and 'exang' align with medical literature or global feature importance. Missing global context and Framingham alignment diminish completeness. It's hard to act on localized weights without broader context. Trust is limited due to lack of verification against known biases, impacting satisfaction and decision support.""
+decision_support = 1
+comment = ""As a Hospital Administrator, this explanation is not very useful. The 'COUNTERFACTUAL' method is too technical and lacks clarity on what specific steps should be taken next. It doesn't provide the action-oriented guidance I need to make a decision, such as whether a stress test or immediate intervention is recommended. Additionally, the explanation doesn't give insights into the actual risk of heart disease, which is crucial for understanding liability and ensuring high-risk patients aren't missed.""
 ```",gpt-4o
-Mark Thompson,Medical Researcher / Data Scientist,ANCHOR,18,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation provided uses the ANCHOR method and effectively highlights the specific conditions used to make the prediction, which aids in understanding, thus a moderate score for interpretability. However, it lacks completeness and actionability, as it doesn't connect these rules to broader clinical guidelines and lacks specific next steps. Trust and satisfaction are also moderate as while the precision value inspires some confidence, the low coverage indicates the rule's limited application, which isn't very helpful for broad-scale decision-making.","```toml
-interpretability = 3
-completeness = 2
-actionability = 2
-trust = 3
-satisfaction = 2
-decision_support = 2
-comment = ""The explanation provided uses the ANCHOR method and effectively highlights the specific conditions used to make the prediction, which aids in understanding, thus a moderate score for interpretability. However, it lacks completeness and actionability, as it doesn't connect these rules to broader clinical guidelines and lacks specific next steps. Trust and satisfaction are also moderate as while the precision value inspires some confidence, the low coverage indicates the rule's limited application, which isn't very helpful for broad-scale decision-making.""
-```",gpt-4o
-Mark Thompson,Medical Researcher / Data Scientist,COUNTERFACTUAL,18,0,3.0,2.0,3.0,3.0,2.0,3.0,"The explanation using counterfactuals is somewhat understandable, showing what changes in 'restecg' and 'slope' would flip the prediction. However, it lacks completeness as it doesn't provide insight into how these features relate to well-known medical literature or how they interact with other variables within the prediction model. While knowing the parameters to change for altering the prediction is somewhat actionable, it leaves uncertainty about the underlying model rationale and feature importance according to medical standards. Hence, the trust and satisfaction are moderate, as it does not fully align with my analytic and evidence-based approach.","```toml
-interpretability = 3
-completeness = 2
-actionability = 3
-trust = 3
-satisfaction = 2
-decision_support = 3
-comment = ""The explanation using counterfactuals is somewhat understandable, showing what changes in 'restecg' and 'slope' would flip the prediction. However, it lacks completeness as it doesn't provide insight into how these features relate to well-known medical literature or how they interact with other variables within the prediction model. While knowing the parameters to change for altering the prediction is somewhat actionable, it leaves uncertainty about the underlying model rationale and feature importance according to medical standards. Hence, the trust and satisfaction are moderate, as it does not fully align with my analytic and evidence-based approach.""
-```",gpt-4o
-Mark Thompson,Medical Researcher / Data Scientist,SHAP,157,0,2.0,1.0,1.0,2.0,1.0,1.0,"The explanation provided is too simplistic and lacks context about how these features contribute to the prediction. The SHAP values for 'sex' and 'age' are given, but the absence of a comprehensive view of other significant predictors makes it incomplete. There is no indication of how these values align with medical literature or what actions to take. Without seeing other key features and their importance, or a comparison to recognized risk scores like the Framingham Risk Score, it's hard to trust or act upon this explanation.","```toml
+Linda Martinez,Hospital Administrator,SHAP,18,0,2.0,1.0,2.0,2.0,1.0,1.0,"The explanation is quite vague and lacks clarity. The SHAP values of sex and age provide very little context or detail on how these factors impact the risk assessment. It doesn't cover other critical factors that I'd consider, such as medical history or symptoms. Without specific next steps or comprehensive information, it's challenging to make an informed decision or justify this to insurance boards. The lack of action-oriented guidance leaves me uncertain and unsatisfied.","```toml
 interpretability = 2
 completeness = 1
-actionability = 1
+actionability = 2
 trust = 2
 satisfaction = 1
 decision_support = 1
-comment = ""The explanation provided is too simplistic and lacks context about how these features contribute to the prediction. The SHAP values for 'sex' and 'age' are given, but the absence of a comprehensive view of other significant predictors makes it incomplete. There is no indication of how these values align with medical literature or what actions to take. Without seeing other key features and their importance, or a comparison to recognized risk scores like the Framingham Risk Score, it's hard to trust or act upon this explanation.""
+comment = ""The explanation is quite vague and lacks clarity. The SHAP values of sex and age provide very little context or detail on how these factors impact the risk assessment. It doesn't cover other critical factors that I'd consider, such as medical history or symptoms. Without specific next steps or comprehensive information, it's challenging to make an informed decision or justify this to insurance boards. The lack of action-oriented guidance leaves me uncertain and unsatisfied.""
 ```",gpt-4o
-Mark Thompson,Medical Researcher / Data Scientist,LIME,157,0,3.0,2.0,2.0,3.0,2.0,2.0,"The LIME explanation provides the contribution of specific features to the prediction, but it's rather superficial. It lacks global context, such as comparative analysis with the Framingham Risk Score, which is crucial for verifying medical correlations. Additionally, it does not indicate potential biases, such as age or sex-related bias, which are critical to my evaluations. More comprehensive and intuitive explanations would be needed for confident decision-making, including clarity on feature importance consistency and the stability of predictions across different patient profiles.","```toml
-interpretability = 3
+Linda Martinez,Hospital Administrator,LIME,18,0,2.0,2.0,1.0,2.0,2.0,2.0,"As a Hospital Administrator, this LIME explanation is quite technical and lacks clarity for immediate action. The weights assigned to variables like 'cp', 'sex', and 'ca' are not intuitive, making it hard to understand how they influence the decision or what the recommended actions are. The explanation isn't actionable; it doesn't suggest next steps for patient management. This limits trust and satisfaction with the tool as it doesn't align well with my priorities, which are focused on resource efficiency and reducing liability by ensuring high-risk patients are prioritized.","```toml
+interpretability = 2
+completeness = 2
+actionability = 1
+trust = 2
+satisfaction = 2
+decision_support = 2
+comment = ""As a Hospital Administrator, this LIME explanation is quite technical and lacks clarity for immediate action. The weights assigned to variables like 'cp', 'sex', and 'ca' are not intuitive, making it hard to understand how they influence the decision or what the recommended actions are. The explanation isn't actionable; it doesn't suggest next steps for patient management. This limits trust and satisfaction with the tool as it doesn't align well with my priorities, which are focused on resource efficiency and reducing liability by ensuring high-risk patients are prioritized.""
+```",gpt-4o
+Linda Martinez,Hospital Administrator,ANCHOR,18,0,2.0,2.0,2.0,3.0,2.0,2.0,"As a Hospital Administrator, the explanation provided by the AI lacks clarity and depth. The rule with variables 'ca' and 'oldpeak' does not easily translate into actionable insights without additional context or explanation of what these variables mean in practice. It doesn't help in making informed decisions about whether the patient needs immediate intervention or if we can confidently rule out heart disease. The mention of precision and coverage is technical and doesn't aid in decision-support unless I can translate it into the context of patient care.","```toml
+interpretability = 2
 completeness = 2
 actionability = 2
 trust = 3
 satisfaction = 2
 decision_support = 2
-comment = ""The LIME explanation provides the contribution of specific features to the prediction, but it's rather superficial. It lacks global context, such as comparative analysis with the Framingham Risk Score, which is crucial for verifying medical correlations. Additionally, it does not indicate potential biases, such as age or sex-related bias, which are critical to my evaluations. More comprehensive and intuitive explanations would be needed for confident decision-making, including clarity on feature importance consistency and the stability of predictions across different patient profiles.""
+comment = ""As a Hospital Administrator, the explanation provided by the AI lacks clarity and depth. The rule with variables 'ca' and 'oldpeak' does not easily translate into actionable insights without additional context or explanation of what these variables mean in practice. It doesn't help in making informed decisions about whether the patient needs immediate intervention or if we can confidently rule out heart disease. The mention of precision and coverage is technical and doesn't aid in decision-support unless I can translate it into the context of patient care.""
 ```",gpt-4o
-Mark Thompson,Medical Researcher / Data Scientist,ANCHOR,157,0,3.0,2.0,2.0,3.0,2.0,2.0,"The explanation provides a rule with a precision and coverage metric, which is somewhat understandable, but it lacks context. It doesn't align well with the comprehensive medical factors typically considered in heart disease risk models, such as those in the Framingham Risk Score. The explanation is too focused on a narrow rule without giving a broader understanding of feature importance or potential biases. As a result, it doesn't provide adequate confidence or guidance for actionable decision-making from my perspective as a Medical Researcher.","```toml
-interpretability = 3
+Linda Martinez,Hospital Administrator,COUNTERFACTUAL,18,0,2.0,2.0,1.0,2.0,2.0,1.0,"As a Hospital Administrator, this explanation lacks clarity and fails to provide actionable insights. The output, 'thalach: change by 39.70', is not presented in a way that aligns with my decision-making process. It does not specify what actions to take or why the patient's heart disease risk prediction was made. This does not help with prioritization or defendability to oversight boards.","```toml
+interpretability = 2
 completeness = 2
-actionability = 2
-trust = 3
+actionability = 1
+trust = 2
 satisfaction = 2
-decision_support = 2
-comment = ""The explanation provides a rule with a precision and coverage metric, which is somewhat understandable, but it lacks context. It doesn't align well with the comprehensive medical factors typically considered in heart disease risk models, such as those in the Framingham Risk Score. The explanation is too focused on a narrow rule without giving a broader understanding of feature importance or potential biases. As a result, it doesn't provide adequate confidence or guidance for actionable decision-making from my perspective as a Medical Researcher.""
+decision_support = 1
+comment = ""As a Hospital Administrator, this explanation lacks clarity and fails to provide actionable insights. The output, 'thalach: change by 39.70', is not presented in a way that aligns with my decision-making process. It does not specify what actions to take or why the patient's heart disease risk prediction was made. This does not help with prioritization or defendability to oversight boards.""
 ```",gpt-4o
-Mark Thompson,Medical Researcher / Data Scientist,COUNTERFACTUAL,157,0,3.0,2.0,3.0,3.0,2.0,2.0,"As a Medical Researcher / Data Scientist, I find the explanation using counterfactuals interesting but limited. Interpretability is moderate as it shows numerical changes needed to flip the prediction. However, completeness is low as it lacks contextual information on why these specific features (thalach and oldpeak) are critical compared to others and how they connect to known medical factors. Actionability is average because while it provides specific increments, it doesn't guide subsequent steps—like re-evaluating model biases or verifying if these components align with the Framingham Risk Score. Overall, satisfaction and decision support are low due to the missing insight into the underlying model logic and its implications on biases and general population-level accuracy.","```toml
-interpretability = 3
-completeness = 2
-actionability = 3
-trust = 3
-satisfaction = 2
-decision_support = 2
-comment = ""As a Medical Researcher / Data Scientist, I find the explanation using counterfactuals interesting but limited. Interpretability is moderate as it shows numerical changes needed to flip the prediction. However, completeness is low as it lacks contextual information on why these specific features (thalach and oldpeak) are critical compared to others and how they connect to known medical factors. Actionability is average because while it provides specific increments, it doesn't guide subsequent steps—like re-evaluating model biases or verifying if these components align with the Framingham Risk Score. Overall, satisfaction and decision support are low due to the missing insight into the underlying model logic and its implications on biases and general population-level accuracy.""
-```",gpt-4o
-Linda Martinez,Hospital Administrator,SHAP,134,0,2.0,1.0,1.0,1.0,1.0,1.0,"From my perspective as a Hospital Administrator, this explanation is unclear and incomplete. It only highlights 'sex' and 'age' with SHAP values, which doesn't provide me with enough context to make a decision. There's no guidance on what action to take next, which leaves me unable to optimize resources or ensure high-risk patients aren't missed. I cannot confidently explain or defend this decision to oversight boards or insurance without more comprehensive details.","```toml
+Linda Martinez,Hospital Administrator,SHAP,157,0,2.0,1.0,1.0,2.0,1.0,1.0,"The explanation primarily lists SHAP values for 'sex' and 'age' but doesn't clarify their implications on heart disease risk or suggest any actionable steps, which is crucial for decision-making. It lacks a complete overview, leaving out other vital health indicators that should factor into the risk assessment. My trust is limited as the explanation doesn't align with how patient triage decisions are typically made, focusing on broader clinical factors.","```toml
 interpretability = 2
 completeness = 1
 actionability = 1
-trust = 1
+trust = 2
 satisfaction = 1
 decision_support = 1
-comment = ""From my perspective as a Hospital Administrator, this explanation is unclear and incomplete. It only highlights 'sex' and 'age' with SHAP values, which doesn't provide me with enough context to make a decision. There's no guidance on what action to take next, which leaves me unable to optimize resources or ensure high-risk patients aren't missed. I cannot confidently explain or defend this decision to oversight boards or insurance without more comprehensive details.""
+comment = ""The explanation primarily lists SHAP values for 'sex' and 'age' but doesn't clarify their implications on heart disease risk or suggest any actionable steps, which is crucial for decision-making. It lacks a complete overview, leaving out other vital health indicators that should factor into the risk assessment. My trust is limited as the explanation doesn't align with how patient triage decisions are typically made, focusing on broader clinical factors.""
 ```",gpt-4o
-Linda Martinez,Hospital Administrator,LIME,134,0,1.0,2.0,1.0,1.0,1.0,1.0,"The explanation provided by the AI is not interpretable from my perspective as it uses technical 'LIME weights' that are cryptic without context. It lacks completeness, as it doesn't summarize the key risk factors in a way that helps me understand the case. There's no actionability since it does not suggest any next steps such as additional testing or discharge. Due to the lack of clarity and guidance, I cannot trust this explanation or feel satisfied. Overall, this does not support my decision-making needs effectively, as it doesn't fit my strategic focus on resource optimization and liability avoidance.","```toml
-interpretability = 1
+Linda Martinez,Hospital Administrator,LIME,157,0,2.0,2.0,1.0,1.0,1.0,1.0,"As a Hospital Administrator, the LIME explanation provided is difficult to interpret since it presents technical weights without clear context or implications for patient care. It lacks completeness as it does not offer a comprehensive view of the patient's condition, missing critical information such as recommended next steps. Due to its complexity and lack of actionability, I find it challenging to trust this explanation or use it to make informed decisions regarding patient triage or resource allocation. Overall, it does not support my need for high-level, actionable insights that align with organizational and patient care objectives.","```toml
+interpretability = 2
 completeness = 2
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""The explanation provided by the AI is not interpretable from my perspective as it uses technical 'LIME weights' that are cryptic without context. It lacks completeness, as it doesn't summarize the key risk factors in a way that helps me understand the case. There's no actionability since it does not suggest any next steps such as additional testing or discharge. Due to the lack of clarity and guidance, I cannot trust this explanation or feel satisfied. Overall, this does not support my decision-making needs effectively, as it doesn't fit my strategic focus on resource optimization and liability avoidance.""
+comment = ""As a Hospital Administrator, the LIME explanation provided is difficult to interpret since it presents technical weights without clear context or implications for patient care. It lacks completeness as it does not offer a comprehensive view of the patient's condition, missing critical information such as recommended next steps. Due to its complexity and lack of actionability, I find it challenging to trust this explanation or use it to make informed decisions regarding patient triage or resource allocation. Overall, it does not support my need for high-level, actionable insights that align with organizational and patient care objectives.""
 ```",gpt-4o
-Linda Martinez,Hospital Administrator,ANCHOR,134,0,2.0,2.0,1.0,2.0,1.0,1.0,"As a Hospital Administrator, I find this explanation lacking. The description is too technical and not easily understandable without further context. It does not provide enough information about why these specific thresholds (ca > 1.00 and thal > 2.00) are important or how the precision and coverage relate to decision-making. There are no actionable steps provided. This explanation doesn't support my needs in terms of resource optimization or addressing liability concerns.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 1
-decision_support = 1
-comment = ""As a Hospital Administrator, I find this explanation lacking. The description is too technical and not easily understandable without further context. It does not provide enough information about why these specific thresholds (ca > 1.00 and thal > 2.00) are important or how the precision and coverage relate to decision-making. There are no actionable steps provided. This explanation doesn't support my needs in terms of resource optimization or addressing liability concerns.""
-```",gpt-4o
-Linda Martinez,Hospital Administrator,COUNTERFACTUAL,134,0,2.0,1.0,1.0,2.0,1.0,1.0,"The explanation is not very interpretable as it doesn't provide clear information or high-level summary of the patient's risk factors. It's missing critical details about the patient's condition, which makes it incomplete. Furthermore, it offers no actionable steps or guidance on what should be done next. Due to these issues, trust in the system is low, as it's challenging to make informed decisions or defend these AI recommendations to oversight boards. Overall, it's unsatisfactory and does not support decision-making needs in prioritizing patient care effectively.","```toml
-interpretability = 2
-completeness = 1
-actionability = 1
-trust = 2
-satisfaction = 1
-decision_support = 1
-comment = ""The explanation is not very interpretable as it doesn't provide clear information or high-level summary of the patient's risk factors. It's missing critical details about the patient's condition, which makes it incomplete. Furthermore, it offers no actionable steps or guidance on what should be done next. Due to these issues, trust in the system is low, as it's challenging to make informed decisions or defend these AI recommendations to oversight boards. Overall, it's unsatisfactory and does not support decision-making needs in prioritizing patient care effectively.""
-```",gpt-4o
-Linda Martinez,Hospital Administrator,SHAP,18,0,2.0,1.0,1.0,1.0,1.0,1.0,"The AI explanation using SHAP values provides minimal information, with just partial relevance regarding age and sex, but no substantial insights into the patient's specific risk factors or condition. It lacks the depth required to make or rule out critical decisions about heart disease risk, and provides no clear actions or recommendations for next steps. This would not sufficiently support my role in managing resources efficiently and addressing liability concerns regarding patient care.","```toml
-interpretability = 2
-completeness = 1
-actionability = 1
-trust = 1
-satisfaction = 1
-decision_support = 1
-comment = ""The AI explanation using SHAP values provides minimal information, with just partial relevance regarding age and sex, but no substantial insights into the patient's specific risk factors or condition. It lacks the depth required to make or rule out critical decisions about heart disease risk, and provides no clear actions or recommendations for next steps. This would not sufficiently support my role in managing resources efficiently and addressing liability concerns regarding patient care.""
-```",gpt-4o
-Linda Martinez,Hospital Administrator,LIME,18,0,2.0,2.0,1.0,2.0,1.0,1.0,"The explanation provided by the AI is highly technical and requires a good understanding of specific medical jargon and statistical methods like LIME. As a hospital administrator, I need more straightforward, high-level summaries that indicate risk factors and recommended actions. This output does not clearly guide whether a stress test is needed or if a discharge is appropriate, thereby not supporting critical decision-making effectively. Furthermore, the lack of clear recommendations makes it challenging to explain or defend this decision to insurance or oversight boards. My priority is clear guidance to reduce unnecessary tests while ensuring critical cases are identified.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 1
-decision_support = 1
-comment = ""The explanation provided by the AI is highly technical and requires a good understanding of specific medical jargon and statistical methods like LIME. As a hospital administrator, I need more straightforward, high-level summaries that indicate risk factors and recommended actions. This output does not clearly guide whether a stress test is needed or if a discharge is appropriate, thereby not supporting critical decision-making effectively. Furthermore, the lack of clear recommendations makes it challenging to explain or defend this decision to insurance or oversight boards. My priority is clear guidance to reduce unnecessary tests while ensuring critical cases are identified.""
-```",gpt-4o
-Linda Martinez,Hospital Administrator,ANCHOR,18,0,3.0,2.0,2.0,3.0,2.0,2.0,"The AI's explanation is somewhat interpretable with concise rule-based logic, but it lacks detail on patient-specific factors that could justify its decision more thoroughly. It doesn't provide specific actions to take, only a rule with precision and coverage metrics. While the precision seems high, the coverage is low, indicating that this rule affects a small subset of cases, making it less applicable for regular decision-making. The lack of direction on next steps limits its usefulness in practical scenarios.","```toml
-interpretability = 3
-completeness = 2
-actionability = 2
-trust = 3
-satisfaction = 2
-decision_support = 2
-comment = ""The AI's explanation is somewhat interpretable with concise rule-based logic, but it lacks detail on patient-specific factors that could justify its decision more thoroughly. It doesn't provide specific actions to take, only a rule with precision and coverage metrics. While the precision seems high, the coverage is low, indicating that this rule affects a small subset of cases, making it less applicable for regular decision-making. The lack of direction on next steps limits its usefulness in practical scenarios.""
-```",gpt-4o
-Linda Martinez,Hospital Administrator,COUNTERFACTUAL,18,0,2.0,2.0,1.0,2.0,2.0,1.0,"The explanation using a 'COUNTERFACTUAL' method is hard to grasp in terms of how it aids in clinical decision-making for heart disease risk. It doesn't provide a clear action-oriented recommendation, merely indicating the conditions to change the prediction. As a Hospital Administrator focused on liability and resource optimization, this explanation lacks the depth and clarity needed to make confident decisions or explain them to oversight boards.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 2
-decision_support = 1
-comment = ""The explanation using a 'COUNTERFACTUAL' method is hard to grasp in terms of how it aids in clinical decision-making for heart disease risk. It doesn't provide a clear action-oriented recommendation, merely indicating the conditions to change the prediction. As a Hospital Administrator focused on liability and resource optimization, this explanation lacks the depth and clarity needed to make confident decisions or explain them to oversight boards.""
-```",gpt-4o
-Linda Martinez,Hospital Administrator,SHAP,157,0,2.0,1.0,1.0,2.0,1.0,1.0,"The AI explanation is too technical and lacks clarity for practical use. Simply stating SHAP values for 'sex' and 'age' without context doesn't adequately communicate the patient's heart disease risk. It does not offer guidance on next steps, making it difficult to apply in a clinical context. As a hospital administrator focused on resource optimization and liability, I cannot rely on such vague information for decision-making or to justify actions to oversight boards.","```toml
-interpretability = 2
-completeness = 1
-actionability = 1
-trust = 2
-satisfaction = 1
-decision_support = 1
-comment = ""The AI explanation is too technical and lacks clarity for practical use. Simply stating SHAP values for 'sex' and 'age' without context doesn't adequately communicate the patient's heart disease risk. It does not offer guidance on next steps, making it difficult to apply in a clinical context. As a hospital administrator focused on resource optimization and liability, I cannot rely on such vague information for decision-making or to justify actions to oversight boards.""
-```",gpt-4o
-Linda Martinez,Hospital Administrator,LIME,157,0,2.0,2.0,1.0,2.0,2.0,2.0,"The AI explanation using LIME weights lacks clarity and context for practical decision-making. It focuses on statistical weights without translating them into actionable insights or high-level summaries needed for real-world triage or resource optimization. As a Hospital Administrator, I need clear guidance on next steps and an understanding of risk factors that are not purely numerical to ensure compliance and avoid liability.","```toml
+Linda Martinez,Hospital Administrator,ANCHOR,157,0,2.0,2.0,1.0,2.0,2.0,2.0,"As a Hospital Administrator, I find the explanation fairly technical and lacking context. It's not clear how the variables cp and oldpeak relate to the patient’s immediate needs or what specific actions to take from here. The precision is high but has low coverage, which doesn't instill much confidence given our aim to balance resources and liability effectively. This information isn't sufficient to guide the next steps or facilitate discussions with oversight boards.","```toml
 interpretability = 2
 completeness = 2
 actionability = 1
 trust = 2
 satisfaction = 2
 decision_support = 2
-comment = ""The AI explanation using LIME weights lacks clarity and context for practical decision-making. It focuses on statistical weights without translating them into actionable insights or high-level summaries needed for real-world triage or resource optimization. As a Hospital Administrator, I need clear guidance on next steps and an understanding of risk factors that are not purely numerical to ensure compliance and avoid liability.""
+comment = ""As a Hospital Administrator, I find the explanation fairly technical and lacking context. It's not clear how the variables cp and oldpeak relate to the patient’s immediate needs or what specific actions to take from here. The precision is high but has low coverage, which doesn't instill much confidence given our aim to balance resources and liability effectively. This information isn't sufficient to guide the next steps or facilitate discussions with oversight boards.""
 ```",gpt-4o
-Linda Martinez,Hospital Administrator,ANCHOR,157,0,2.0,2.0,1.0,2.0,2.0,1.0,"From my perspective as a Hospital Administrator, the AI explanation using the 'ANCHOR' method is very technical and lacks clarity. The explanation provides a rule with certain conditions and metrics (precision and coverage), but it is not intuitive or easily interpretable for decision-making concerning heart disease assessment. It doesn't suggest actionable next steps or provide a clear rationale for prioritizing or discharging the patient, which is crucial for optimizing resource use and minimizing liability.","```toml
+Linda Martinez,Hospital Administrator,COUNTERFACTUAL,157,0,2.0,2.0,1.0,2.0,1.0,1.0,"The explanation using 'COUNTERFACTUAL' method is not clear or informative enough for my needs. It shows numerical changes for parameters (fbs, oldpeak) without context, making it hard to understand the implications. There are no direct suggestions on what actions to take, neither does it provide comprehensive information needed for holistic decision-making. This does not align with how I prioritize triage efficiency or resource optimization. It fails to build trust or assist in making actionable decisions to either recommend further testing or confidently discharge a patient.","```toml
 interpretability = 2
 completeness = 2
 actionability = 1
 trust = 2
-satisfaction = 2
+satisfaction = 1
 decision_support = 1
-comment = ""From my perspective as a Hospital Administrator, the AI explanation using the 'ANCHOR' method is very technical and lacks clarity. The explanation provides a rule with certain conditions and metrics (precision and coverage), but it is not intuitive or easily interpretable for decision-making concerning heart disease assessment. It doesn't suggest actionable next steps or provide a clear rationale for prioritizing or discharging the patient, which is crucial for optimizing resource use and minimizing liability.""
+comment = ""The explanation using 'COUNTERFACTUAL' method is not clear or informative enough for my needs. It shows numerical changes for parameters (fbs, oldpeak) without context, making it hard to understand the implications. There are no direct suggestions on what actions to take, neither does it provide comprehensive information needed for holistic decision-making. This does not align with how I prioritize triage efficiency or resource optimization. It fails to build trust or assist in making actionable decisions to either recommend further testing or confidently discharge a patient.""
 ```",gpt-4o
-Linda Martinez,Hospital Administrator,COUNTERFACTUAL,157,0,2.0,2.0,1.0,2.0,2.0,1.0,"As a Hospital Administrator, the explanation provided lacks clarity and detail, which makes it difficult to interpret effectively. While it presents counterfactuals (thalach and oldpeak changes), it doesn't translate this into actionable steps or clear clinical implications. Without comprehensive insights or specific recommendations for next steps, such as further testing or immediate discharge, it fails to support decision-making. Trust and satisfaction are low because the explanation doesn't align with my focus on resource optimization and liability management.","```toml
-interpretability = 2
-completeness = 2
-actionability = 1
-trust = 2
-satisfaction = 2
-decision_support = 1
-comment = ""As a Hospital Administrator, the explanation provided lacks clarity and detail, which makes it difficult to interpret effectively. While it presents counterfactuals (thalach and oldpeak changes), it doesn't translate this into actionable steps or clear clinical implications. Without comprehensive insights or specific recommendations for next steps, such as further testing or immediate discharge, it fails to support decision-making. Trust and satisfaction are low because the explanation doesn't align with my focus on resource optimization and liability management.""
-```",gpt-4o
-David Chen,Patient (End User),SHAP,134,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a patient, I find this explanation completely confusing. It uses terms like 'SHAP values' and numbers related to 'sex' and 'age' without any explanation in plain English about what it means for my health. It doesn't tell me if I'm okay or what I can do to improve my situation. There's no guidance or reassurance, making it feel untrustworthy and unhelpful.","```toml
+David Chen,Patient (End User),SHAP,134,0,1.0,1.0,1.0,1.0,1.0,1.0,"As someone concerned about my heart health, this explanation is not helpful at all. I don't understand what 'SHAP values' mean, and terms like 'sex: 0.125; age: -0.125' are just confusing numbers to me. This doesn't tell me if I am okay or not, and it doesn't suggest what I should do next. I need clear, plain English explanations and actionable advice on what lifestyle changes can help.","```toml
 interpretability = 1
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""As a patient, I find this explanation completely confusing. It uses terms like 'SHAP values' and numbers related to 'sex' and 'age' without any explanation in plain English about what it means for my health. It doesn't tell me if I'm okay or what I can do to improve my situation. There's no guidance or reassurance, making it feel untrustworthy and unhelpful.""
+comment = ""As someone concerned about my heart health, this explanation is not helpful at all. I don't understand what 'SHAP values' mean, and terms like 'sex: 0.125; age: -0.125' are just confusing numbers to me. This doesn't tell me if I am okay or not, and it doesn't suggest what I should do next. I need clear, plain English explanations and actionable advice on what lifestyle changes can help.""
 ```",gpt-4o
-David Chen,Patient (End User),LIME,134,0,1.0,1.0,1.0,1.0,1.0,1.0,"This explanation is not understandable to me at all. It uses abbreviations and terms like 'LIME weights', 'cp', and 'thal' which I'm not familiar with. It doesn't tell me if I'm okay or in immediate danger, and there are no suggestions for what I can do, such as lifestyle changes or treatments I might need. I feel anxious and not reassured, and I don't know what steps to take next or what this means for my health.","```toml
+David Chen,Patient (End User),LIME,134,0,1.0,1.0,1.0,1.0,1.0,1.0,"This explanation is confusing and filled with jargon like 'LIME weights' and 'cp', which don't mean anything to me. It doesn't tell me if I'm okay or what I can do to improve my situation. I don't know what to do with this information, and it doesn't help reassure me or guide my next steps in relation to my chest pain.","```toml
 interpretability = 1
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""This explanation is not understandable to me at all. It uses abbreviations and terms like 'LIME weights', 'cp', and 'thal' which I'm not familiar with. It doesn't tell me if I'm okay or in immediate danger, and there are no suggestions for what I can do, such as lifestyle changes or treatments I might need. I feel anxious and not reassured, and I don't know what steps to take next or what this means for my health.""
+comment = ""This explanation is confusing and filled with jargon like 'LIME weights' and 'cp', which don't mean anything to me. It doesn't tell me if I'm okay or what I can do to improve my situation. I don't know what to do with this information, and it doesn't help reassure me or guide my next steps in relation to my chest pain.""
 ```",gpt-4o
-David Chen,Patient (End User),ANCHOR,134,0,1.0,1.0,1.0,2.0,1.0,1.0,"As a patient, this explanation is completely confusing. It uses terms like 'ca' and 'thal' without explaining what they mean. It also gives numbers like 1.00 or 2.00, which don't make sense to me. I don’t know if I'm in immediate danger or what steps to take. I need clear information about my health and what actions I can take to improve it.","```toml
-interpretability = 1
-completeness = 1
-actionability = 1
-trust = 2
-satisfaction = 1
-decision_support = 1
-comment = ""As a patient, this explanation is completely confusing. It uses terms like 'ca' and 'thal' without explaining what they mean. It also gives numbers like 1.00 or 2.00, which don't make sense to me. I don’t know if I'm in immediate danger or what steps to take. I need clear information about my health and what actions I can take to improve it.""
-```",gpt-4o
-David Chen,Patient (End User),COUNTERFACTUAL,134,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a patient concerned about my heart health, this explanation is completely confusing. It uses technical terms like 'cp' and 'thal' that I don't understand. There's no clear information on whether I'm in immediate danger or what specific actions I need to take to improve my health. I can't trust or use this explanation to make informed decisions about my lifestyle or treatment.","```toml
+David Chen,Patient (End User),ANCHOR,134,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a regular person trying to understand my health, this explanation is completely confusing. It uses medical jargon like 'ca' and 'thal' with numbers that mean nothing to me. There's no clear information on whether I'm okay or what I can do to improve my situation. This output leaves me feeling anxious rather than informed.","```toml
 interpretability = 1
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""As a patient concerned about my heart health, this explanation is completely confusing. It uses technical terms like 'cp' and 'thal' that I don't understand. There's no clear information on whether I'm in immediate danger or what specific actions I need to take to improve my health. I can't trust or use this explanation to make informed decisions about my lifestyle or treatment.""
+comment = ""As a regular person trying to understand my health, this explanation is completely confusing. It uses medical jargon like 'ca' and 'thal' with numbers that mean nothing to me. There's no clear information on whether I'm okay or what I can do to improve my situation. This output leaves me feeling anxious rather than informed.""
 ```",gpt-4o
-David Chen,Patient (End User),SHAP,18,0,1.0,1.0,1.0,1.0,1.0,1.0,"I found the explanation very confusing. It simply mentions 'age' and 'sex' with some numbers, which does not tell me anything actionable about my current heart health or what steps I might need to consider. I am anxious about understanding whether I am okay or what I need to change, and this explanation doesn't address my specific needs or provide reassurance. It lacks clarity and doesn't help with my situation at all.","```toml
+David Chen,Patient (End User),COUNTERFACTUAL,134,0,1.0,1.0,1.0,1.0,1.0,1.0,"I find this explanation completely confusing and not helpful at all. I don't understand what 'cp: change by 1.40' and 'thal: change by -2.50' mean in terms of my health or what actions I need to take. It uses technical terms without explaining how they relate to my heart health. There are no clear steps on what I can do to address my concerns, making it impossible to trust or feel satisfied with this information. I still don't know if I'm okay or what I should change in my lifestyle.","```toml
 interpretability = 1
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""I found the explanation very confusing. It simply mentions 'age' and 'sex' with some numbers, which does not tell me anything actionable about my current heart health or what steps I might need to consider. I am anxious about understanding whether I am okay or what I need to change, and this explanation doesn't address my specific needs or provide reassurance. It lacks clarity and doesn't help with my situation at all.""
+comment = ""I find this explanation completely confusing and not helpful at all. I don't understand what 'cp: change by 1.40' and 'thal: change by -2.50' mean in terms of my health or what actions I need to take. It uses technical terms without explaining how they relate to my heart health. There are no clear steps on what I can do to address my concerns, making it impossible to trust or feel satisfied with this information. I still don't know if I'm okay or what I should change in my lifestyle.""
 ```",gpt-4o
-David Chen,Patient (End User),LIME,18,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a patient, this explanation is completely confusing. The numbers and terms like 'LIME weights', 'cp', and 'oldpeak' do not mean anything to me. I don't understand why my case was flagged, and it doesn't tell me what I should do about it. I can't trust something that doesn't make sense to me, and it doesn't help me feel more informed or prepared to make any decisions about my health.","```toml
+David Chen,Patient (End User),SHAP,18,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a patient, I find this explanation completely confusing because it uses terms like 'SHAP values' and numbers which don't mean anything to me. It doesn't help me understand if I'm okay or what I should do next. I need clear guidance on whether I'm in immediate danger and what lifestyle changes I can make to improve my heart health. This explanation doesn't cover any of that.","```toml
 interpretability = 1
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""As a patient, this explanation is completely confusing. The numbers and terms like 'LIME weights', 'cp', and 'oldpeak' do not mean anything to me. I don't understand why my case was flagged, and it doesn't tell me what I should do about it. I can't trust something that doesn't make sense to me, and it doesn't help me feel more informed or prepared to make any decisions about my health.""
+comment = ""As a patient, I find this explanation completely confusing because it uses terms like 'SHAP values' and numbers which don't mean anything to me. It doesn't help me understand if I'm okay or what I should do next. I need clear guidance on whether I'm in immediate danger and what lifestyle changes I can make to improve my heart health. This explanation doesn't cover any of that.""
 ```",gpt-4o
-David Chen,Patient (End User),ANCHOR,18,0,1.0,1.0,1.0,2.0,1.0,1.0,"As a patient, I find this explanation very confusing. It uses technical terms like 'ca > 1.00' and 'oldpeak > 1.80' that I don't understand. I am not sure what these terms mean or how they relate to my health. The explanation doesn't mention what I can do to improve or manage my heart health, leaving me feeling worried and lost. It doesn't give me any clear next steps to take or reassure me about my current health status.","```toml
-interpretability = 1
-completeness = 1
-actionability = 1
-trust = 2
-satisfaction = 1
-decision_support = 1
-comment = ""As a patient, I find this explanation very confusing. It uses technical terms like 'ca > 1.00' and 'oldpeak > 1.80' that I don't understand. I am not sure what these terms mean or how they relate to my health. The explanation doesn't mention what I can do to improve or manage my heart health, leaving me feeling worried and lost. It doesn't give me any clear next steps to take or reassure me about my current health status.""
-```",gpt-4o
-David Chen,Patient (End User),COUNTERFACTUAL,18,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a patient, I found this explanation completely confusing. I have no idea what 'restecg' or 'slope' mean or how changing them affects my heart health. There is no clear guidance on what actions I should take to improve my situation. I would need a doctor's help to understand this, which doesn't help me feel in control or reassured.","```toml
+David Chen,Patient (End User),LIME,18,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a patient, this explanation is completely confusing to me. It uses technical terms and numbers without any context or plain language clarification about what they mean for my health. There's no guidance on what steps I should take next to improve my condition or understand my risk better. I can't trust or feel satisfied with the explanation as it doesn't address my concerns about immediate danger or lifestyle changes.","```toml
 interpretability = 1
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""As a patient, I found this explanation completely confusing. I have no idea what 'restecg' or 'slope' mean or how changing them affects my heart health. There is no clear guidance on what actions I should take to improve my situation. I would need a doctor's help to understand this, which doesn't help me feel in control or reassured.""
+comment = ""As a patient, this explanation is completely confusing to me. It uses technical terms and numbers without any context or plain language clarification about what they mean for my health. There's no guidance on what steps I should take next to improve my condition or understand my risk better. I can't trust or feel satisfied with the explanation as it doesn't address my concerns about immediate danger or lifestyle changes.""
 ```",gpt-4o
-David Chen,Patient (End User),SHAP,157,0,1.0,1.0,1.0,1.0,1.0,1.0,"This explanation is completely confusing to me as a patient. It talks about 'SHAP values', 'sex', and 'age', without saying anything about what those mean, if I'm okay, or what I should do. I'm left wondering if I need to change my lifestyle or seek further treatment. There is no guidance on what steps to take or reassurance about my situation. This doesn't help me at all to calm my anxiety or understand my condition.","```toml
+David Chen,Patient (End User),ANCHOR,18,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a patient, I can't understand what the explanation is saying at all. Terms like 'ca' and 'oldpeak' with precision and coverage percentages are too technical for me. I want to hear if I am healthy and, if not, what lifestyle changes I can make. This doesn't tell me if I am okay or what to do next, so it's not helpful or reassuring at all.","```toml
 interpretability = 1
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""This explanation is completely confusing to me as a patient. It talks about 'SHAP values', 'sex', and 'age', without saying anything about what those mean, if I'm okay, or what I should do. I'm left wondering if I need to change my lifestyle or seek further treatment. There is no guidance on what steps to take or reassurance about my situation. This doesn't help me at all to calm my anxiety or understand my condition.""
+comment = ""As a patient, I can't understand what the explanation is saying at all. Terms like 'ca' and 'oldpeak' with precision and coverage percentages are too technical for me. I want to hear if I am healthy and, if not, what lifestyle changes I can make. This doesn't tell me if I am okay or what to do next, so it's not helpful or reassuring at all.""
 ```",gpt-4o
-David Chen,Patient (End User),LIME,157,0,1.0,1.0,1.0,1.0,1.0,1.0,"I find the explanation completely confusing and filled with numbers and jargon that make no sense to me. It doesn't cover any of the factors I understand, like cholesterol or blood pressure, which makes me feel anxious and left out of the decision process. There's no guidance on what I can do next to improve my heart health, leaving me feeling helpless and worried. Overall, this explanation does not reassure me about my health, nor does it provide steps to improve.","```toml
+David Chen,Patient (End User),COUNTERFACTUAL,18,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a patient, the explanation 'thalach: change by 39.70' is completely confusing. I have no idea what 'thalach' refers to, and without any context, I can't understand why this change would affect my heart health risk. There are no clear actions or next steps provided, and I don't know if I'm in immediate danger or what I can do to improve my condition. Overall, this explanation doesn't help me at all and doesn't give me confidence in my own health assessment.","```toml
 interpretability = 1
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""I find the explanation completely confusing and filled with numbers and jargon that make no sense to me. It doesn't cover any of the factors I understand, like cholesterol or blood pressure, which makes me feel anxious and left out of the decision process. There's no guidance on what I can do next to improve my heart health, leaving me feeling helpless and worried. Overall, this explanation does not reassure me about my health, nor does it provide steps to improve.""
+comment = ""As a patient, the explanation 'thalach: change by 39.70' is completely confusing. I have no idea what 'thalach' refers to, and without any context, I can't understand why this change would affect my heart health risk. There are no clear actions or next steps provided, and I don't know if I'm in immediate danger or what I can do to improve my condition. Overall, this explanation doesn't help me at all and doesn't give me confidence in my own health assessment.""
 ```",gpt-4o
-David Chen,Patient (End User),ANCHOR,157,0,1.0,1.0,1.0,1.0,1.0,1.0,"As someone who is anxious about my heart health, this explanation is completely confusing. I don't understand what 'cp' or 'oldpeak' means, and the numbers given make no sense to me. There's no clear information on what steps to take next or what lifestyle changes might help. I feel frustrated and even more worried, as I'm unable to determine if I'm okay or what I can do to improve my situation.","```toml
+David Chen,Patient (End User),SHAP,157,0,1.0,1.0,1.0,1.0,1.0,1.0,"As someone concerned about my heart health, this explanation is completely confusing and lacks any relevance to my situation. It uses terms like 'SHAP' and offers values for 'sex' and 'age' without explaining what they mean or how they relate to my risk or what I can do. It provides no guidance on what actions I can take to improve my health, making it impossible for me to trust or feel satisfied with this information. I need simple, clear explanations and actionable advice to feel supported and understand my health better.","```toml
 interpretability = 1
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""As someone who is anxious about my heart health, this explanation is completely confusing. I don't understand what 'cp' or 'oldpeak' means, and the numbers given make no sense to me. There's no clear information on what steps to take next or what lifestyle changes might help. I feel frustrated and even more worried, as I'm unable to determine if I'm okay or what I can do to improve my situation.""
+comment = ""As someone concerned about my heart health, this explanation is completely confusing and lacks any relevance to my situation. It uses terms like 'SHAP' and offers values for 'sex' and 'age' without explaining what they mean or how they relate to my risk or what I can do. It provides no guidance on what actions I can take to improve my health, making it impossible for me to trust or feel satisfied with this information. I need simple, clear explanations and actionable advice to feel supported and understand my health better.""
 ```",gpt-4o
-David Chen,Patient (End User),COUNTERFACTUAL,157,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a patient, this explanation is completely confusing. I don't know what 'thalach' or 'oldpeak' means, or what it means to change these numbers. It doesn't provide me with any actionable steps or reassurance about my health. I want to understand if I'm okay and what I can do to improve my situation, but this explanation doesn't help with that at all.","```toml
+David Chen,Patient (End User),LIME,157,0,1.0,1.0,1.0,1.0,1.0,1.0,"I have no idea what the AI's explanation means. Terms like 'LIME weights' and 'thal' or 'exang' don't make sense to me. It doesn't tell me if I'm in immediate danger or what I should do next about my chest pain. I need clear information on what can be changed, like diet and exercise, to improve my heart health.","```toml
 interpretability = 1
 completeness = 1
 actionability = 1
 trust = 1
 satisfaction = 1
 decision_support = 1
-comment = ""As a patient, this explanation is completely confusing. I don't know what 'thalach' or 'oldpeak' means, or what it means to change these numbers. It doesn't provide me with any actionable steps or reassurance about my health. I want to understand if I'm okay and what I can do to improve my situation, but this explanation doesn't help with that at all.""
+comment = ""I have no idea what the AI's explanation means. Terms like 'LIME weights' and 'thal' or 'exang' don't make sense to me. It doesn't tell me if I'm in immediate danger or what I should do next about my chest pain. I need clear information on what can be changed, like diet and exercise, to improve my heart health.""
+```",gpt-4o
+David Chen,Patient (End User),ANCHOR,157,0,1.0,1.0,1.0,1.0,1.0,1.0,"This explanation is completely confusing and it doesn't match how I think about my heart health at all. As a non-technical person, I don't understand terms like 'cp', 'oldpeak', or what the numbers mean for my health. There's no information about what I can do or if I'm in immediate danger, and this doesn't help me understand my risks or next steps. I can't trust or be satisfied with this explanation because it doesn't address my concerns or needs.","```toml
+interpretability = 1
+completeness = 1
+actionability = 1
+trust = 1
+satisfaction = 1
+decision_support = 1
+comment = ""This explanation is completely confusing and it doesn't match how I think about my heart health at all. As a non-technical person, I don't understand terms like 'cp', 'oldpeak', or what the numbers mean for my health. There's no information about what I can do or if I'm in immediate danger, and this doesn't help me understand my risks or next steps. I can't trust or be satisfied with this explanation because it doesn't address my concerns or needs.""
+```",gpt-4o
+David Chen,Patient (End User),COUNTERFACTUAL,157,0,1.0,1.0,1.0,1.0,1.0,1.0,"As a patient, this explanation is completely confusing and meaningless to me. I don't understand what 'fbs' or 'oldpeak' means, nor how changing these values impacts my health. There's no guidance on what steps I should take or explanations in plain language. I feel like I'm left in the dark and this doesn't help address my fears or provide any actionable insights about my heart health.","```toml
+interpretability = 1
+completeness = 1
+actionability = 1
+trust = 1
+satisfaction = 1
+decision_support = 1
+comment = ""As a patient, this explanation is completely confusing and meaningless to me. I don't understand what 'fbs' or 'oldpeak' means, nor how changing these values impacts my health. There's no guidance on what steps I should take or explanations in plain language. I feel like I'm left in the dark and this doesn't help address my fears or provide any actionable insights about my heart health.""
 ```",gpt-4o

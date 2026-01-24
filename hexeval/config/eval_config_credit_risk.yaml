@@ -99,6 +99,7 @@ output:
 # Recommendation Settings
 recommendations:
   enabled: true
+  dice_sparsity_target: 3  # Avg changed features for full score
   weights:
     technical_fidelity: 0.3
     technical_parsimony: 0.2

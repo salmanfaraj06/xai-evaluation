@@ -372,36 +372,132 @@ with tab3:
         # Display metrics table
         st.dataframe(tech_df, use_container_width=True, hide_index=True)
         
-        # Visualize fidelity
-        st.subheader("Fidelity Comparison")
+        st.divider()
         
+        # ===== 1. QUALITY METRICS (Does it work?) =====
+        st.subheader("Quality Metrics")
+        st.caption("Measures how well each method performs: Fidelity (SHAP/LIME), Precision & Coverage (Anchor), Validity (DiCE)")
+        
+        fig_quality = go.Figure()
+        
+        # SHAP/LIME: Fidelity (Deletion & Insertion)
         fidelity_data = tech_df[tech_df['fidelity_deletion'].notna()]
-        
         if not fidelity_data.empty:
-            fig = go.Figure()
-            
-            fig.add_trace(go.Bar(
-                name='Deletion (lower = better)',
+            fig_quality.add_trace(go.Bar(
+                name='Deletion AUC ↓',
                 x=fidelity_data['method'],
                 y=fidelity_data['fidelity_deletion'],
-                marker_color='indianred'
+                marker_color='#e74c3c',
+                text=fidelity_data['fidelity_deletion'].round(3),
+                textposition='outside'
             ))
-            
-            fig.add_trace(go.Bar(
-                name='Insertion (higher = better)',
+            fig_quality.add_trace(go.Bar(
+                name='Insertion AUC ↑',
                 x=fidelity_data['method'],
                 y=fidelity_data['fidelity_insertion'],
-                marker_color='lightseagreen'
+                marker_color='#2ecc71',
+                text=fidelity_data['fidelity_insertion'].round(3),
+                textposition='outside'
+            ))
+        
+        # Anchor: Precision & Coverage
+        anchor_data = tech_df[tech_df['rule_accuracy'].notna()]
+        if not anchor_data.empty:
+            fig_quality.add_trace(go.Bar(
+                name='Precision ↑',
+                x=anchor_data['method'],
+                y=anchor_data['rule_accuracy'],
+                marker_color='#3498db',
+                text=anchor_data['rule_accuracy'].round(3),
+                textposition='outside'
+            ))
+            fig_quality.add_trace(go.Bar(
+                name='Coverage ↑',
+                x=anchor_data['method'],
+                y=anchor_data['rule_applicability'],
+                marker_color='#9b59b6',
+                text=anchor_data['rule_applicability'].round(3),
+                textposition='outside'
+            ))
+        
+        # DiCE: Validity/Success Rate
+        dice_data = tech_df[tech_df['counterfactual_success'].notna()]
+        if not dice_data.empty:
+            fig_quality.add_trace(go.Bar(
+                name='Validity ↑',
+                x=dice_data['method'],
+                y=dice_data['counterfactual_success'],
+                marker_color='#1abc9c',
+                text=dice_data['counterfactual_success'].round(3),
+                textposition='outside'
+            ))
+        
+        fig_quality.update_layout(
+            barmode='group',
+            height=450,
+            xaxis_title="Method",
+            yaxis_title="Score",
+            yaxis_range=[0, 1.1],
+            showlegend=True,
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+        )
+        
+        st.plotly_chart(fig_quality, use_container_width=True)
+        
+        st.divider()
+        
+        # ===== 2. SIMPLICITY METRICS (Is it usable?) =====
+        st.subheader("Parsimony Comparison")
+        st.caption("Number of features or conditions used by each method (lower is better for simpler explanations)")
+        
+        fig_parsimony = go.Figure()
+        
+        parsimony_methods = []
+        parsimony_values = []
+        parsimony_labels = []
+        
+        # SHAP/LIME: Sparsity (num features)
+        for _, row in tech_df.iterrows():
+            if pd.notna(row.get('num_important_features')):
+                parsimony_methods.append(row['method'])
+                parsimony_values.append(row['num_important_features'])
+                parsimony_labels.append(f"{row['num_important_features']:.1f} features")
+        
+        # Anchor: Rule Length (num conditions)
+        anchor_data = tech_df[tech_df['rule_length'].notna()]
+        if not anchor_data.empty:
+            for _, row in anchor_data.iterrows():
+                parsimony_methods.append(row['method'])
+                parsimony_values.append(row['rule_length'])
+                parsimony_labels.append(f"{row['rule_length']:.1f} conditions")
+        
+        # DiCE: Counterfactual Sparsity (num features changed)
+        dice_data = tech_df[tech_df['counterfactual_sparsity'].notna()]
+        if not dice_data.empty:
+            for _, row in dice_data.iterrows():
+                parsimony_methods.append(row['method'])
+                parsimony_values.append(row['counterfactual_sparsity'])
+                parsimony_labels.append(f"{row['counterfactual_sparsity']:.1f} features")
+        
+        if parsimony_methods:
+            fig_parsimony.add_trace(go.Bar(
+                x=parsimony_methods,
+                y=parsimony_values,
+                marker_color='#f39c12',
+                text=parsimony_labels,
+                textposition='outside'
             ))
             
-            fig.update_layout(
-                barmode='group',
+            fig_parsimony.update_layout(
                 height=400,
                 xaxis_title="Method",
-                yaxis_title="AUC Score"
+                yaxis_title="Parsimony Score (lower = better)",
+                showlegend=False
             )
             
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig_parsimony, use_container_width=True)
+        else:
+            st.info("No parsimony metrics available")
         
         # Persona ratings
         if results['persona_ratings'] is not None:
@@ -420,12 +516,17 @@ with tab3:
             # Radar chart with all 6 dimensions
             fig_radar = go.Figure()
             
-            for method in summary.index:
+            
+            colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f']
+            
+            for idx, method in enumerate(summary.index):
                 fig_radar.add_trace(go.Scatterpolar(
                     r=summary.loc[method].values,
                     theta=['Trust', 'Satisfaction', 'Actionability', 'Interpretability', 'Completeness', 'Decision Support'],
                     fill='toself',
-                    name=method
+                    name=method,
+                    line=dict(color=colors[idx % len(colors)], width=2),
+                    marker=dict(size=6)
                 ))
             
             fig_radar.update_layout(

@@ -1,5 +1,5 @@
-method,fidelity_deletion,fidelity_insertion,num_important_features,rule_accuracy,rule_applicability,rule_length,counterfactual_success,stability
-SHAP,0.10750180904321105,0.24942874367883366,24.006666666666668,,,,,
-LIME,0.13247670146692275,0.20965173692665603,10.0,,,,,0.1882688936724718
-Anchor,,,,0.921737096525977,0.34185666666666675,2.2,,
-DiCE,,,,,,,1.0,
+method,fidelity_deletion,fidelity_insertion,num_important_features,rule_accuracy,rule_applicability,rule_length,counterfactual_success,counterfactual_sparsity,stability
+SHAP,0.10750180904321105,0.24942874367883366,24.006666666666668,,,,,,
+LIME,0.13247670146692275,0.20965173692665603,10.0,,,,,,0.20525114891820465
+Anchor,,,,0.9362648885600843,0.28635666666666665,2.3333333333333335,,,
+DiCE,,,,,,,1.0,2.066666666666667,
