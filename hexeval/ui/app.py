@@ -641,35 +641,39 @@ with tab4:
 with tab5:
     st.header("Documentation")
     
-    doc_mode = st.radio(
+    # Simple dropdown navigation
+    doc_options = {
+       
+        "💡 How It Works": "how_it_works",
+        "📋 Prerequisites & Setup": "prerequisites",
+        "⚙️ Configuration Guide": "configuration"
+    }
+    
+    selected_doc = st.selectbox(
         "Select Topic:",
-        ["🚀 Prerequisites & Setup", "💡 How It Works (Concepts)", "⚙️ Configuration Guide"],
-        horizontal=True
+        options=list(doc_options.keys()),
+        label_visibility="collapsed"
     )
     
     st.divider()
     
-    # Updated paths for docs
-    if doc_mode == "🚀 Prerequisites & Setup":
+    # Load and display content
+    doc_files = {
+        
+        'how_it_works': 'docs/HEXEval_HowItWorks.md',
+        'prerequisites': 'docs/HEXEval_Prerequisites.md',
+        'configuration': 'docs/HEXEval_Configuration.md'
+    }
+    
+    doc_key = doc_options[selected_doc]
+    doc_file = doc_files.get(doc_key)
+    
+    if doc_file:
         try:
-            with open("docs/HEXEval_Prerequisites.md", "r") as f:
+            with open(doc_file, "r") as f:
                 st.markdown(f.read())
         except FileNotFoundError:
-            st.error("Documentation file not found: `docs/HEXEval_Prerequisites.md`")
-            
-    elif doc_mode == "💡 How It Works (Concepts)":
-        try:
-            with open("docs/HEXEval_HowItWorks.md", "r") as f:
-                st.markdown(f.read())
-        except FileNotFoundError:
-            st.error("Documentation file not found: `docs/HEXEval_HowItWorks.md`")
-            
-    elif doc_mode == "⚙️ Configuration Guide":
-        try:
-            with open("docs/HEXEval_Configuration.md", "r") as f:
-                st.markdown(f.read())
-        except FileNotFoundError:
-            st.error("Documentation file not found: `docs/HEXEval_Configuration.md`")
+            st.error(f"Documentation file not found: `{doc_file}`")
 
 # Footer
 st.divider()

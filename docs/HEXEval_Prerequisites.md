@@ -1,86 +1,84 @@
-# HEXEval Prerequisites & User Guide
+# User Guide: Preparing Assets for HEXEval
 
-This guide details everything you need to successfully evaluate your machine learning models using the HEXEval framework.
+This guide outlines the necessary file formats and structures required to successfully upload and evaluate your machine learning models on the HEXEval SaaS platform.
 
-## 1. System Requirements
+To begin an evaluation, you will need to have two distinct assets ready for upload:
 
-*   **Operating System:** macOS, Linux, or Windows (WSL recommended).
-*   **Python Version:** Python 3.8 or higher.
-*   **Dependencies:** All required packages are listed in `pyproject.toml` (or `requirements.txt`).
-    *   Key libraries: `shap`, `lime`, `anchor-exp`, `dice-ml`, `openai` (optional for Persona mode).
+1. YOUR **Trained Model Artifact** (e.g., a `.pkl` file)
+2. YOUR **Evaluation Dataset** (a `.csv` file)
 
 ---
 
-## 2. Model Requirements (Critical)
+## 1. Model Artifact Requirements
 
-HEXEval is designed to evaluate **black-box tabular classification models**. To function correctly, your model must meet these strict criteria:
+The HEXEval platform is architected to evaluate tabular classification models. To ensure successful ingestion and accurate explanations, your uploaded model file must adhere to the following specifications.
 
-### A. Supported Formats
-*   **File Type:** Must be saved as a `.pkl` (Pickle) or `.joblib` file.
-*   **Libraries:** Scikit-Learn (`sklearn`) or XGBoost (`xgboost`) are natively supported.
+### A. Supported File Formats
 
-### B. The `predict_proba` Requirement
-Your model object **must** implement the `predict_proba()` method.
-*   **Why?** Most XAI methods (SHAP, LIME, Anchor) rely on probability scores, not just hard class labels, to measure decision boundaries.
-*   **Common Pitfall:** If using a Support Vector Machine (SVM), ensure it was trained with `probability=True`.
+The platform accepts trained model objects serialized in the following formats:
 
-### C. Pipeline Structure (Recommended)
-It is **highly recommended** to wrap your preprocessing (scaling, encoding) and model into a single `sklearn.pipeline.Pipeline`.
-*   **Why?** HEXEval passes raw data to validite interpretability. If your model expects pre-processed tensors but you pass raw CSV rows, it will break.
-*   **Solution:** Save the entire pipeline:
-    ```python
-    from sklearn.pipeline import Pipeline
-    pipeline = Pipeline([
-        ('preprocessor', my_preprocessor),
-        ('classifier', my_model)
-    ])
-    joblib.dump(pipeline, "model_pipeline.pkl")
-    ```
+* **Pickle** (`.pkl`)
+* **Joblib** (`.joblib`)
 
-### D. The "Pro" Format (Dictionary Artifact)
-For maximum reliability (especially with correct feature names), save a dictionary containing your components:
+*Note: The platform currently natively supports Scikit-Learn and XGBoost estimator objects.*
+
+### B. Functional Requirements (`predict_proba`)
+
+The uploaded model object **must** support probabilistic prediction. Internally, the object must implement a functional `predict_proba()` method.
+
+* **Rationale:** HEXEval's interpretability engines (SHAP, LIME, Anchor, DiCE) require access to class probabilities, not just hard class labels, to map decision boundaries accurately.
+* **User Action:** Before uploading, verify your model outputs probabilities. For example, if uploading an SVM classifier, ensure it was originally trained with `probability=True`.
+
+### C. Recommended Structure: The "Pipeline" Approach
+
+For the most reliable experience, it is highly recommended to upload a single `sklearn.pipeline.Pipeline` object containing both your data preprocessing steps (e.g., scalers, encoders) and the final estimator.
+
+* **Why this matters on the platform:** This allows you to upload raw, human-readable data (see Section 2). The platform passes the raw data to the pipeline, which handles encoding internally. This results in significantly more interpretable explanations (e.g., seeing "Feature=Urban" instead of "Feature=1").
+
+### D. Best Practice: The Artifact Dictionary
+
+To ensure the platform accurately ingest feature names for visualizations, the optimal upload format is a serialized dictionary containing your components:
+
 ```python
+# Example structure prior to saving as .pkl
 artifact = {
-    "model": my_model,
-    "preprocessor": my_preprocessor,  # Optional
-    "feature_names": ["age", "bmi", "glucose"] # Critical for readable plots
+    "model": trained_pipeline_object,
+    "feature_names": ["Age", "Income", "Location_Type"] # Critical for readable charts
 }
-joblib.dump(artifact, "model_artifact.pkl")
+
 ```
-HEXEval automatically detects this format and extracts everything.
+
+*If uploaded in this format, HEXEval will automatically extract the model and apply the correct feature names to all outputs.*
 
 ---
 
-## 3. Data Requirements
+## 2. Evaluation Dataset Requirements
 
-### A. Format
-*   **File Type:** `.csv` (Comma Separated Values).
-*   **Structure:** Standard tabular format where rows are samples and columns are features.
+You must upload a corresponding dataset that the platform will use to probe the model and generate explanations.
 
-### B. Content
-*   **Target Column:** The dataset **must** contain the ground truth/target column (e.g., `target`, `diagnosis`, `churn`). You will specify this column name during execution.
-*   **Consistency:** The feature columns in your CSV must match exactly (in name and order) the features your model was trained on.
-    *   *Note:* If your model is a Pipeline, your CSV should contain **raw, human-readable data** (e.g., "Male", "Female" strings instead of 0/1), as the pipeline handles the encoding. This produces much better explanations.
+### A. File Format & Structure
 
----
+* **Format:** Comma Separated Values (`.csv`).
+* **Structure:** Standard tabular format where rows represent individual samples and columns represent features.
 
-## 4. Persona (LLM) Requirements
+### B. Content & Integrity Schema
 
-To use the **Persona Evaluator** module (simulating human feedback), you need:
+* **Feature Alignment (Critical):** The columns in your CSV must match exactly—in name, order, and count—the features expected by your uploaded model artifact. Mismatches will cause evaluation failure.
+* **Target Column:** The dataset should include the ground truth/target column (e.g., "Diagnosis", "Fraud_Label"). You will be asked to identify this column name in the platform UI during setup.
+* **Data Type Recommendation:** If you have followed the "Pipeline" recommendation in Section 1.C, your CSV should contain **raw, unencoded data**.
+* *Good:* Columns containing strings like "Married", "Single".
+* *Bad:* Columns pre-encoded as 0, 1 (unless they are naturally numerical).
 
-1.  **OpenAI API Key:**
-    *   You need a valid API key from [OpenAI Platform](https://platform.openai.com/).
-    *   **Cost:** The framework makes multiple calls (Approx. 4 calls * N Personas * N Samples). A typical run might cost $0.50 - $2.00 depending on the model used (`gpt-4` vs `gpt-3.5`).
 
-2.  **Configuration:**
-    *   Ensure `enable_personas` is checked in the UI or set to `True` in `eval_config.yaml`.
-    *   Ensure the relevant `personas_*.yaml` file is selected for your domain (e.g., Healthcare vs Finance).
 
 ---
 
-## 5. Configuration (Optional but Recommended)
+## 3. Configuring the Evaluation Context
 
-While HEXEval works out-of-the-box, customizing `config/eval_config.yaml` greatly improves results:
+Once your assets are uploaded, you will configure the evaluation context directly in the HEXEval web interface. No local configuration files are required.
 
-*   **Domain Context:** defining `domain.name` and reasonable class names (e.g., `Class 0: Healthy`, `Class 1: Disease`) helps the LLM generate accurate qualitative feedback.
-*   **Stakeholders:** You can define custom personas in `config/personas_*.yaml` if you want to test specific user types (e.g., "Regulator", "Junior Analyst").
+### A. Domain Context Selection
+
+To activate the AI-powered **Persona Evaluator**, you must select the appropriate domain context for your model from the dropdown menu (e.g., "Healthcare," "Finance," "Automotive").
+
+* **Rationale:** This selection primes the underlying Large Language Models with domain-specific knowledge and risk frameworks, ensuring that the qualitative feedback provided by simulated stakeholders (e.g., a "Clinical Auditor") is relevant to your use case.

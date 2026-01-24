@@ -1,75 +1,84 @@
-# How HEXEval Works: The Concept
+# HEXEval: Overview and Operational Methodology
 
-## The Problem: "Good" Math vs. "Useful" Explanations
-As an ML practitioner, you often need to explain your black-box model (XGBoost, Random Forest) to humans. You have many tools: SHAP, LIME, Anchors, etc.
+## Executive Summary: The Explainability Challenge
 
-But how do you choose?
-*   **SHAP** might be mathematically perfect, but can a **Bank Teller** explain it to a customer?
-*   **LIME** might be easy to read, but does it **hallucinate** on edge cases?
-*   **Anchors** gives clear rules ("If Age < 30..."), but handles complex continuous variables poorly.
-*   **DiCE (Counterfactuals)** tells you *what to change* ("Increase income by $5k"), but is computationally slow.
+As machine learning models are increasingly deployed in high-stakes domains like finance and healthcare, the need to explain their decisions has become critical. However, the field of Explainable AI (XAI) is fragmented. Data science teams face "choice overload," struggling to select from dozens of techniques (SHAP, LIME, Counterfactuals, Anchors) without a standardized framework to judge their quality.
 
-**HEXEval** is a framework that evaluates these XAI methods from two angles simultaneously:
-1.  **Objective Reality (The Math):** Is the explanation truthful to the model?
-2.  **Subjective Reality (The Human):** Is the explanation useful to the stakeholder?
+Furthermore, a critical gap exists between technical validity and practical utility. An explanation that is mathematically precise (high technical fidelity) may still be unintelligible or untrustworthy to a business stakeholder (low human utility).
+
+**HEXEval addresses this gap.** It is the first framework designed to systematically evaluate, compare, and recommend XAI methods by integrating rigorous technical testing with context-aware human simulation.
 
 ---
 
-## 🔵 1. The Technical Evaluation (Does it work?)
-Before asking humans, we stress-test the explanations against the model itself.
+## What is HEXEval?
 
-### **Fidelity (Truthfulness)**
-We rigorously check if the features the explanation claims are "important" actually drive the model's prediction.
-*   *Test:* If we delete the "top features", does the prediction flip?
-*   *Goal:* Ensure the explanation isn't lying about what the model actually used.
+HEXEval is a model-agnostic, hybrid evaluation framework specifically designed for tabular classification models.
 
-### **Stability (Robustness)**
-We check if the explanation is jittery.
-*   *Test:* If we add invisible noise to the input, does the explanation wildly change?
-*   *Goal:* You cannot deploy an explanation system that gives different reasons for the same data point on different days.
+It does not train models. Instead, it acts as an independent auditing layer that sits on top of your already-deployed models. By ingesting your model artifact and a validation dataset, HEXEval runs a battery of tests to answer two fundamental questions:
 
-### **Parsimony (Simplicity)**
-We check how "heavy" the cognitive load is.
-*   *Test:* How many features/rules are needed to explain the decision?
-*   *Goal:* An explanation with 3 key features is better than one with 50 features, even if the 50-feature one is slightly more accurate.
+1. **Is the explanation technically sound?** (Does it accurately reflect the model's behavior without instability?)
+2. **Is the explanation fit for purpose?** (Does it meet the specific needs, risk tolerances, and cognitive styles of its intended users?)
 
-### **Rule Applicability (Coverage)**
-*Specific to Anchors.*
-*   *Test:* What % of the population does this rule apply to?
-*   *Goal:* Avoid hyper-specific rules that only explain one specific patient but fail for everyone else.
-
-### **Actionability (Success Rate)**
-*Specific to Counterfactuals (DiCE).*
-*   *Test:* If the user follows the advice (e.g., "reduce debt by $500"), does the model actually change its decision?
-*   *Goal:* Ensure the advice isn't fake or broken suitable to the model's actual boundary.
+By automating the assessment of these two competing dimensions, HEXEval provides organizations with a defensible, data-driven basis for selecting the right interpretability strategy.
 
 ---
 
-## 🟢 2. The Persona Evaluation (Is it useful?)
-This is where HEXEval is unique. Instead of running a generic survey, we use **LLM Simulations** to interview your specific stakeholders.
+## The Core Engine: Hybrid Evaluation Methodology
 
-You define who matters for your project in the config. For example:
-*   **In Finance:** "Loan Officer", "Regulator", "Applicant".
-*   **In Healthcare:** "Clinician", "Patient", "Hospital Admin".
-*   **In Retail:** "Store Manager", "Marketing Analyst".
+HEXEval’s unique value lies in its dual-track evaluation pipeline, which runs in parallel once assets are ingested.
 
-**How it works:**
-1.  We generate an explanation (e.g., a SHAP plot or LIME weights).
-2.  We "show" this to a GPT-4 agent acting as your specific persona (e.g., a strict **Regulator**).
-3.  The agent reviews it and scores it on:
-    *   **Trust:** "Does this look like a valid decision rationale?"
-    *   **Actionability:** "Can I use this to make a decision?"
-    *   **Clarity:** "Is this too technical for me?"
+### Track 1: The Technical Evaluation Engine (Quality & Robustness)
 
-*Result:* You might find that **SHAP** fails for your "End Users" (too complex) but wins for your "Data Scientists".
+This engine conducts rigorous mathematical probing of the XAI methods to ensure they are objectively reliable. It applies method-appropriate metrics to avoid unfair comparisons:
+
+* **For Attribution Methods (e.g., SHAP, LIME):** We measure **Fidelity** (how accurately feature scores map to model output) and **Stability** (ensuring explanations don’t change drastically with minor input noise).
+* **For Rule-Based Methods (e.g., Anchors):** We measure **Precision** (rule accuracy) and **Coverage** (how broad of a population the rule applies to).
+* **For Counterfactuals (e.g., DiCE):** We measure **Validity** (success rate in flipping the prediction) and **Sparsity** (cost of change).
+
+All raw metrics are normalized onto a standardized 0–1 scale for subsequent comparison.
+
+### Track 2: The Human-Centered Persona Evaluator (Context & Trust)
+
+While technical metrics are necessary, they are insufficient for adoption. HEXEval utilizes advanced Large Language Models (LLMs) to simulate the qualitative evaluation process of real human stakeholders.
+
+The framework injects domain-specific mental models and constraints into LLM agents to create "Personas" (e.g., a "Conservative Risk Officer" or a "Technical Data Auditor"). These personas review explanations in natural language and rate them across six experiential dimensions:
+
+* **Trust & Reliability**
+* **Actionability**
+* **Interpretability**
+* **Satisfaction**
+* **Completeness**
+* **Decision Support**
 
 ---
 
-## 🔴 3. The Recommendation
-Finally, HEXEval aggregates all scores to give you a clear, data-driven recommendation.
+## How it Works: The End-to-End Workflow
 
-It might tell you:
-> *"For your **Data Scientists**, use **SHAP** (High fidelity).*
-> *But for your **Customers**, use **Counterfactuals** (High actionability, high clarity)."*
+The HEXEval framework guides users through a four-stage process to transform raw assets into actionable recommendations.
 
-This empowers you to deploy the right tool for the right audience, backed by empirical evidence.
+### Stage 1: Ingestion & Configuration
+
+The user uploads their trained model artifact (`.pkl` or `.joblib`) and a representative dataset (`.csv`) via the secure web interface. The user then selects the evaluation context (e.g., "Financial Services," "Clinical Ops"), which primes the system with the appropriate domain knowledge and stakeholder persona definitions.
+
+### Stage 2: Parallel Execution
+
+Upon execution, HEXEval generates explanations for the uploaded data using four industry-standard methods: **SHAP, LIME, Anchor, and DiCE**. These explanations are simultaneously routed to both the Technical Evaluation Engine and the Persona Evaluator for scoring.
+
+### Stage 3: The Multi-Criteria Recommender Engine
+
+This is the framework’s decision-making core. Raw scores from the Technical and Persona tracks flow into a **Context-Aware Weighted Mixer**.
+
+Rather than seeking a universally "best" method, the engine applies Multi-Criteria Decision Analysis (MCDM) logic to balance competing priorities based on the target audience. For example:
+
+* *If the target stakeholder is a Developer,* the engine weights technical Fidelity and Stability higher.
+* *If the target stakeholder is a Loan Applicant,* the engine weights Actionability and Interpretability higher.
+
+The engine incorporates a **"Safety Gate"**: if all methods fail minimum technical stability thresholds, the system will recommend *none* rather than promote misleading information.
+
+### Stage 4: Insight Delivery
+
+The framework presents a comprehensive report featuring:
+
+1. **The Primary Recommendation:** The single best method for the selected context, backed by natural language reasoning explaining the trade-offs.
+2. **Evaluation Matrices:** Interactive charts showing how each method performed across technical and human dimensions.
+3. **Stakeholder Profiles:** Detailed breakdowns of how different personas perceived the same explanations, revealing potential friction points between technical and business teams.
