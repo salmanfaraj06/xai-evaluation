@@ -79,15 +79,21 @@ with st.sidebar:
     st.divider()
     
     st.header("⚙️ Settings")
-    sample_size = st.slider("Evaluation sample size", 50, 500, use_case_config["default_sample_size"])
-    enable_personas = st.checkbox("Enable LLM personas", value=True, help="Requires OpenAI API key")
     
-    if enable_personas:
-        api_key_input = st.text_input("OpenAI API Key", type="password")
-        if api_key_input:
-            os.environ["OPENAI_API_KEY"] = api_key_input
-        elif "OPENAI_API_KEY" in os.environ:
-             st.info("API Key found in environment.")
+    st.subheader("OpenAI API Key")
+    st.caption("Required for persona-based evaluation")
+    
+    api_key_input = st.text_input(
+        "Enter your OpenAI API key",
+        type="password",
+        help="Your API key is used to evaluate explanations from different stakeholder perspectives"
+    )
+    
+    if api_key_input:
+        os.environ["OPENAI_API_KEY"] = api_key_input
+        st.success("✓ API key configured")
+    elif "OPENAI_API_KEY" in os.environ:
+        st.info("✓ API key found in environment")
 
 # Main content
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["📤 Configuration & Run", "ℹ️ Use Case Details", "📊 Results", "💡 Recommendations", "📚 Documentation"])
@@ -260,11 +266,11 @@ with tab1:
                         model_path=final_model_path,
                         data_path=final_data_path,
                         target_column=target_column,
-                        config_path=use_case_config["config_path"],
+                        config_path=config_path_to_use,
                         output_dir=use_case_config["output_dir"],
                         config_overrides={
-                            "personas": {"enabled": enable_personas},
-                            "evaluation": {"sample_size": sample_size}
+                            "personas": {"enabled": True},  # Always enabled - core feature
+                            "evaluation": {"sample_size": use_case_config["default_sample_size"]}
                         }
                     )
                     
