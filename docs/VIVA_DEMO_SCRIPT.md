@@ -14,6 +14,7 @@
 - [ ] Verify results exist in `outputs/heart_disease/` (or `outputs/credit_risk/`)
 - [ ] Have OpenAI API key ready (if doing live persona evaluation)
 - [ ] Test UI loads correctly: `streamlit run hexeval/ui/app.py`
+- [ ] Verify all 5 tabs are accessible (Configuration, Use Case Details, Results, Recommendations, Documentation)
 - [ ] Have backup screenshots/video if live demo fails
 - [ ] Close unnecessary browser tabs/applications
 
@@ -36,7 +37,9 @@
 
 **What to show:**
 - [Open Streamlit UI] Point to the title: "HEXEval - Holistic Explanation Evaluation"
-- [Point to sidebar] "The framework evaluates four methods: SHAP, LIME, Anchor, and DiCE"
+- [Point to sidebar] "Select use case: Heart Disease or Credit Risk"
+- [Point to tabs] "The interface has 5 tabs: Configuration, Use Case Details, Results, Recommendations, and Documentation"
+- "The framework evaluates four methods: SHAP, LIME, Anchor, and DiCE"
 
 **Transition:**
 > "Let me show you how it works."
@@ -48,41 +51,64 @@
 **What to say:**
 > "HEXEval has five main components. First, **Configuration**—we select a use case. I've prepared the Heart Disease prediction scenario, which evaluates explanations for a cardiology model.
 >
-> Notice the framework is domain-agnostic—we can switch to Credit Risk or upload custom models. The configuration includes domain context, stakeholder personas, and evaluation settings.
+> Notice the framework is domain-agnostic—we can switch to Credit Risk or upload custom models.
 >
-> For this demo, I've pre-run the evaluation to save time, but normally you'd click 'Run Evaluation' here. The framework loads the model, validates compatibility, runs all four XAI methods, and then—this is the key innovation—simulates stakeholder personas using LLMs."
+> For this demo, I've pre-run the evaluation to save time. See this green message? 'Found existing results for Heart Disease.' I'll click this **Load Existing Results** button to load the pre-computed evaluation."
 
 **What to do:**
-- [Click Tab 1: "Configuration & Run"]
+- [Click Tab 1: "📤 Configuration & Run"]
 - [Point to sidebar] "Use Case: Heart Disease (Healthcare)"
-- [If results exist] Click "Load Existing Results" button
-- [Wait for success message] "Great, results loaded"
+- [Point to green success message] "✅ Found existing results"
+- [Click "📂 Load Existing Results" button]
+- [Wait for success message] "✅ Loaded results for Heart Disease!"
 
 **Transition:**
-> "Now let's see what the framework evaluated."
+> "Before we look at results, let me quickly show you the use case configuration."
 
 ---
 
-### [1:30-2:30] Technical Evaluation Results
+### [1:30-2:00] Use Case Details (Optional)
+
+**What to say:**
+> "The **Use Case Details** tab shows the complete configuration. Here's the domain context—we're predicting heart disease risk for cardiologists and patients.
+>
+> Below are the stakeholder personas. Each persona represents a real user type with distinct priorities and preferences. For example, Dr. Sarah Jenkins is a Lead Cardiologist with high risk aversion and moderate AI comfort. Her priorities include patient safety and clinical accuracy.
+>
+> The framework uses these personas to evaluate explanations from a human perspective—not just technical metrics."
+
+**What to do:**
+- [Click Tab 2: "ℹ️ Use Case Details"]
+- [Point to Domain Context] "Task: heart disease risk assessment"
+- [Expand first persona card] "Dr. Sarah Jenkins - Lead Cardiologist"
+- [Point to priorities and explanation preferences]
+- [Optional: Show YAML config expander if time permits]
+
+**Transition:**
+> "Now let's see the evaluation results."
+
+---
+
+### [2:00-3:00] Technical Evaluation Results
 
 **What to say:**
 > "The first part of HEXEval is **Technical Evaluation**. We measure three key dimensions:
 >
-> **Fidelity**—does the explanation truthfully reflect the model? We use insertion/deletion AUC. Lower deletion AUC means removing important features actually drops predictions—that's good. Higher insertion AUC means adding important features raises predictions—also good.
+> **Quality**—does the method actually work? For SHAP and LIME, we measure fidelity using insertion/deletion AUC. For Anchor, we measure precision and coverage. For DiCE, we measure validity—how many counterfactuals successfully flip the prediction.
 >
-> **Parsimony**—how simple is the explanation? We count the number of features shown.
+> **Parsimony**—how simple is the explanation? We count features for SHAP/LIME, rule conditions for Anchor, and features changed for DiCE counterfactuals.
 >
-> **Stability**—does the explanation change wildly with small input changes?
->
-> Here are the results for our four methods:"
+> Let me show you the visualizations."
 
 **What to do:**
-- [Click Tab 3: "Results"]
-- [Scroll to "Technical Metrics Table"]
-- [Point to table] Read out key numbers:
+- [Click Tab 3: "📊 Results"]
+- [Point to "Quality Metrics" chart]
 
-**Script for reading table:**
-> "SHAP achieves a deletion AUC of 0.11—excellent fidelity. But notice it shows 24 features—that's overwhelming for users. LIME is similar: good fidelity at 0.13, but still shows 10 features. Anchor achieves 94% rule precision—very high—but only covers 32% of cases. DiCE generates valid counterfactuals 100% of the time, but it's computationally slow.
+**Script for reading Quality chart:**
+> "This unified chart shows quality across all methods. SHAP has deletion AUC of 0.63—good fidelity. LIME is similar at 0.57. Anchor achieves 95% precision—very high—but only 15% coverage, meaning it applies to a small subset of cases. DiCE has 100% validity—all counterfactuals successfully flip the prediction.
+>
+> [Scroll to Parsimony chart]
+>
+> But here's the parsimony trade-off: SHAP shows only 2 features—very simple. LIME shows 5 features—still manageable. Anchor uses 2.2 conditions on average. DiCE changes 2.7 features—highly actionable.
 >
 > **So technically, all methods perform well.** But here's where traditional evaluation stops—and where HEXEval's innovation begins."
 
@@ -91,45 +117,53 @@
 
 ---
 
-### [2:30-4:00] Persona Evaluation & The Gap
+### [3:00-4:30] Persona Evaluation & The Gap
 
 **What to say:**
 > "The second part of HEXEval is **Persona Evaluation**. Instead of expensive human studies, we use LLM-simulated personas—each representing a real stakeholder type.
 >
 > For Heart Disease, we have four personas: a Lead Cardiologist, a Medical Researcher, a Hospital Administrator, and a Patient. Each has distinct priorities, risk profiles, and decision-making styles.
 >
-> We present each persona with explanations from all four methods and ask them to rate on six dimensions: interpretability, completeness, actionability, trust, satisfaction, and decision support."
+> We present each persona with explanations from all four methods and ask them to rate on **six dimensions**: trust, satisfaction, actionability, interpretability, completeness, and decision support."
 
 **What to do:**
-- [Scroll to "Persona Ratings Summary"]
-- [Point to radar chart or summary table]
+- [Scroll to "Persona Ratings" section]
+- [Point to "Average Ratings by Method" table]
+- [Point to radar chart showing all 6 dimensions]
 
 **Script for reading persona results:**
 > "Here's what we found: **The same explanations that scored excellently on technical metrics receive poor human ratings.**
 >
-> SHAP: Technical fidelity 0.11—excellent. But average trust from personas? 2.4 out of 5. Actionability? 1.7 out of 5. That's a 2-3 point gap.
+> Look at this table—SHAP scores 1.75 on trust, 1.25 on decision support. LIME is similar: 1.83 trust, 1.58 decision support. Even Anchor, with 95% precision, only gets 2.08 trust and 1.83 decision support. DiCE (Counterfactual) scores 2.0 trust but only 1.42 decision support.
 >
-> LIME: Similar story—good technical scores, but trust at 2.2, actionability at 1.3.
->
-> Anchor: 94% precision technically, but trust at 1.9, actionability at 1.3.
+> This radar chart shows all six dimensions. Notice how all methods score below 2.5 on most dimensions—that's barely acceptable. The overall averages are: SHAP 1.49, LIME 1.68, Anchor 1.85, DiCE 1.64.
 >
 > **This is the fidelity-interpretability gap**—methods that are mathematically sound are not human-friendly."
 
 **What to show:**
-- [Scroll to "Persona-Wise Analysis"]
+- [Scroll to "🎭 Persona-Wise Analysis"]
 - [Expand one persona card, e.g., "Dr. Sarah Jenkins - Lead Cardiologist"]
 
 **Script:**
-> "Let me show you why. Here's feedback from Dr. Sarah Jenkins, a Lead Cardiologist. She says about SHAP: 'The explanation provides numerical weights without clear clinical context. I need to understand how these translate to patient care decisions.'
+> "Let me show you why. Here's the **Persona-Wise Analysis**—we can see each stakeholder's perspective individually.
 >
-> This is exactly the problem—technical accuracy doesn't guarantee clinical usability."
-
-**Transition:**
-> "But here's the key insight: different personas prefer different methods."
+> [Expand Dr. Sarah Jenkins card]
+>
+> Dr. Sarah Jenkins, a Lead Cardiologist, rates each method. Look at her ratings table—she gives Anchor the highest average at 2.17/5, while SHAP scores only 1.17/5. That's a full point difference.
+>
+> [Scroll to comments]
+>
+> Here's her actual feedback on SHAP: 'The SHAP values highlight sex and age without mentioning critical clinical indicators like chest pain type or thallium stress test. Without these clinical markers, I struggle to trust this as a reliable assessment tool.'
+>
+> But for Anchor, she says: 'The explanation is somewhat understandable, but doesn't provide a complete picture. I value detailed clinical indicators which are not all mentioned here.'
+>
+> Notice even her 'best' method scores only 2.17—showing the gap. But here's the key: **Different personas have different preferences.** Mark Thompson (Medical Researcher) gives SHAP 2.33—higher than Dr. Jenkins. David Chen (Patient) gives all methods 1.0—he can't understand any of them.
+>
+> This is exactly the insight—technical accuracy doesn't guarantee usability, and **different personas prefer different methods.**"
 
 ---
 
-### [4:00-5:30] Stakeholder-Specific Recommendations
+### [4:30-5:30] Stakeholder-Specific Recommendations
 
 **What to say:**
 > "This brings us to HEXEval's third component: **Stakeholder-Specific Recommendations**.
@@ -141,17 +175,26 @@
 - [Point to recommendation cards]
 
 **Script for reading recommendations:**
-> "For the Lead Cardiologist, HEXEval recommends **Anchor**—not because it has the highest technical score, but because it provides rule-based explanations that align with clinical decision-making. The reasoning: 'High stakeholder trust, excellent precision, rule-based format preferred.'
+> "For the Lead Cardiologist (Dr. Sarah Jenkins), HEXEval recommends **Anchor**—not because it has the highest technical score, but because it provides rule-based explanations that align with clinical decision-making. Her average rating for Anchor is 2.17, compared to 1.17 for SHAP.
 >
-> For the Medical Researcher, it recommends **SHAP**—because researchers value comprehensive feature attribution, even if it's technical.
+> For the Medical Researcher (Mark Thompson), it recommends **SHAP or DiCE**—both score 2.33 in his ratings. Researchers value comprehensive feature attribution and counterfactual analysis for understanding model behavior.
 >
-> For the Patient, it recommends **DiCE**—because counterfactuals are actionable: 'To reduce risk, reduce your cholesterol by 20 points.'
+> For the Patient (David Chen), unfortunately all methods score 1.0—none are interpretable to non-technical users. This reveals a critical gap: current XAI methods fail end users entirely.
 >
 > **This is the core contribution:** One-size-fits-all doesn't work. Different stakeholders need different explanation formats."
 
 **What to show:**
-- [Scroll to "Method Comparison Matrix"]
-- [Point to heatmap] "You can see the variance—some methods score 4.5 for one persona but 1.5 for another."
+- [Scroll to "📊 Method Comparison Across All Personas"]
+- [Point to heatmap] "This is the Method Comparison Matrix—a heatmap showing satisfaction scores by persona and method."
+
+**Script:**
+> "This heatmap makes the variance crystal clear. See how the colors change? Green means higher satisfaction, red means low.
+>
+> For Dr. Sarah Jenkins (Cardiologist), Anchor scores 2.17—her best option. For Mark Thompson (Medical Researcher), SHAP and DiCE both score 2.33—tied for best.
+>
+> But look at David Chen (Patient)—all methods score 1.0. He can't understand any explanation format. And Linda Martinez (Hospital Administrator) gives Anchor 2.06, SHAP 1.44.
+>
+> The variance is clear: methods that work for one persona fail for another. **This proves one-size-fits-all doesn't work.**"
 
 **Transition:**
 > "Let me show you the framework's architecture."
@@ -171,6 +214,8 @@
 >
 > The framework is domain-agnostic—you configure it via YAML for any binary classification task. No code changes needed.
 >
+> The UI has five tabs: Configuration for running evaluations, Use Case Details for viewing personas and domain context, Results for technical and persona metrics, Recommendations for stakeholder-specific guidance, and Documentation for in-app guides.
+>
 > **Research Contributions:**
 > 1. First framework to combine technical and human-centered evaluation systematically.
 > 2. Quantifies the fidelity-interpretability gap with concrete evidence.
@@ -178,7 +223,8 @@
 > 4. LLM-based persona simulation—cost-effective and scalable alternative to human studies."
 
 **What to show:**
-- [Click Tab 2: "Use Case Details"] (optional, if time)
+- [Click Tab 2: "ℹ️ Use Case Details"] (if not already shown)
+- [Or] [Click Tab 5: "📚 Documentation"] to show in-app guides
 - [Or] Reference architecture diagram from documentation
 
 **Transition:**
@@ -191,11 +237,11 @@
 **What to say:**
 > "**Key Findings:**
 >
-> 1. Technical excellence does not guarantee human interpretability. We see a 2-3 point gap between technical scores and human ratings.
+> 1. Technical excellence does not guarantee human interpretability. SHAP has 0.63 deletion AUC (good fidelity) but only 1.49 average persona rating. Anchor has 95% precision but 1.85 average rating.
 >
-> 2. Persona differentiation is real. Different stakeholders prefer different methods—2.5-point variance in ratings.
+> 2. Persona differentiation is real. Dr. Jenkins rates Anchor at 2.17 but SHAP at 1.17—a full point difference. Mark Thompson rates SHAP at 2.33 but Dr. Jenkins rates it 1.17—showing role-based preferences.
 >
-> 3. No method excels universally. Each has strengths for specific personas.
+> 3. No method excels universally. Best average is Anchor at 1.85/5—barely acceptable. Patients rate all methods 1.0—a critical failure for end-user interpretability.
 >
 > **Impact:** HEXEval enables practitioners to make data-driven decisions about which explanation method to deploy, based on their actual stakeholders—not just technical metrics.
 >
@@ -219,6 +265,20 @@
 > However, I acknowledge this is a limitation. In my future work section, I propose a validation study comparing LLM personas to real humans. Preliminary evidence suggests personas capture realistic preferences—we see 2.5-point variance across personas, which matches what we'd expect from real stakeholders.
 >
 > For now, LLM personas enable rapid iteration and method comparison, which would be prohibitively expensive with real humans."
+
+### Q: "What are the 6 rating dimensions?"
+
+**Answer:**
+> "Great question. The six dimensions capture different aspects of explanation quality from a human perspective:
+>
+> 1. **Trust** — Do I believe this explanation is accurate and reliable?
+> 2. **Satisfaction** — Am I satisfied with the quality and clarity of this explanation?
+> 3. **Actionability** — Can I take concrete actions based on this explanation?
+> 4. **Interpretability** — How easy is it to understand what the explanation means?
+> 5. **Completeness** — Does the explanation provide all the information I need?
+> 6. **Decision Support** — Does this explanation help me make better decisions?
+>
+> These dimensions are based on established HCI and XAI research. Different personas weight these dimensions differently based on their role and priorities."
 
 ### Q: "How do you know the personas are realistic?"
 
@@ -258,8 +318,8 @@
 **Answer:**
 > "For a typical run with 100 instances:
 > - Technical evaluation: ~3 minutes (SHAP ~50s, LIME ~100s, Anchor ~20s, DiCE ~15s)
-> - Persona evaluation: ~2 minutes (48 LLM API calls)
-> - **Total: ~5-7 minutes**
+> - Persona evaluation: ~4 minutes (48 LLM API calls)
+> - **Total: ~ 6 - 8 minutes**
 >
 > This is much faster than human studies, which can take days or weeks. The framework is designed for rapid iteration."
 
@@ -268,7 +328,7 @@
 ## Backup Plan: If Live Demo Fails
 
 **If UI doesn't load:**
-1. Have screenshots ready of each tab
+1. Have screenshots ready of each of the 5 tabs
 2. Walk through screenshots while narrating
 3. Offer to show code/architecture instead
 
@@ -276,11 +336,13 @@
 1. Show the code that generates results
 2. Explain the data flow
 3. Reference the architecture document
+4. Show Use Case Details tab to demonstrate configuration
 
 **If API key issues:**
 1. Show technical evaluation only (no personas)
 2. Explain persona evaluation conceptually
 3. Show pre-generated persona results from documentation
+4. Navigate to Documentation tab to show framework capabilities
 
 ---
 
