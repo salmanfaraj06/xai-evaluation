@@ -26,7 +26,7 @@ USE_CASES = {
         "description": "Predict loan default. Stakeholders: Loan Officers, Risk Managers.",
         "config_path": "hexeval/config/eval_config_credit_risk.yaml",
         "data_path": "usecases/credit_risk_dataset.csv",
-        "model_path": "usecases/xgboost_credit_risk_new.pkl", # Ensure this path is correct relative to root
+        "model_path": "usecases/xgboost_credit_risk_new.pkl", 
         "target": "loan_status",
         "output_dir": "outputs/credit_risk",
         "default_sample_size": 150
@@ -109,10 +109,10 @@ with tab1:
     )
     
     if has_existing_results:
-        st.success(f"✅ Found existing results for **{selected_use_case}**")
+        st.success(f"Found existing results for **{selected_use_case}**")
         
         # Show the Load Existing Results button nicely
-        if st.button("📂 Load Existing Results", type="primary", use_container_width=True, key="load_btn"):
+        if st.button("Load Existing Results", type="primary", use_container_width=True, key="load_btn"):
             import json
             
             try:
@@ -130,7 +130,7 @@ with tab1:
                     "output_path": str(default_output)
                 }
                 
-                st.success(f"✅ Loaded results for {selected_use_case}!")
+                st.success(f"Loaded results for {selected_use_case}!")
             except Exception as e:
                 st.error(f"Failed to load results: {e}")
         
@@ -203,7 +203,7 @@ with tab1:
         run_ready = True
         
     if run_ready:
-        if st.button("🚀 Run Evaluation", type="primary", use_container_width=True):
+        if st.button("Run Evaluation", type="primary", use_container_width=True):
             # Create progress tracking UI
             progress_bar = st.progress(0)
             status_text = st.empty()
@@ -280,12 +280,12 @@ with tab1:
                 # Clear progress indicators and show success
                 progress_bar.empty()
                 status_text.empty()
-                st.success("✅ Evaluation complete! Check the Results tab.")
+                st.success("Evaluation complete! Check the Results tab.")
                 
             except Exception as e:
                 progress_bar.empty()
                 status_text.empty()
-                st.error(f"❌ Evaluation failed: {str(e)}")
+                st.error(f"Evaluation failed: {str(e)}")
                 st.exception(e)
     else:
         st.info("👆 Configure inputs to begin")
@@ -323,12 +323,11 @@ with tab2:
              personas_file = config_data.get("personas", {}).get("file")
              if personas_file:
                  try:
-                     # Load personas directly from YAML file (avoid import issues on Streamlit Cloud)
+                     # Load personas directly from YAML file 
                      import yaml
                      
                      # Handle relative path
                      if not os.path.exists(personas_file):
-                         # Try relative to project root
                          pass
                      
                      with open(personas_file, 'r') as f:
@@ -447,7 +446,7 @@ with tab3:
         
         st.divider()
         
-        # ===== 2. SIMPLICITY METRICS (Is it usable?) =====
+        # ===== 2. SIMPLICITY METRICS =====
         st.subheader("Parsimony Comparison")
         st.caption("Number of features or conditions used by each method (lower is better for simpler explanations)")
         
@@ -567,7 +566,7 @@ with tab3:
                             st.metric("Best Method", best_method, f"{best_score:.2f}/5")
                     
                     # Show comments for each method
-                    st.markdown("**💬 Comments by Method**")
+                    st.markdown("**Comments by Method**")
                     for method in persona_data['explanation_type'].unique():
                         method_comments = persona_data[persona_data['explanation_type'] == method]['comment'].values
                         if len(method_comments) > 0:
@@ -586,7 +585,7 @@ with tab4:
     if 'results' in st.session_state and st.session_state['results']['recommendations']:
         recs = st.session_state['results']['recommendations']
         
-        st.markdown("### 🎯 Which method should you use?")
+        st.markdown("### Which method should you use?")
         st.caption("Recommendations are based on both technical performance and persona feedback")
         
         # Show recommendations per stakeholder
@@ -614,13 +613,13 @@ with tab4:
         # NEW: Method Comparison Across Personas
         if 'results' in st.session_state and st.session_state['results']['persona_ratings'] is not None:
             st.divider()
-            st.subheader("📊 Method Comparison Across All Personas")
+            st.subheader("Method Comparison Across All Personas")
             
             persona_df = st.session_state['results']['persona_ratings']
             
             # Pivot table: personas vs methods showing average rating
             pivot_data = persona_df.pivot_table(
-                values='satisfaction',  # or use average of all ratings
+                values='satisfaction', 
                 index='persona_name',
                 columns='explanation_type',
                 aggfunc='mean'
