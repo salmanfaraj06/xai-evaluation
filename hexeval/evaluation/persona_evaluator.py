@@ -9,7 +9,7 @@ from __future__ import annotations
 import json
 import logging
 import os
-from typing import Dict, List, Tuple
+from typing import Any, Dict, List, Tuple
 
 import numpy as np
 import pandas as pd
@@ -331,7 +331,7 @@ You make critical decisions about {prediction_task}. Each decision impacts:
     
     return f"""{intro}
 
-👤 YOUR PROFILE:
+YOUR PROFILE:
 • Risk Profile: {risk_profile}
 • Decision Style: {decision_style}
 • AI Comfort Level: {ai_comfort}

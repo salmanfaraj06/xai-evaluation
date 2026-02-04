@@ -14,7 +14,6 @@ import yaml
 import warnings
 from sklearn.exceptions import InconsistentVersionWarning
 
-# Suppress warnings
 warnings.filterwarnings("ignore", category=InconsistentVersionWarning)
 warnings.filterwarnings("ignore", category=UserWarning, message=".*X does not have valid feature names.*")
 
@@ -185,7 +184,6 @@ def evaluate(
     
     # Save results
     report_progress(95, "Saving results...")
-    # User requested flattened output structure, no domain splitting
     final_output_dir = output_dir if output_dir else config.get("output", {}).get("dir", "outputs/hexeval_results")
     output_path = Path(final_output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
