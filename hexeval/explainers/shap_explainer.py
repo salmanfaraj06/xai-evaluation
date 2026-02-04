@@ -16,8 +16,8 @@ class ShapExplainer:
         class_index: int = 1,
     ):
         try:
-            import shap  # type: ignore
-        except ImportError as exc:  # pragma: no cover - dependency guard
+            import shap  
+        except ImportError as exc:  
             raise ImportError("Install shap to use ShapExplainer") from exc
 
         self.shap = shap
@@ -26,7 +26,7 @@ class ShapExplainer:
         try:
             self.explainer = shap.Explainer(model, background)
         except Exception:
-            # Fallback for Pipelines or unsupported objects: use predict_proba
+            
             if hasattr(model, "predict_proba"):
                 self.explainer = shap.Explainer(model.predict_proba, background)
             else:

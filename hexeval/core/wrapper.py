@@ -134,17 +134,16 @@ class ModelWrapper(BaseModelWrapper):
 
     def _preprocess(self, X: Union[np.ndarray, pd.DataFrame]) -> Any:
         """Internal preprocessing logic."""
-        # 1. Apply external preprocessor if exists
+       
         if self.preprocessor:
-            # If input is DataFrame and preprocessor expects it, great
-            # If input is numpy and preprocessor expects dataframe... tricky
+            
             # We assume user provides compatible input relative to preprocessor
             X = self.preprocessor.transform(X)
             return X # Usually returns numpy array
             
         # 2. If no preprocessor, handle format
         if isinstance(X, pd.DataFrame):
-            # Check if model was trained on numpy arrays (no feature names)
+            
             if not hasattr(self.model, "feature_names_in_"):
                 return X.values
                 
@@ -170,7 +169,7 @@ class ModelWrapper(BaseModelWrapper):
             
         # Linear models
         elif hasattr(self.model, "coef_"):
-            # For multiclass, coef_ is (n_classes, n_features), take mean or max
+         
             if self.model.coef_.ndim > 1:
                 importance = np.abs(self.model.coef_).mean(axis=0)
             else:

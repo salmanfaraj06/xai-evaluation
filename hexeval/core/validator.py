@@ -15,7 +15,7 @@ LOG = logging.getLogger(__name__)
 
 
 def validate_model_data_compatibility(
-    model_wrapper: Any,  # Typed as Any to avoid circular imports, but expects ModelWrapper
+    model_wrapper: Any,  
     data: Dict,
 ) -> Dict[str, str]:
     """

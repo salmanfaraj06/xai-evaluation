@@ -15,8 +15,8 @@ class LimeExplainer:
         random_state: int = 42,
     ):
         try:
-            from lime import lime_tabular  # type: ignore
-        except ImportError as exc:  # pragma: no cover - dependency guard
+            from lime import lime_tabular  
+        except ImportError as exc:  
             raise ImportError("Install lime to use LimeExplainer") from exc
 
         self.feature_names = feature_names
@@ -26,7 +26,7 @@ class LimeExplainer:
             feature_names=feature_names,
             class_names=class_names,
             mode="classification",
-            discretize_continuous=False,  # Disable to prevent truncnorm errors with encoded categoricals
+            discretize_continuous=False, 
             random_state=random_state,
         )
 

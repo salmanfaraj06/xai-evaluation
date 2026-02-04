@@ -94,8 +94,7 @@ def evaluate(
     
     config = load_config(config_path)
     if config_overrides:
-        # Simple recursive update or flat update? 
-        # For now, handle specific top-level keys used by UI
+        
         if "personas" in config_overrides:
             config.setdefault("personas", {}).update(config_overrides["personas"])
         if "evaluation" in config_overrides:
@@ -118,14 +117,14 @@ def evaluate(
         test_size=0.2,
         random_state=config["evaluation"]["random_state"],
     )
-    LOG.info(f"✓ Loaded data: {len(data['X_train'])} train, {len(data['X_test'])} test")
+    LOG.info(f"Loaded data: {len(data['X_train'])} train, {len(data['X_test'])} test")
     report_progress(25, f"Data loaded: {len(data['X_train'])} samples")
     
     report_progress(28, "Validating model-data compatibility...")
     validation = validate_model_data_compatibility(model_wrapper, data)
     if validation["status"] == "invalid":
         raise ValueError(f"Model-data validation failed: {validation['errors']}")
-    LOG.info("✓ Validated model-data compatibility")
+    LOG.info("Validated model-data compatibility")
     report_progress(30, "Validation complete")
     
     # Run technical evaluation
@@ -139,7 +138,7 @@ def evaluate(
         data=data,
         config=config["evaluation"],
     )
-    LOG.info(f"✓ Technical evaluation complete ({len(technical_results)} methods)")
+    LOG.info(f"Technical evaluation complete ({len(technical_results)} methods)")
     report_progress(60, "Technical evaluation complete")
     
     # Persona Evaluation (LLM-based)
@@ -160,7 +159,7 @@ def evaluate(
                 data=data,
                 config=config,
             )
-            LOG.info("✓ Persona evaluation complete")
+            LOG.info("Persona evaluation complete")
             report_progress(85, "Persona evaluation complete")
         except Exception as e:
             LOG.warning(f"Persona evaluation failed: {e}")
@@ -181,7 +180,7 @@ def evaluate(
                 persona_ratings=persona_results,
                 config=config.get("recommendations", {}),
             )
-            LOG.info("✓ Generated recommendations")
+            LOG.info("Generated recommendations")
             report_progress(92, "Recommendations generated")
     
     # Save results

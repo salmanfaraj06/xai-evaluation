@@ -148,20 +148,12 @@ with tab1:
     target_column = None
     
     if use_sample_data:
-        # Use paths from config
-        # Verify files exist
+        
         m_path = Path(use_case_config["model_path"])
         d_path = Path(use_case_config["data_path"])
-        
-        # Determine if files exist relative to CWD
-        # Usually Streamlit runs from root
+       
         if not m_path.exists():
-             # Try looking in 'models/' if standard structure, but USE_CASES has 'usecases/'
-             # actually I moved pk to 'models/' in previous step?
-             # Wait, I moved `xgboost_credit_risk_new.pkl` to `models/`
-             # I need to fix the path in USE_CASES if I moved them.
-             # Checking walkthrough... "Moved .pkl files to models"
-             # So `xgboost_credit_risk_new.pkl` IS IN `models/`
+            
              pass
 
         model_path = use_case_config["model_path"]
@@ -197,8 +189,7 @@ with tab1:
         
         # Handle file saving
         if model_file and data_file:
-            # We need to save them content to pass paths to evaluate()
-             # Ideally we save to a temp or the output folder
+          
              pass 
 
     
@@ -234,33 +225,25 @@ with tab1:
                         tmp_data.write(data_file.getvalue())
                         data_path = tmp_data.name
                 
-                # Import here to avoid slow startup
+                
                 from hexeval import evaluate
                 
-                # Helper: fix path if not found (because I moved files)
-                # I moved 'xgboost_credit_risk_new.pkl' to 'models/'
-                # But 'credit_risk_dataset.csv' to 'data/'
-                # And 'heart.csv' might still be in 'usecases/'
+                
                 
                 final_model_path = model_path
                 final_data_path = data_path
                 
-                # Fix for moved files if using defaults
                 if use_sample_data:
-                    # Check where I actually moved them
-                    # task.md said: "Move .pkl files to models", "Move .csv files to data"
-                    # USE_CASES dict above has 'usecases/...'. I should fix logic here or in dict.
-                    # I will attempt to fix paths dynamically if file not found at original path
                     
                     if not os.path.exists(final_model_path):
-                        # Try models/
+                       
                         basename = os.path.basename(final_model_path)
                         alt_path = f"models/{basename}"
                         if os.path.exists(alt_path):
                             final_model_path = alt_path
                     
                     if not os.path.exists(final_data_path):
-                        # Try data/
+                        
                         basename = os.path.basename(final_data_path)
                         alt_path = f"data/{basename}"
                         if os.path.exists(alt_path):
@@ -269,7 +252,7 @@ with tab1:
                 st.write(f"Using Model: `{final_model_path}`")
                 st.write(f"Using Data: `{final_data_path}`")
 
-                # Run evaluation with progress callback
+                # Run evaluation 
                 results = evaluate(
                     model_path=final_model_path,
                     data_path=final_data_path,
@@ -277,7 +260,7 @@ with tab1:
                     config_path=use_case_config["config_path"],
                     output_dir=use_case_config["output_dir"],
                     config_overrides={
-                        "personas": {"enabled": True},  # Always enabled - core feature
+                        "personas": {"enabled": True}, 
                         "evaluation": {"sample_size": use_case_config["default_sample_size"]}
                     },
                     progress_callback=update_progress
