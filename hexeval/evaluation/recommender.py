@@ -132,10 +132,9 @@ def generate_recommendations(
             tech_row = tech_row.iloc[0]
             
             # METHOD-SPECIFIC TECHNICAL SCORES (normalized to 0-1)
-            # This fixes the bias bug - each method is scored on its own strengths
             
             if method == "SHAP" or method == "LIME":
-                # Use fidelity & parsimony for attribution methods
+                # fidelity & parsimony for attribution methods
                 fidelity_score = 0
                 if pd.notna(tech_row.get("fidelity_deletion")):
                     # Lower deletion AUC = better fidelity
@@ -187,7 +186,6 @@ def generate_recommendations(
                     technical_score = success_score
             
             else:
-                # Unknown method - default to 0
                 technical_score = 0
             
             # Persona score (already 1-5, normalize to 0-1)
@@ -196,7 +194,7 @@ def generate_recommendations(
             # Combined weighted score
             combined_score = (
                 weights["technical_fidelity"] * technical_score +
-                weights["technical_parsimony"] * technical_score +  # Both use technical_score now
+                weights["technical_parsimony"] * technical_score + 
                 weights["persona_trust"] * (row["trust"] / 5) +
                 weights["persona_satisfaction"] * (row["satisfaction"] / 5)
             )
@@ -206,7 +204,7 @@ def generate_recommendations(
                 "trust": row["trust"],
                 "satisfaction": row["satisfaction"],
                 "actionability": row["actionability"],
-                "technical_score": technical_score,  # Store for transparency
+                "technical_score": technical_score, 
             }
         
         # Find best method
@@ -279,11 +277,10 @@ def generate_recommendations(
         recommendations[stakeholder] = {
             "recommended_method": best_method,
             "score": float(best_scores["score"]),
-            "score_out_of": 1.0,  # Clarify score scale
+            "score_out_of": 1.0, 
             "reasoning": reasoning,
             "technical_strengths": {k: str(v) for k, v in technical_strengths.items()},
             "persona_feedback": persona_feedback,
-            # BUG FIX: Add alternatives for UI display
             "alternatives": {
                 method: float(scores["score"])
                 for method, scores in method_scores.items()

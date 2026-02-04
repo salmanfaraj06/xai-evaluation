@@ -19,8 +19,8 @@ class DiceExplainer:
         method: str = "random",
     ):
         try:
-            import dice_ml  # type: ignore
-        except ImportError as exc:  # pragma: no cover - dependency guard
+            import dice_ml 
+        except ImportError as exc: 
             raise ImportError("Install dice-ml to use DiceExplainer") from exc
 
         self.feature_names = feature_names

@@ -30,8 +30,6 @@ except ImportError:
 
 LOG = logging.getLogger(__name__)
 
-# Import personas from existing file
-# Import dynamic loader
 from hexeval.evaluation.personas import load_personas_from_file
 
 RATING_DIMENSIONS: List[Tuple[str, str]] = [
@@ -114,9 +112,9 @@ def run_persona_evaluation(model_wrapper: Any, data: Dict, config: Dict) -> pd.D
         explanations,
         instance_indices,
         data,
-        personas,  # Pass loaded personas
+        personas,  
         persona_config,
-        domain_config,  # Pass domain config
+        domain_config,  
     )
     
     return pd.DataFrame(results)
@@ -142,7 +140,7 @@ def _generate_explanations(model_wrapper: Any, data: Dict, config: Dict) -> Tupl
     
     top_k = config.get("personas", {}).get("top_k_features", 5)
     
-    explanations = {}  # {instance_idx: {method: explanation_text}}
+    explanations = {}  
     
     LOG.info(f"Generating explanations for {n_instances} instances...")
     
@@ -226,7 +224,7 @@ def _evaluate_with_llm(
     data: Dict,
     personas: List[Dict],
     persona_config: Dict,
-    domain_config: Dict,  # NEW: domain configuration
+    domain_config: Dict,  
 ) -> List[Dict]:
     """Evaluate explanations using LLM personas."""
     
@@ -240,15 +238,15 @@ def _evaluate_with_llm(
     
     with tqdm(total=total_calls, desc="LLM evaluation") as pbar:
         for persona in personas:
-            system_prompt = _build_system_prompt(persona, domain_config)  # Pass domain
+            system_prompt = _build_system_prompt(persona, domain_config)  
             
             for idx in instance_indices:
                 pred_info = {
                     "instance_index": idx,
-                    "predicted_proba_default": 0.5,  # Placeholder
+                    "predicted_proba_default": 0.5,  
                     "predicted_class": 1,
                     "actual_class": data["y_test"].iloc[idx] if data["y_test"] is not None else None,
-                    "role": persona["role"],  # Add role for prompt context
+                    "role": persona["role"],  
                 }
                 
                 for method, explanation_text in explanations[idx].items():
@@ -317,7 +315,7 @@ def _build_system_prompt(persona: Dict, domain_config: Dict) -> str:
     if is_end_user:
         intro = f"""You are {name}, a person {domain_config.get('end_user_context', 'using this AI system')}.
 
-🎭 YOUR SITUATION:
+YOUR SITUATION:
 You are affected by an AI prediction about you. The decision impacts your life directly.
 - A positive outcome ({domain_config.get('positive_outcome', 'approval')}) can change your future
 - A negative outcome ({domain_config.get('negative_outcome', 'rejection')}) feels personal and devastating
@@ -325,7 +323,7 @@ You are affected by an AI prediction about you. The decision impacts your life d
     else:
         intro = f"""You are {name}, a {role} {stakeholder_ctx} with {years} years of experience.
 
-🎭 YOUR IDENTITY & BACKGROUND:
+YOUR IDENTITY & BACKGROUND:
 You make critical decisions about {prediction_task}. Each decision impacts:
 - The people affected by your decisions (their outcomes matter)
 - Your organization's objectives (accuracy, fairness, compliance)
@@ -338,21 +336,21 @@ You make critical decisions about {prediction_task}. Each decision impacts:
 • Decision Style: {decision_style}
 • AI Comfort Level: {ai_comfort}
 
-🧠 YOUR MENTAL MODEL:
+YOUR MENTAL MODEL:
 {mental_model}
 
-📋 YOUR DECISION-MAKING APPROACH:
+YOUR DECISION-MAKING APPROACH:
 {chr(10).join(f'• {h}' for h in heuristics)}
 
-👤 WHAT YOU VALUE IN EXPLANATIONS:
+WHAT YOU VALUE IN EXPLANATIONS:
 {preferences}
 
-🎯 YOUR TOP PRIORITIES (in order):
+YOUR TOP PRIORITIES (in order):
 {chr(10).join(f'{i+1}. {p}' for i, p in enumerate(priorities[:4]))}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📊 YOUR TASK TODAY:
+YOUR TASK TODAY:
 You're reviewing AI predictions for {prediction_task}. The AI has provided an explanation for its prediction.
 
 You need to rate HOW USEFUL this explanation is for YOUR needs as a {role}.
@@ -407,11 +405,11 @@ def _build_eval_prompt(pred_info: Dict, explanation_text: str, method: str, doma
     # Build realistic scenario
     scenario = f"""
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📁 REVIEW - Case #{instance_id}
+REVIEW - Case #{instance_id}
 
 You are reviewing {decision_noun}. The AI system has analyzed this case and made a prediction about {prediction_task}.
 
-🤖 AI SYSTEM OUTPUT:
+AI SYSTEM OUTPUT:
 The system used the "{method}" explanation method to show you WHY it made this prediction.
 
 Here's what the AI is telling you:
@@ -420,7 +418,7 @@ Here's what the AI is telling you:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-❓ YOUR EVALUATION:
+YOUR EVALUATION:
 Imagine you're looking at this explanation in your real work. You need to {decision_verb}, and this AI explanation is supposed to help you.
 
 Rate this explanation on the 6 dimensions (1-5).
@@ -439,11 +437,9 @@ Provide your ratings in TOML format AS {pred_info.get('role', 'your role')}:
 def _call_llm(client, model: str, system_prompt: str, user_prompt: str) -> Tuple[Dict, str]:
     """Call OpenAI API and parse TOML response."""
     
-    # Check if reasoning model
     is_reasoning = model.startswith("o1") or model.startswith("o3")
     
     if is_reasoning:
-        # Reasoning models don't support system messages
         messages = [{"role": "user", "content": system_prompt + "\n\n" + user_prompt}]
     else:
         messages = [
@@ -454,17 +450,16 @@ def _call_llm(client, model: str, system_prompt: str, user_prompt: str) -> Tuple
     response = client.chat.completions.create(
         model=model,
         messages=messages,
-        max_tokens=400 if not is_reasoning else None,  # Reduced from 500
+        max_tokens=400 if not is_reasoning else None,  
     )
     
     content = response.choices[0].message.content or ""
     
-    # Parse TOML format (more compact than JSON)
     try:
         import toml
         data = toml.loads(content)
     except:
-        # Fallback: try to parse as key-value pairs
+
         data = {}
         for line in content.split('\n'):
             line = line.strip()
@@ -473,7 +468,7 @@ def _call_llm(client, model: str, system_prompt: str, user_prompt: str) -> Tuple
                 key = key.strip()
                 val = val.strip().strip('"\'')
                 
-                # Try to convert to number
+              
                 try:
                     data[key] = float(val)
                 except:

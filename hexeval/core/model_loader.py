@@ -49,13 +49,9 @@ def load_model(path: str | Path) -> ModelWrapper:
     
     LOG.info(f"Loading model from {path}")
     
-    # XGBoost compatibility fix: Add deprecated attributes BEFORE unpickling
-    # Models trained with XGBoost <1.6.0 have use_label_encoder attribute
-    # Models trained with older XGBoost versions may also have gpu_id and predictor attributes
     try:
         import xgboost as xgb
         if hasattr(xgb, 'XGBClassifier'):
-            # Add the attributes if they don't exist (for newer XGBoost versions)
             if not hasattr(xgb.XGBClassifier, 'use_label_encoder'):
                 xgb.XGBClassifier.use_label_encoder = False
             if not hasattr(xgb.XGBClassifier, 'gpu_id'):
@@ -69,21 +65,19 @@ def load_model(path: str | Path) -> ModelWrapper:
                 xgb.XGBRegressor.gpu_id = None
             if not hasattr(xgb.XGBRegressor, 'predictor'):
                 xgb.XGBRegressor.predictor = None
-        # Also patch the base XGBModel class if it exists
         if hasattr(xgb, 'XGBModel'):
             if not hasattr(xgb.XGBModel, 'gpu_id'):
                 xgb.XGBModel.gpu_id = None
             if not hasattr(xgb.XGBModel, 'predictor'):
                 xgb.XGBModel.predictor = None
     except ImportError:
-        pass  # XGBoost not installed, no problem
+        pass 
     
     try:
         artifact = joblib.load(path)
     except Exception as e:
         raise ValueError(f"Failed to load model: {e}")
     if isinstance(artifact, dict):
-        # Already in artifact format
         model = artifact.get("model")
         preprocessor = artifact.get("preprocessor")
         feature_names = artifact.get("feature_names")
@@ -110,20 +104,18 @@ def load_model(path: str | Path) -> ModelWrapper:
     elif isinstance(model, ModelWrapper):
         wrapper = model
     else:
-        # Last attempt - maybe the artifact IS the model wrapper
         if isinstance(artifact, ModelWrapper):
             wrapper = artifact
-        # Or maybe it's a raw model but without predict_proba (which we catch later)
         else:
              wrapper = ModelWrapper(model=artifact)
 
     # Validate model has predict_proba via wrapper
     try:
-        # We don't call it here, just inspect wrapped model
+
         if not hasattr(wrapper.model, "predict_proba"):
              raise ValueError(f"Model {type(wrapper.model)} missing predict_proba")
     except Exception:
-         # Some custom models might implement predict_proba dynamically, so this check is soft
+
          pass
     
     model_type = type(wrapper.model).__name__

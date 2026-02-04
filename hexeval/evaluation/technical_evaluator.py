@@ -54,12 +54,6 @@ def run_technical_evaluation(
     LOG.info("Starting technical evaluation...")
     
     model = model_wrapper.model
-    # wrapper handles preprocessing internally but we might need raw preprocessor for some explainers
-    # actually, explainers usually need raw data and a predict function that handles preprocessing
-    # OR they need processed data and a raw predict function.
-    # Let's standardize: pass processed data to explainers where possible, 
-    # but ModelWrapper.predict_proba expects RAW data if preprocessor is set.
-    
     preprocessor = model_wrapper.preprocessor
     feature_names = model_wrapper.feature_names or data["feature_names"]
     
@@ -72,8 +66,6 @@ def run_technical_evaluation(
     rng = np.random.default_rng(config.get("random_state", 42))
     sample_idx = rng.choice(len(X_test_proc), size=sample_size, replace=False)
     X_sample = X_test_proc[sample_idx]
-    
-    # Compute baseline (X_train_proc is already numeric numpy array from preprocess_for_model)
     baseline = X_train_proc.mean(axis=0)
     
     results = []
@@ -168,7 +160,6 @@ def _evaluate_shap(model, X_train, X_sample, baseline, feature_names, config) ->
 
 def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) -> Dict:
     """Evaluate LIME explainer."""
-    # Get class names from domain config (defaults to Class 0/1 if missing)
     domain_cfg = config.get("domain", {})
     class_names = [
         domain_cfg.get("positive_outcome", "Class 0"),
@@ -187,12 +178,10 @@ def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) ->
     LOG.info(f"LIME Debug: After conversion - X_train has NaN: {np.any(np.isnan(X_train))}")
     LOG.info(f"LIME Debug: NaN count: {np.sum(np.isnan(X_train))}")
     
-    # Add small jitter to prevent zero-variance features (LIME requirement)
     X_train_jittered = X_train.copy()
     
-    # Check for zero or very low variance columns
     variances = np.var(X_train_jittered, axis=0)
-    min_variance = 1e-8  # Minimum acceptable variance
+    min_variance = 1e-8  
     
     LOG.info(f"LIME Debug: Min variance: {np.min(variances)}, Max variance: {np.max(variances)}")
     LOG.info(f"LIME Debug: Features with low variance: {np.sum(variances < min_variance)}")
@@ -220,7 +209,6 @@ def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) ->
     LOG.info(f"LIME Debug: Final X_train_jittered has NaN: {np.any(np.isnan(X_train_jittered))}")
     LOG.info(f"LIME Debug: Final shape: {X_train_jittered.shape}, dtype: {X_train_jittered.dtype}")
     
-    # Make a clean copy to ensure no reference issues
     X_train_clean = X_train_jittered.copy()
 
     explainer = LimeExplainer(
@@ -259,7 +247,7 @@ def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) ->
     # Parsimony
     sparsity = sparsity_from_importances(importances)
     
-    # Stability (optional)
+    # Stability
     stability_score = np.nan
     if lime_cfg.get("stability_test", False):
         subset_size = min(lime_cfg.get("stability_subset", 30), len(X_sample))

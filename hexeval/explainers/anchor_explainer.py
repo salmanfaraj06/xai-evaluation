@@ -15,8 +15,8 @@ class AnchorExplainer:
         categorical_names=None,
     ):
         try:
-            from anchor import anchor_tabular  # type: ignore
-        except ImportError as exc:  # pragma: no cover - dependency guard
+            from anchor import anchor_tabular  
+        except ImportError as exc: 
             raise ImportError("Install anchor-exp to use AnchorExplainer") from exc
 
         self.predict_fn = predict_fn

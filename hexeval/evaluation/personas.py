@@ -24,7 +24,7 @@ def load_personas_from_file(path: str | Path) -> List[Dict]:
     """
     path = Path(path)
     if not path.exists():
-        # Fallback to looking in config directory relative to project root
+       
         project_root = Path(__file__).parent.parent.parent
         possible_path = project_root / path
         if possible_path.exists():
