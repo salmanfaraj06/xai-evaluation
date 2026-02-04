@@ -7,7 +7,7 @@ Removes VXAI jargon and uses practitioner-friendly terminology.
 from __future__ import annotations
 
 import logging
-from typing import Dict, List
+from typing import Any, Dict, List
 
 import numpy as np
 import pandas as pd
@@ -169,7 +169,6 @@ def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) ->
     LOG.info(f"LIME Debug: X_train type: {type(X_train)}, shape: {X_train.shape if hasattr(X_train, 'shape') else 'N/A'}")
     LOG.info(f"LIME Debug: X_train dtype: {X_train.dtype if hasattr(X_train, 'dtype') else 'N/A'}")
     
-    # Ensure X_train is numpy array and float64
     if not isinstance(X_train, np.ndarray):
         X_train = np.asarray(X_train, dtype=np.float64)
     else:
@@ -188,9 +187,8 @@ def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) ->
     
     for i in range(X_train_jittered.shape[1]):
         if variances[i] < min_variance:
-            # Add small random noise proportional to the mean
             mean_val = np.abs(np.mean(X_train_jittered[:, i]))
-            noise_scale = max(mean_val * 0.01, 0.01)  # 1% of mean or 0.01 minimum
+            noise_scale = max(mean_val * 0.01, 0.01) 
             noise = np.random.RandomState(42 + i).normal(0, noise_scale, X_train_jittered.shape[0])
             X_train_jittered[:, i] += noise
             LOG.info(f"LIME Debug: Added jitter to feature {i} (variance was {variances[i]:.2e})")
@@ -200,7 +198,6 @@ def _evaluate_lime(model, X_train, X_sample, baseline, feature_names, config) ->
         nan_count = np.sum(np.isnan(X_train_jittered))
         LOG.warning(f"LIME Debug: Found {nan_count} NaN values in X_train, filling with 0.0")
         X_train_jittered = np.nan_to_num(X_train_jittered, nan=0.0, copy=False)
-        # Verify NaN removal worked
         if np.any(np.isnan(X_train_jittered)):
             LOG.error("LIME Debug: NaN still present after nan_to_num!")
         else:
