@@ -1,4 +1,4 @@
-# HEXEval: Bridging the Gap Between AI Explanations and Human Trust 🤝
+# HEXEval: Bridging the Gap Between AI Explanations and Human Trust
 
 [![Test Suite](https://github.com/salmanfaraj06/xai-evaluation/actions/workflows/test.yml/badge.svg)](https://github.com/salmanfaraj06/xai-evaluation/actions/workflows/test.yml)
 [![Code Quality](https://github.com/salmanfaraj06/xai-evaluation/actions/workflows/lint.yml/badge.svg)](https://github.com/salmanfaraj06/xai-evaluation/actions/workflows/lint.yml)
@@ -10,7 +10,7 @@
 
 ---
 
-## 🚀 Why HEXEval?
+## Why HEXEval?
 
 You have a model. You have explainers like SHAP, LIME, or Anchor. But which one is right for your **Risk Officer**? Which one works for your **End User**? 
 
@@ -21,7 +21,7 @@ HEXEval answers this by running a holistic evaluation:
 
 ---
 
-## ⚡️ Quick Start
+## Quick Start
 
 ### 1. The Easy Way: Interactive UI
 The best way to use HEXEval is through our visual dashboard.
@@ -40,7 +40,7 @@ echo "OPENAI_API_KEY=your-key-here" > .env
 # 4. Launch the App!
 streamlit run hexeval/ui/app.py
 ```
-👉 **Then just open your browser to `http://localhost:8501`, upload your dataset, and click "Run Evaluation".**
+**Then just open your browser to `http://localhost:8501`, upload your dataset, and click "Run Evaluation".**
 
 ### 2. The Developer Way: Python API
 Want to integrate HEXEval into your CI/CD pipeline or notebook?
@@ -63,11 +63,11 @@ print(results['recommendations']['Conservative Risk Officer'])
 
 ---
 
-## 🧠 How It Works
+## How It Works
 
 HEXEval runs a two-step evaluation process:
 
-| Layer 1: The Math 🧮 | Layer 2: The Humans 👥 |
+| Layer 1: The Math | Layer 2: The Humans |
 | :--- | :--- |
 | **Fidelity:** Does the explanation actually match the model? | **Trust:** Does the stakeholder believe the explanation? |
 | **Stability:** Do small input changes break the explanation? | **Satisfaction:** Is the explanation useful for their job? |
@@ -77,7 +77,7 @@ We combine these scores using a weighted algorithm to find the perfect match for
 
 ---
 
-## � Features
+## Features
 
 *   **Multi-Method Support**: Out-of-the-box support for **SHAP**, **LIME**, **Anchor**, and **DiCE**.
 *   **Persona Engine**: highly detailed LLM prompts that simulate distinct personalities (e.g., *Technical Analyst* vs. *Non-Technical Customer*).
@@ -86,29 +86,13 @@ We combine these scores using a weighted algorithm to find the perfect match for
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 *   `hexeval/ui/`: The Streamlit dashboard code.
 *   `hexeval/core/`: The engine room (data loading, model wrappers).
 *   `hexeval/explainers/`: Adapters for different XAI libraries.
 *   `hexeval/evaluation/`: The logic for scoring and recommendations.
 *   `hexeval/config/`: YAML files where you define your stakeholders and settings.
-
----
-
-## 🤝 Contributing
-
-We love contributions! Whether it's a new metric, a new stakeholder persona, or a bug fix:
-1.  Fork the repository.
-2.  Create your feature branch (`git checkout -b feature/amazing-feature`).
-3.  Commit your changes.
-4.  Open a Pull Request.
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
