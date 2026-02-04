@@ -45,14 +45,8 @@ class BaseModelWrapper(ABC):
         if self.preprocessor:
             return self.preprocessor.transform(X)
         
-        # If no preprocessor, convert DataFrame to numpy if needed
-        # but respect feature names if possible (some models handle DataFrames directly)
         if isinstance(X, pd.DataFrame):
-            # If the model handles dataframes natively, pass it through
-            # Otherwise, convert to numpy
             if hasattr(self.model, "predict_proba"):
-                # Most sklearn models handle dataframes but strip names internally
-                # XGBoost/LightGBM might use names
                 pass
             return X.values if not hasattr(self.model, "feature_names_in_") else X
             
@@ -80,7 +74,7 @@ class ModelWrapper(BaseModelWrapper):
         super().__init__(model, feature_names, class_names, preprocessor)
         self.threshold = threshold
         
-        # Try to infer feature names if not provided
+        # infer feature names if not provided
         if not self.feature_names:
             if hasattr(model, "feature_names_in_"):
                 self.feature_names = list(model.feature_names_in_)
@@ -90,7 +84,7 @@ class ModelWrapper(BaseModelWrapper):
                 except Exception:
                     pass
 
-        # Try to infer class names if not provided
+        # infer class names if not provided
         if not self.class_names and hasattr(model, "classes_"):
             self.class_names = list(map(str, model.classes_))
 
@@ -137,11 +131,10 @@ class ModelWrapper(BaseModelWrapper):
        
         if self.preprocessor:
             
-            # We assume user provides compatible input relative to preprocessor
-            X = self.preprocessor.transform(X)
-            return X # Usually returns numpy array
             
-        # 2. If no preprocessor, handle format
+            X = self.preprocessor.transform(X)
+            return X 
+
         if isinstance(X, pd.DataFrame):
             
             if not hasattr(self.model, "feature_names_in_"):
