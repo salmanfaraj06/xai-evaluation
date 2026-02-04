@@ -1,0 +1,77 @@
+# HEXEval Configuration for Heart Disease Prediction
+
+domain:
+  name: "Heart Disease Prediction"
+  prediction_task: "heart disease risk assessment"
+  decision_verb: "diagnose"
+  decision_noun: "patient case"
+  stakeholder_context: "at a cardiology clinic"
+  end_user_context: "concerned about my heart health"
+  positive_outcome: "healthy (no disease)"
+  negative_outcome: "diagnosis of heart disease"
+  
+  # Domain-specific terms for prompts
+  terms:
+    applicant: "patient"
+    application: "medical case"
+    risk_factor: "health risk"
+    decision_maker: "cardiologist"
+
+output:
+  dir: "outputs/hexeval_results"
+  export_formats:
+    - csv
+    - json
+  save_explanations: false
+
+personas:
+  enabled: true
+  file: "hexeval/config/personas_healthcare.yaml"
+  llm_model: "gpt-4o"
+  runs_per_method: 1         # 1 run to save cost/time
+  sample_instances: 3           # Small sample for testing
+  top_k_features: 5
+
+evaluation:
+  sample_size: 500           # Increased for research-level evaluation
+  random_state: 42
+  
+  fidelity:
+    steps: 100                # Increased for precision
+  
+  stability:
+    noise_std: 0.05
+    repeats: 10               # Increased for robustness
+  
+  explainers:
+    shap:
+      enabled: true
+      background_size: 1000   # Increased for accuracy
+    
+    lime:
+      enabled: true
+      num_samples: 5000      # Increased for stability
+      num_features: 5       
+      stability_test: true
+      stability_subset: 50   # Increased
+    
+    anchor:
+      enabled: true
+      precision_threshold: 0.95  # Increased for quality
+      max_instances: 50      # Increased for coverage
+    
+    dice:
+      enabled: true
+      num_counterfactuals: 5  # Increased for diversity
+      max_instances: 30      # Increased for coverage
+      method: "random"
+
+
+recommendations:
+  enabled: true
+  dice_sparsity_target: 3 
+  weights:
+    technical_fidelity: 0.3
+    technical_parsimony: 0.2
+    persona_trust: 0.3
+    persona_satisfaction: 0.2      

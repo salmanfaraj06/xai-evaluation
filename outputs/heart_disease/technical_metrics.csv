@@ -1,0 +1,5 @@
+method,fidelity_deletion,fidelity_insertion,num_important_features,rule_accuracy,rule_applicability,rule_length,counterfactual_success,counterfactual_sparsity,stability
+SHAP,0.6267166512672369,0.48103730986459675,2.0,,,,,,
+LIME,0.5700400903965055,0.5585899691295763,5.0,,,,,,0.5335863021071355
+Anchor,,,,0.9467560569907306,0.14753,2.2,,,
+DiCE,,,,,,,1.0,2.6666666666666665,

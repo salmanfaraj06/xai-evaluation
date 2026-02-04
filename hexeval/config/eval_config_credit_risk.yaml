@@ -1,0 +1,107 @@
+# HEXEval Configuration
+# Simplified config focused on evaluation only
+
+# HEX# Domain Configuration (makes HEXEval reusable for any prediction task)
+domain:
+  name: "Credit Risk / Loan Default"
+  prediction_task: "loan default risk"
+  decision_verb: "approve or reject"
+  decision_noun: "loan application"
+  stakeholder_context: "at a financial institution"
+  end_user_context: "applying for a loan to improve my life"
+  positive_outcome: "loan approval"
+  negative_outcome: "loan rejection"
+  
+  # Domain-specific terms that appear in prompts
+  terms:
+    applicant: "borrower"
+    application: "loan application"
+    risk_factor: "default risk"
+    decision_maker: "loan officer"
+
+# Evaluation Configuration
+# Simplified config focused on evaluation only
+
+# Evaluation Settings
+evaluation:
+  # Sample size for technical metrics (increased for research-level evaluation)
+  sample_size: 500
+  
+  # Random seed for reproducibility
+  random_state: 42
+  
+  # Technical Metrics Configuration
+  fidelity:
+    steps: 100  # Granularity for insertion/deletion curves (increased for precision)
+  
+  stability:
+    noise_std: 0.02  # Noise level for robustness testing
+    repeats: 10  # Number of perturbations per instance (increased for robustness)
+  
+  # Explainer-Specific Settings
+  explainers:
+    shap:
+      enabled: true
+      background_size: 1000  # Number of background samples (increased for accuracy)
+    
+    lime:
+      enabled: true
+      num_samples: 5000  # Perturbations per explanation (increased for stability)
+      num_features: 10  # Top features to explain
+      stability_test: true
+      stability_subset: 50  # Instances to test stability (increased)
+    
+    anchor:
+      enabled: true
+      precision_threshold: 0.95  # Minimum rule precision (increased for quality)
+      max_instances: 50  # Max instances to explain (increased for coverage)
+    
+    dice:
+      enabled: true
+      num_counterfactuals: 3  # CFs to generate per instance (increased for diversity)
+      max_instances: 30  # Max instances (increased for coverage)
+      method: "random"  # CF generation method
+
+# Human Proxy Evaluation (LLM Personas)
+personas:
+  enabled: true
+  file: "hexeval/config/personas_credit_risk.yaml"
+  
+  # LLM Model Selection
+  # Options:
+  #   - "gpt-4" / "gpt-4-turbo" - Standard models (good balance)
+  #   - "gpt-4o" - Optimized, faster
+  #   - "o1-mini" / "o3-mini" - Reasoning models (GPT-5 range, better for complex evaluation)
+  llm_model: "gpt-4o" 
+  
+  # For GPT-5/reasoning models, use fewer runs due to cost
+  runs_per_method: 1  # Reduced from 2 → 1 run per method (faster)
+  sample_instances: 2  # Reduced from 5 → 2 instances (40 LLM calls instead of 200)
+  top_k_features: 5  # Features to show in explanations
+  
+  # Which personas to include (all 6 by default - 5 stakeholders + 1 end-user)
+  include:
+    - "Conservative Loan Officer"
+    - "Data-Driven Analyst"
+    - "Risk Manager"
+    - "Customer Relationship Manager"
+    - "Executive Decision Maker"
+    - "Loan Applicant (End User)" 
+
+# Output Configuration
+output:
+  dir: "outputs/hexeval_results"
+  export_formats:
+    - csv
+    - json
+  save_explanations: false 
+
+# Recommendation Settings
+recommendations:
+  enabled: true
+  dice_sparsity_target: 3  # Avg changed features for full score
+  weights:
+    technical_fidelity: 0.3
+    technical_parsimony: 0.2
+    persona_trust: 0.3
+    persona_satisfaction: 0.2
