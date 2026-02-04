@@ -1,4 +1,4 @@
-# HEXEval: Bridging the Gap Between AI Explanations and Human Trust 🤝
+# HEXEval: Bridging the Gap Between AI Explanations and Human Trust
 
 [![Test Suite](https://github.com/salmanfaraj06/xai-evaluation/actions/workflows/test.yml/badge.svg)](https://github.com/salmanfaraj06/xai-evaluation/actions/workflows/test.yml)
 [![Code Quality](https://github.com/salmanfaraj06/xai-evaluation/actions/workflows/lint.yml/badge.svg)](https://github.com/salmanfaraj06/xai-evaluation/actions/workflows/lint.yml)
